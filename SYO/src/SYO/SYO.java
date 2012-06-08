@@ -30,7 +30,7 @@ public class SYO {
     BitmapCanvasProvider canvas = new BitmapCanvasProvider(
         fout, "image/jpeg", resolution, BufferedImage.TYPE_BYTE_BINARY, false, 0);
 
-    gen.generateBarcode(canvas, "Hello World it's me");
+    gen.generateBarcode(canvas, "Challo Mike");
     canvas.finish();
     
   }

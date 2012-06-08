@@ -11,7 +11,7 @@ public class MainView extends JFrame {
 
 	public MainView(String title) {
 		this.setTitle(title);
-		this.setSize(600, 600);
+		this.setSize(600, 800);
 		this.setVisible(true);
 	}
 }

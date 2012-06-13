@@ -25,7 +25,7 @@ public class DBTool {
 	 */
 	private DBTool() {
 		host = "localhost";
-		db = "";
+		db = "syo";
 		user = "root";
 		password = "1234";
 	}
@@ -53,7 +53,7 @@ public class DBTool {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
-	private void connectDB() {
+	public void connectDB() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch (ClassNotFoundException ex) {
@@ -82,7 +82,7 @@ public class DBTool {
 	 * Closes the connection. Checks if there is an existing connection before
 	 * attempting to close it.
 	 */
-	private void closeDB() {
+	public void closeDB() {
 		if (rSet != null) {
 			try {
 				rSet.close();
@@ -111,8 +111,17 @@ public class DBTool {
 	 *            The name of the Sammlung.
 	 */
 	public void addSammlung(String name) {
+		String sammlung = "INSERT INTO Sammlung (Sammlung_ID, Sammlungname) VALUES (NULL,'"
+				+ name + "')";
 		connectDB();
-
+		try {
+			statement = connection.createStatement();
+			statement.executeUpdate(sammlung);
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
 		closeDB();
 	}
 
@@ -124,8 +133,29 @@ public class DBTool {
 	 * @param typID
 	 *            The ID of the type of the object
 	 */
-	public void addObject(String name, String typID) {
-
+	public void addObject(String name, int typID, int sammlungID) {
+		String objekt = "INSERT INTO Objekt (ID_Objekt, ObjektName, Typ_ID) VALUES (NULL,'"
+				+ name + "', '" + typID + "')";
+		int key = -1;
+		connectDB();
+		try {
+			statement = connection.createStatement();
+			statement.executeUpdate(objekt, Statement.RETURN_GENERATED_KEYS); // Der generierte Key soll bereitgestellt werden.
+			rSet = statement.getGeneratedKeys();
+			
+			while (rSet.next()){
+				key = rSet.getInt(1);
+				}
+			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
+					+ key + ", " + sammlungID + ")";
+			statement.executeUpdate(objekt_sammlung);
+			
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		closeDB();
 	}
 
 	/**
@@ -137,7 +167,7 @@ public class DBTool {
 	 *            The list of the fields that belong to this type.
 	 */
 	public void addType(String name, ArrayList<String> feldIDs) {
-
+		// TODO Implement
 	}
 
 	/**
@@ -149,7 +179,7 @@ public class DBTool {
 	 *            int the length of the field.
 	 */
 	public void addIntegerField(String name, int length) {
-
+		// TODO Implement
 	}
 
 	/**
@@ -161,6 +191,6 @@ public class DBTool {
 	 *            int the length of the field.
 	 */
 	public void addStringField(String name, int length) {
-
+		// TODO Implement
 	}
 }

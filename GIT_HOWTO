@@ -1,0 +1,10 @@
+Challo zusammen willkommen beim GIT-Howto:
+
+Unser Workflow:
+
+- Programmieren, Speichern
+
+- In der GIT-Shell auf eurem Branch:
+	git add *
+	git commit -m "Kommentar zum Bearbeiteten"
+	git 

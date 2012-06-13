@@ -104,6 +104,15 @@ public class DBTool {
 		}
 	}
 
+	public void purgeAllData() {
+		try {
+			statement.executeUpdate("DELETE * FROM Feld");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Adds a Sammlung to the database.
 	 * 
@@ -138,23 +147,24 @@ public class DBTool {
 				+ name + "', '" + typID + "')";
 		int key = -1;
 		connectDB();
+		
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(objekt, Statement.RETURN_GENERATED_KEYS); // Der generierte Key soll bereitgestellt werden.
 			rSet = statement.getGeneratedKeys();
-			
+			// Den neu erzeugten Primary Key in key speichern.
 			while (rSet.next()){
 				key = rSet.getInt(1);
 				}
 			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
 					+ key + ", " + sammlungID + ")";
 			statement.executeUpdate(objekt_sammlung);
-			
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
+		
 		closeDB();
 	}
 
@@ -171,18 +181,6 @@ public class DBTool {
 	}
 
 	/**
-	 * Adds a field of the type Integer to the database.
-	 * 
-	 * @param name
-	 *            The name of the field.
-	 * @param length
-	 *            int the length of the field.
-	 */
-	public void addIntegerField(String name, int length) {
-		// TODO Implement
-	}
-
-	/**
 	 * Adds a field of the type varchar to the database.
 	 * 
 	 * @param name
@@ -190,7 +188,27 @@ public class DBTool {
 	 * @param length
 	 *            int the length of the field.
 	 */
-	public void addStringField(String name, int length) {
-		// TODO Implement
+	public void addStringFeld(String name, int typID) {
+		String feld = "INSERT INTO feld (ID_Feld, FeldName) VALUES (NULL,'"
+			+ name + "')";
+		int key = -1;
+		try {
+			statement = connection.createStatement();
+			statement.executeUpdate(feld, Statement.RETURN_GENERATED_KEYS); // Der generierte Key soll bereitgestellt werden.
+			rSet = statement.getGeneratedKeys();
+			// Den neu erzeugten Primary Key in key speichern.
+			while (rSet.next()){
+				key = rSet.getInt(1);
+				}
+			String objekt_sammlung = "INSERT INTO Typ_Feld (Typ_ID, Feld_ID) VALUES ("
+					+ typID + ", " + key + ")";
+			statement.executeUpdate(objekt_sammlung);
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+
+	connectDB();
 	}
 }

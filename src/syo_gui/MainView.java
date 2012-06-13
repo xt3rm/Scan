@@ -29,7 +29,9 @@ public class MainView extends JFrame {
 		this.setSize(900, 600);
 		this.setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-        		
+        
+		
+		//set size of the panels
 		pnlContent.setLayout(null);
         pnlContent.setSize(900,600);    
         pnlNavigation.setLayout(null);
@@ -40,19 +42,15 @@ public class MainView extends JFrame {
         
         
         this.getContentPane().add(pnlNavigation);
-        pnlNavigation.setBackground(Color.BLACK);
+        pnlNavigation.setBackground(Color.RED);
         
         this.getContentPane().add(pnlView);
-        pnlView.setBackground(Color.YELLOW);
+        pnlView.setBackground(Color.BLUE);
         
         this.getContentPane().add(pnlContent);
         pnlContent.add(new MainView.HeadlinePanel());
     
 	}
-	
-//-------------------------------------------------------
-//  PANEL - HEADLINE - HeadlinePanel
-//-------------------------------------------------------
 	
 	class HeadlinePanel extends JPanel {
         private Image theImage;
@@ -73,11 +71,6 @@ public class MainView extends JFrame {
             
         }
     }
-	
-//-------------------------------------------------------
-//  PANEL - NAVIGATION - pnlNavigation
-//-------------------------------------------------------
-	
 	
 	public void paint(Graphics g) {
 

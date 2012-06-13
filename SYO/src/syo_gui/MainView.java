@@ -1,5 +1,6 @@
 package syo_gui;
 
+import java.awt.Graphics;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -11,15 +12,14 @@ public class MainView extends JFrame {
 	 * 
 	 */
 	
-	Image s1 = new ImageIcon("syo.gif").getImage(); // Bild holen
+	Image picLogo = new ImageIcon("syo.png").getImage(); // Bild holen
 
 
     //Skalierung des Bildes
-    int b1 = s1.getWidth(this);
-    int h1 = s1.getHeight(this);
-    
+    int b1 = picLogo.getWidth(this);
+    int h1 = picLogo.getHeight(this);
     int   percent1 = 29;
-    Image scaled1 =   s1.getScaledInstance((b1*percent1/100),(h1*percent1/100),Image.SCALE_SMOOTH );
+    Image scaled1 =   picLogo.getScaledInstance((b1*percent1/100),(h1*percent1/100),Image.SCALE_SMOOTH );
 	
 	private static final long serialVersionUID = 8892701173173371771L;
 
@@ -30,4 +30,9 @@ public class MainView extends JFrame {
 		this.setSize(800, 600);
 		this.setVisible(true);
 	}
+	
+	 public void paint(Graphics g){
+	      g.drawImage(picLogo, 0, 24, this);//Position (Hintergrund)  
+	 }
+	
 }

@@ -27,6 +27,7 @@ public class MainView extends JFrame {
 	public MainView(String title) {
 		this.setTitle(title);
 		this.setSize(900, 600);
+		this.setResizable(false);
 		this.setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
         		
@@ -35,33 +36,39 @@ public class MainView extends JFrame {
         pnlNavigation.setLayout(null);
         pnlView.setLayout(null);
 
-        pnlNavigation.setBounds(0,100,200,500);
-        pnlView.setBounds(200,100,700,500);
-        
-        
+        pnlNavigation.setBounds(0,100,225,500);
+        pnlView.setBounds(230,100,700,500);
+
+         
         this.getContentPane().add(pnlNavigation);
-        pnlNavigation.setBackground(Color.BLACK);
+        pnlNavigation.setBackground(Color.WHITE);
         
         this.getContentPane().add(pnlView);
-        pnlView.setBackground(Color.YELLOW);
+        pnlView.setBackground(Color.WHITE);
         
         this.getContentPane().add(pnlContent);
         pnlContent.add(new MainView.HeadlinePanel());
-    
+        pnlContent.setBackground(Color.lightGray);
+        
+        
 	}
 	
 //-------------------------------------------------------
-//  PANEL - HEADLINE - HeadlinePanel
+//  PANEL - HEADLINE - HeadlinePanel	
 //-------------------------------------------------------
 	
 	class HeadlinePanel extends JPanel {
-        private Image theImage;
+		private Image theImage;
         
         public HeadlinePanel(){
-        	this.setSize(900,100);
+        	this.setSize(900,95);
+        	this.setBackground(Color.WHITE);
+        	this.setVisible(true);
         	
         	try{
-        		 theImage = ImageIO.read(new File("syo.png"));   
+        		 theImage = ImageIO.read(new File("syo_logo.JPG"));  
+        		 theImage =   theImage.getScaledInstance((900),(95),theImage.SCALE_SMOOTH );
+        		 
         	}catch(IOException ex){
         		ex.printStackTrace();
         	}
@@ -70,17 +77,22 @@ public class MainView extends JFrame {
         public void paint(Graphics g) {
         	System.out.println("Good");
             g.drawImage(theImage, 0, 0, null); // see javadoc for more info on the parameters
-            
         }
     }
 	
 //-------------------------------------------------------
 //  PANEL - NAVIGATION - pnlNavigation
 //-------------------------------------------------------
+	//Ja, ich weiss, hier steht noch  nichts!!
+	
+	
+//-------------------------------------------------------
+//  PANEL - CONTENT - pnlContent
+//-------------------------------------------------------
+	//Ja, ich weiss, hier steht noch  nichts!!	
 	
 	
 	public void paint(Graphics g) {
 
-        
     }
 }

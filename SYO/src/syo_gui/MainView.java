@@ -32,9 +32,6 @@ public class MainView extends JFrame {
 		this.setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-		;
-        
-		
 		
 		//set size of the panels
 		pnlContent.setLayout(null);

@@ -9,9 +9,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 
 public class MainView extends JFrame {
+	
+	
+	JTextArea area = new JTextArea();
 	
     //Tobi-Stuff---
 	private static final long serialVersionUID = 8892701173173371771L;
@@ -72,6 +76,9 @@ public class MainView extends JFrame {
 	
 	class HeadlinePanel extends JPanel {
 		private Image theImage;
+		
+		
+		
         
         public HeadlinePanel(){
         	this.setSize(900,95);

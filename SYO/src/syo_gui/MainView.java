@@ -1,44 +1,29 @@
 package syo_gui;
 
-
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Label;
-import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.*;
 
-
-
-public class MainView extends JFrame{
-	
-    //Tobi-Stuff---
-	private static final long serialVersionUID = 8892701173173371771L;
-	private int currentCard = 1;
+class MainView extends JFrame {
+ 
+    
+    private int currentCard = 1;
 	private CardLayout cl;
 
-
-	
-	HeadlinePanel pnlHeadline;
-	JPanel pnlContent = new JPanel();
+    JPanel pnlContent = new JPanel();
     JPanel pnlNavigation = new JPanel();
     private JPanel pnlView;
-       
-    
     
     Label lblNavigation;
     Label lblNaviStuff;
-    
-    
+
     JButton cmdSammlung;
     JButton cmdVerwaltung;
     JButton cmdInfo;
@@ -56,9 +41,8 @@ public class MainView extends JFrame{
     final static String VERWALTUNG = "Die Verwaltung wird angezeigt";
 
     
-    
-	public MainView(String title) {
-		this.setTitle(title);
+    MainView() {
+        this.setTitle("dsf");	
 		this.setSize(900, 600);
 		this.setResizable(false);
 		this.setVisible(true);
@@ -71,7 +55,6 @@ public class MainView extends JFrame{
 	    JPanel pnlCard5;
 	    JPanel pnlCard6;
 	    JPanel pnlCard7;
-		
 		
     	
 /*  	
@@ -98,16 +81,6 @@ public class MainView extends JFrame{
         pnlCard7 = new JPanel();
         
         
-        /*
-        pnlView.add(pnlCard1, SAMMLUNGEN);
-        pnlView.add(pnlCard2, OBJEKT);
-        pnlView.add(pnlCard3, TYPERSTELLUNG);
-        pnlView.add(pnlCard4, SAMMLUNGERSTELLUNG);
-        pnlView.add(pnlCard5, OBJEKTERSTELLUNG);
-        pnlView.add(pnlCard6, FELDERSTELLUNG);
-        pnlView.add(pnlCard7, VERWALTUNG);*/
-        
-        
         pnlView.add(pnlCard1, "1");
         pnlView.add(pnlCard2, "2");
         pnlView.add(pnlCard3, "3");
@@ -118,11 +91,13 @@ public class MainView extends JFrame{
           
 /*    	
 *-------------------------------------------------------
-*  PANEL - View-Card1-SAMMLUNGEN
+*  PANEL - View-Card1-SAMMLUNGEN - pnlCard1
 *-------------------------------------------------------	
-*/
+*/	
+        
         JLabel lblCard1 = new JLabel(SAMMLUNGEN);
         pnlCard1.add(lblCard1);
+        JButton cmdneueSammlung;
 
         pnlCard1.setBackground(new Color(255,255,255));
         
@@ -130,14 +105,20 @@ public class MainView extends JFrame{
         lblCard1.setVisible(true);
         
         
+        cmdneueSammlung = new JButton("Sammlungen anzeigen");
+        pnlCard1.add(cmdneueSammlung);
+        cmdneueSammlung.setVisible(true);
+        cmdneueSammlung.setBounds(100, 320, 185, 30);
+        
         
 /*    	
 *-------------------------------------------------------
-*  PANEL - View-Card2-OBJEKT
+*  PANEL - View-Card2-OBJEKT - pnlCard2
 *-------------------------------------------------------	
 */
         JLabel lblCard2 = new JLabel(OBJEKT);
         pnlCard2.add(lblCard2);
+      
 
         pnlCard2.setBackground(new Color(255,255,255));
         
@@ -217,10 +198,7 @@ public class MainView extends JFrame{
         lblCard7.setBounds(50, 50, 120, 30);
         lblCard7.setVisible(true); 
         
-        
-        
-        
-        
+
         
         
         
@@ -307,66 +285,22 @@ public class MainView extends JFrame{
         		}
         	}
        	});
-            	
-
-/*
-*-------------------------------------------------------
-*  PANEL - CONTENT - pnlContent
-*-------------------------------------------------------       
-*/
-                
+        
+        
+        
+        
+        
+        
+        
+        
         pnlContent.setLayout(null);
         pnlContent.setSize(900,600);  
-        pnlContent.add(new MainView.HeadlinePanel());
+        pnlContent.add(new WhitePanel());
         pnlContent.setBackground(new Color(222,222,222));
         pnlContent.add(pnlNavigation);
         pnlContent.add(pnlView);
-        this.getContentPane().add(pnlContent);
-	}
-	
-	
-/*
-*-------------------------------------------------------
-*  PANEL - HEADLINE - HeadlinePanel	
-*-------------------------------------------------------
-*/	
-	
-	
-	class HeadlinePanel extends JPanel {
-		
-		private static final long serialVersionUID = -1802094992738102637L;
-		private Image theImage;
-        
-        public HeadlinePanel(){
-        	this.setSize(900,95);
-        	this.setBackground(Color.WHITE);
-        	this.setVisible(true);
-        	
-        	try{
-        		 theImage = ImageIO.read(new File("syo_logo.JPG"));  
-        		 theImage =   theImage.getScaledInstance((900),(95),theImage.SCALE_SMOOTH );
-        		 
-        	}catch(IOException ex){
-        		ex.printStackTrace();
-        	}
-        }
-        @Override
-        public void paint(Graphics g) {
-        	System.out.println("Good");
-            g.drawImage(theImage, 0, 0, null);
-        }
+
+        getContentPane().add(pnlContent);
     }
-	
-	
-//----Ende - HEADLINE ---------------------------------------	
-
-	
-	
-	
-	
-	
-	
-//----PAINT-METHODE------------------------------------------	
-	
-
 }
+

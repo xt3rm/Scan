@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -21,14 +22,18 @@ public class MainView extends JFrame implements MouseListener{
     //Tobi-Stuff---
 	private static final long serialVersionUID = 8892701173173371771L;
 
-	JPanel pnlContent = new JPanel();
+	
 	HeadlinePanel pnlHeadline;
+	JPanel pnlContent = new JPanel();
     JPanel pnlNavigation = new JPanel();
     JPanel pnlView;
-    Label lblNavigation;
     JPanel card1;
     JPanel card2;
-	
+    
+    
+    Label lblNavigation;
+    JButton cmdSammlung;
+    
     final static String SAMMLUNGEN = "Card mit Sammlungen";
     final static String TYPERSTELLUNG = "Card mit Typerstellung";
     
@@ -51,6 +56,7 @@ public class MainView extends JFrame implements MouseListener{
         pnlNavigation.setBackground(Color.WHITE);
         lblNavigation = new Label();
         pnlNavigation.add(lblNavigation);
+       
         
         lblNavigation.setBackground(new Color(222,222,222));
         lblNavigation.setForeground(new Color(0,0,0));
@@ -58,6 +64,13 @@ public class MainView extends JFrame implements MouseListener{
         lblNavigation.setBounds(37, 10, 150, 30);
         lblNavigation.setFont(new Font((lblNavigation.getFont()).getFontName(), (lblNavigation.getFont()).getStyle(), 16));
     	lblNavigation.setText("Navigationspunkte");
+    	
+    	
+    	cmdSammlung = new JButton("Sammlungen anzeigen");
+    	pnlNavigation.add(cmdSammlung);
+    	cmdSammlung.setVisible(true);
+    	
+    	
         
 /*    	
 *-------------------------------------------------------
@@ -104,8 +117,6 @@ public class MainView extends JFrame implements MouseListener{
         pnlContent.add(pnlNavigation);
         pnlContent.add(pnlView);
         this.getContentPane().add(pnlContent);
-        
-        
 	}
 	
 	
@@ -137,19 +148,32 @@ public class MainView extends JFrame implements MouseListener{
         @Override
         public void paint(Graphics g) {
         	System.out.println("Good");
-            g.drawImage(theImage, 0, 0, null); // see javadoc for more info on the parameters
+            g.drawImage(theImage, 0, 0, null);
         }
     }
+	
+	
 //----Ende - HEADLINE ---------------------------------------	
 
 	
 	
 	
+	
+	
+//----PAINT-METHODE------------------------------------------	
+	
 	public void paint(Graphics g) {
 		lblNavigation.setVisible(true);
+		
     }
 
 
+	
+	
+	
+	
+	
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub

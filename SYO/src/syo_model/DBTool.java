@@ -21,7 +21,7 @@ public class DBTool {
 	 * Constructor sets up the necessary data for the connection.
 	 */
 	private DBTool() {
-		host = "localhost";
+		host = "127.0.0.1";
 		db = "syo";
 		user = "root";
 		password = "1234";

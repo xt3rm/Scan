@@ -30,12 +30,20 @@ public class DBTest {
 		DBTool.getInstance().dropDB("testsyo");
 		DBTool.getInstance().setupDB("testsyo");
 	}
-	/*
+	
 	@Test
-	public void testUpdateField() {
-		DBTool.getInstance().connectDB();
-		DBTool.getInstance().addStringFeld("Tester", 1);
-		DBTool.getInstance().closeDB();
-	}*/
+	public void testUpdateTypAndFeld() {
+		DBTool.getInstance().addTyp("TestTyp");
+		DBTool.getInstance().addStringFeld("Tester", 2);
+		assert(DBTool.getInstance().getRowCount("typ") == 1);
+		assert(DBTool.getInstance().getRowCount("feld") == 1);
+		assert(DBTool.getInstance().getRowCount("typ_feld") == 1);
+	}
+	
+	@Test
+	public void testUpdateSammlung() {
+		DBTool.getInstance().addSammlung("TestSammlung");
+		assert(DBTool.getInstance().getRowCount("sammlung") == 1);
+	}
 	
 }

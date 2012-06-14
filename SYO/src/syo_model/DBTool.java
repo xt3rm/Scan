@@ -1,8 +1,6 @@
 package syo_model;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.sql.*;
 
 /**
@@ -44,7 +42,7 @@ public class DBTool {
 	}
 
 	/**
-	 * Creates the given database.
+	 * Creates the given database with all necessary tables.
 	 * 
 	 * @param name
 	 */
@@ -69,7 +67,7 @@ public class DBTool {
 			// Zwischentabellen erzeugen
 			statement.executeUpdate(creator.getTblObjekt_Sammlung());
 			statement.executeUpdate(creator.getTblTyp_Feld());
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -176,6 +174,28 @@ public class DBTool {
 		}
 	}
 
+	public int getRowCount(String tblName) {
+		connectDB();
+		int count = 0;
+		String countRows = "SELECT COUNT(*) FROM " + tblName;
+		try {
+			statement = connection.createStatement();
+			if (statement.execute(countRows)) {
+                rSet = statement.getResultSet();
+            }
+			while (rSet.next()){
+				count = rSet.getInt(1);
+			}
+
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        } 
+		closeDB();
+		return count;
+	}
+
 	/**
 	 * Adds a Sammlung to the database.
 	 * 
@@ -183,7 +203,7 @@ public class DBTool {
 	 *            The name of the Sammlung.
 	 */
 	public void addSammlung(String name) {
-		String sammlung = "INSERT INTO Sammlung (Sammlung_ID, Sammlungname) VALUES (NULL,'"
+		String sammlung = "INSERT INTO Sammlung (ID_Sammlung, Sammlungname) VALUES (NULL,'"
 				+ name + "')";
 		connectDB();
 		try {
@@ -244,8 +264,19 @@ public class DBTool {
 	 * @param feldIDs
 	 *            The list of the fields that belong to this type.
 	 */
-	public void addType(String name, ArrayList<String> feldIDs) {
-		// TODO Implement
+	public void addTyp(String name) {
+		String typ = "INSERT INTO typ (ID_Typ, TypName) VALUES (NULL,'" + name
+				+ "')";
+		connectDB();
+		try {
+			statement = connection.createStatement();
+			statement.executeUpdate(typ);
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		closeDB();
 	}
 
 	/**
@@ -260,6 +291,7 @@ public class DBTool {
 		String feld = "INSERT INTO feld (ID_Feld, FeldName) VALUES (NULL,'"
 				+ name + "')";
 		int key = -1;
+		connectDB();
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(feld, Statement.RETURN_GENERATED_KEYS); // Der
@@ -280,8 +312,8 @@ public class DBTool {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
-		}
 
-		connectDB();
+			connectDB();
+		}
 	}
 }

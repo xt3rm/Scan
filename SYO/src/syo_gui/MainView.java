@@ -32,6 +32,7 @@ public class MainView extends JFrame implements MouseListener{
     
     
     Label lblNavigation;
+    Label lblNaviStuff;
     JButton cmdSammlung;
     JButton cmdVerwaltung;
     JButton cmdInfo;
@@ -61,18 +62,31 @@ public class MainView extends JFrame implements MouseListener{
 */
         pnlNavigation.setLayout(null);
         pnlNavigation.setBounds(0,100,225,500);
-        
         pnlNavigation.setBackground(Color.WHITE);
+        
         lblNavigation = new Label();
         pnlNavigation.add(lblNavigation);
-       
-        
         lblNavigation.setBackground(new Color(222,222,222));
         lblNavigation.setForeground(new Color(0,0,0));
         lblNavigation.setAlignment(1);
-        lblNavigation.setBounds(37, 10, 150, 30);
+        lblNavigation.setBounds(31, 10, 156, 30);
         lblNavigation.setFont(new Font((lblNavigation.getFont()).getFontName(), (lblNavigation.getFont()).getStyle(), 16));
     	lblNavigation.setText("Navigationspunkte");
+    	Font f = lblNavigation.getFont();
+    	lblNavigation.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
+    	
+    	
+        lblNaviStuff = new Label();
+        pnlNavigation.add(lblNaviStuff);
+        lblNaviStuff.setBackground(new Color(255,255,255));
+        lblNaviStuff.setForeground(new Color(0,0,0));
+        lblNaviStuff.setAlignment(1);
+        lblNaviStuff.setBounds(10, 390, 205, 30);
+        lblNaviStuff.setFont(new Font((lblNavigation.getFont()).getFontName(), (lblNavigation.getFont()).getStyle(), 10));
+        lblNaviStuff.setText("If you think, Java-GUI is easy...");
+        f = lblNavigation.getFont();
+    	lblNavigation.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+        
     	
     	
     	cmdSammlung = new JButton("Sammlungen anzeigen");
@@ -83,17 +97,17 @@ public class MainView extends JFrame implements MouseListener{
     	cmdVerwaltung = new JButton("Sammlungen verwalten");
     	pnlNavigation.add(cmdVerwaltung);
     	cmdVerwaltung.setVisible(true);
-    	cmdVerwaltung.setBounds(20, 150, 185, 30);
+    	cmdVerwaltung.setBounds(20, 160, 185, 30);
     	
     	cmdInfo = new JButton("Über SYO");
     	pnlNavigation.add(cmdInfo);
     	cmdInfo.setVisible(true);
-    	cmdInfo.setBounds(20, 200, 185, 30);
+    	cmdInfo.setBounds(20, 220, 185, 30);
     	
     	cmdStuff = new JButton("Noch so ein Button");
     	pnlNavigation.add(cmdStuff);
     	cmdStuff.setVisible(true);
-    	cmdStuff.setBounds(20, 250, 185, 30);
+    	cmdStuff.setBounds(20, 280, 185, 30);
     	
     	
         
@@ -115,9 +129,6 @@ public class MainView extends JFrame implements MouseListener{
         
         repaint();
 
-
-        
-        
         
 /*    	
 *-------------------------------------------------------

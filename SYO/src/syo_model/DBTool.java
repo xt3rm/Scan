@@ -42,25 +42,41 @@ public class DBTool {
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * Creates the given database.
 	 * 
 	 * @param name
 	 */
 	public void setupDB(String name) {
+		DBStringCreator creator = new DBStringCreator();
 		db = name;
-		String createDB = "CREATE DATABASE  IF NOT EXISTS " + name + " DEFAULT CHARACTER SET utf8";
+		String createDB = "CREATE DATABASE  IF NOT EXISTS " + name
+				+ " DEFAULT CHARACTER SET utf8";
 		try {
 			connectForCreation();
 			statement = connection.createStatement();
 			statement.executeUpdate(createDB);
+			closeDB(); // Close Initial connection.
+			connectDB(); // Reopen it with a database selected.
+			statement = connection.createStatement();
+			// Erzeuge Haupttabellen
+			statement.executeUpdate(creator.getTblSammlung());
+			statement.executeUpdate(creator.getTblFeld());
+			statement.executeUpdate(creator.getTblTyp());
+			statement.executeUpdate(creator.getTblObjekt());
+			statement.executeUpdate(creator.getTblEigenschaft());
+			// Zwischentabellen erzeugen
+			statement.executeUpdate(creator.getTblObjekt_Sammlung());
+			statement.executeUpdate(creator.getTblTyp_Feld());
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		closeDB();
 	}
-	
+
 	/**
 	 * Deletes the given Database.
 	 * 
@@ -78,9 +94,10 @@ public class DBTool {
 		}
 		closeDB();
 	}
-	
+
 	/**
-	 * 
+	 * Sets up a connection without giving the name of a database. This method
+	 * can be used to connect to the server if no database has been created yet.
 	 */
 	private void connectForCreation() {
 		try {
@@ -95,11 +112,8 @@ public class DBTool {
 			System.out.println("SQLException: " + ex.getMessage());
 		}
 		try {
-			connection = DriverManager
-					.getConnection("jdbc:mysql://" + host + "/?"
-							+ "user=" + user + "&password=" + password);
-			System.out.println("jdbc:mysql://" + host + "/?"
-				+ "user=" + user + "&password=" + password);
+			connection = DriverManager.getConnection("jdbc:mysql://" + host
+					+ "/?" + "user=" + user + "&password=" + password);
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
@@ -162,15 +176,6 @@ public class DBTool {
 		}
 	}
 
-	public void purgeAllData() {
-		try {
-			statement.executeUpdate("DELETE * FROM Feld");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	/**
 	 * Adds a Sammlung to the database.
 	 * 
@@ -205,15 +210,20 @@ public class DBTool {
 				+ name + "', '" + typID + "')";
 		int key = -1;
 		connectDB();
-		
+
 		try {
 			statement = connection.createStatement();
-			statement.executeUpdate(objekt, Statement.RETURN_GENERATED_KEYS); // Der generierte Key soll bereitgestellt werden.
+			statement.executeUpdate(objekt, Statement.RETURN_GENERATED_KEYS); // Der
+																				// generierte
+																				// Key
+																				// soll
+																				// bereitgestellt
+																				// werden.
 			rSet = statement.getGeneratedKeys();
 			// Den neu erzeugten Primary Key in key speichern.
-			while (rSet.next()){
+			while (rSet.next()) {
 				key = rSet.getInt(1);
-				}
+			}
 			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
 					+ key + ", " + sammlungID + ")";
 			statement.executeUpdate(objekt_sammlung);
@@ -222,7 +232,7 @@ public class DBTool {
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
-		
+
 		closeDB();
 	}
 
@@ -248,16 +258,21 @@ public class DBTool {
 	 */
 	public void addStringFeld(String name, int typID) {
 		String feld = "INSERT INTO feld (ID_Feld, FeldName) VALUES (NULL,'"
-			+ name + "')";
+				+ name + "')";
 		int key = -1;
 		try {
 			statement = connection.createStatement();
-			statement.executeUpdate(feld, Statement.RETURN_GENERATED_KEYS); // Der generierte Key soll bereitgestellt werden.
+			statement.executeUpdate(feld, Statement.RETURN_GENERATED_KEYS); // Der
+																			// generierte
+																			// Key
+																			// soll
+																			// bereitgestellt
+																			// werden.
 			rSet = statement.getGeneratedKeys();
 			// Den neu erzeugten Primary Key in key speichern.
-			while (rSet.next()){
+			while (rSet.next()) {
 				key = rSet.getInt(1);
-				}
+			}
 			String objekt_sammlung = "INSERT INTO Typ_Feld (Typ_ID, Feld_ID) VALUES ("
 					+ typID + ", " + key + ")";
 			statement.executeUpdate(objekt_sammlung);
@@ -267,6 +282,6 @@ public class DBTool {
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
 
-	connectDB();
+		connectDB();
 	}
 }

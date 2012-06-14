@@ -334,4 +334,19 @@ public class DBTool {
 		}
 		return rSet;
 	}
+	
+	public ResultSet selectAllInfoFromObject() {
+		String selAll = "SELECT * FROM Objekt AS O JOIN Eigenschaft AS E ON" +
+				"O.ID_Objekt = E.Objekt_ID";
+		try {
+			statement = connection.createStatement();
+			statement.execute(selAll);
+			rSet = statement.getResultSet();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		return rSet;
+	}
 }

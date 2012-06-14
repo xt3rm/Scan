@@ -7,38 +7,38 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Label;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.*;
 
 
-public class MainView extends JFrame implements MouseListener{
+
+public class MainView extends JFrame{
 	
     //Tobi-Stuff---
 	private static final long serialVersionUID = 8892701173173371771L;
+	private int currentCard = 1;
+	private CardLayout cl;
+
 
 	
 	HeadlinePanel pnlHeadline;
 	JPanel pnlContent = new JPanel();
     JPanel pnlNavigation = new JPanel();
-    JPanel pnlView;
-    JPanel card1;
-    JPanel card2;
-    JPanel card3;
-    JPanel card4;
-    JPanel card5;
-    JPanel card6;
-    JPanel card7;
-    
+    private JPanel pnlView;
+       
     
     
     Label lblNavigation;
     Label lblNaviStuff;
+    
+    
     JButton cmdSammlung;
     JButton cmdVerwaltung;
     JButton cmdInfo;
@@ -63,110 +63,71 @@ public class MainView extends JFrame implements MouseListener{
 		this.setResizable(false);
 		this.setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-        		        
-/*        
-*-------------------------------------------------------
-*  PANEL - NAVIGATION - pnlNavigation
-*-------------------------------------------------------
-*/
-        pnlNavigation.setLayout(null);
-        pnlNavigation.setBounds(0,100,225,500);
-        pnlNavigation.setBackground(Color.WHITE);
-        
-        lblNavigation = new Label();
-        pnlNavigation.add(lblNavigation);
-        lblNavigation.setBackground(new Color(222,222,222));
-        lblNavigation.setForeground(new Color(0,0,0));
-        lblNavigation.setAlignment(1);
-        lblNavigation.setBounds(31, 10, 156, 30);
-        lblNavigation.setFont(new Font((lblNavigation.getFont()).getFontName(), (lblNavigation.getFont()).getStyle(), 16));
-    	lblNavigation.setText("Navigationspunkte");
-    	Font f = lblNavigation.getFont();
-    	lblNavigation.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
+		
+		JPanel pnlCard1;
+	    JPanel pnlCard2;
+	    JPanel pnlCard3;
+	    JPanel pnlCard4;
+	    JPanel pnlCard5;
+	    JPanel pnlCard6;
+	    JPanel pnlCard7;
+		
+		
     	
-    	
-        lblNaviStuff = new Label();
-        pnlNavigation.add(lblNaviStuff);
-        lblNaviStuff.setBackground(new Color(255,255,255));
-        lblNaviStuff.setForeground(new Color(0,0,0));
-        lblNaviStuff.setAlignment(1);
-        lblNaviStuff.setBounds(10, 420, 205, 30);
-        lblNaviStuff.setFont(new Font((lblNavigation.getFont()).getFontName(), (lblNavigation.getFont()).getStyle(), 10));
-        lblNaviStuff.setText("If you think, Java-GUI is easy...");
-        f = lblNavigation.getFont();
-    	lblNavigation.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
-        
-    	
-    	
-    	cmdSammlung = new JButton("Sammlungen anzeigen");
-    	pnlNavigation.add(cmdSammlung);
-    	cmdSammlung.setVisible(true);
-    	cmdSammlung.setBounds(20, 100, 185, 30);
-    	
-    	cmdVerwaltung = new JButton("Sammlungen verwalten");
-    	pnlNavigation.add(cmdVerwaltung);
-    	cmdVerwaltung.setVisible(true);
-    	cmdVerwaltung.setBounds(20, 150, 185, 30);
-    	
-    	cmdInfo = new JButton("Über SYO");
-    	pnlNavigation.add(cmdInfo);
-    	cmdInfo.setVisible(true);
-    	cmdInfo.setBounds(20, 200, 185, 30);
-    	
-    	cmdStuff = new JButton("Noch so ein Button");
-    	pnlNavigation.add(cmdStuff);
-    	cmdStuff.setVisible(true);
-    	cmdStuff.setBounds(20, 250, 185, 30);
-    	
-    	
-    	//Previous & Next - Buttons / Only for Testing
-        cmdPrevious = new JButton("<-- Previous");
-    	pnlNavigation.add(cmdPrevious);
-    	cmdPrevious.setVisible(true);
-    	cmdPrevious.setBounds(50, 310, 120, 36);
-    	
-    	cmdNext = new JButton("Next -->");
-    	pnlNavigation.add(cmdNext);
-    	cmdNext.setVisible(true);
-    	cmdNext.setBounds(50, 350, 120, 36);
-    	
-/*    	
+/*  	
 *-------------------------------------------------------
 *  PANEL - View - pnlView
 *-------------------------------------------------------	
 */  	
-    	pnlView = new JPanel(null);
-        pnlView.setBounds(230,100,700,500);
-        pnlView.setBackground(Color.WHITE);
+	    cl = new CardLayout();
 
-        
-        
+		pnlView = new JPanel();
+		pnlView.setLayout(cl);
+    	
+        pnlView.setBounds(230,100,700,500);
+        pnlView.setBackground(Color.RED);
+
+
     	//card-Definition
-        card1 = new JPanel();
-        card2 = new JPanel();
-        card3 = new JPanel();
-        card4 = new JPanel();
-        card5 = new JPanel();
-        card6 = new JPanel();
-        card7 = new JPanel();
-        
-        pnlView.add(card1, SAMMLUNGEN);
-        pnlView.add(card2, OBJEKT);
-        pnlView.add(card3, TYPERSTELLUNG);
-        pnlView.add(card4, SAMMLUNGERSTELLUNG);
-        pnlView.add(card5, OBJEKTERSTELLUNG);
-        pnlView.add(card6, FELDERSTELLUNG);
-        pnlView.add(card7, VERWALTUNG);
+        pnlCard1 = new JPanel();
+        pnlCard2 = new JPanel();
+        pnlCard3 = new JPanel();
+        pnlCard4 = new JPanel();
+        pnlCard5 = new JPanel();
+        pnlCard6 = new JPanel();
+        pnlCard7 = new JPanel();
         
         
+        /*
+        pnlView.add(pnlCard1, SAMMLUNGEN);
+        pnlView.add(pnlCard2, OBJEKT);
+        pnlView.add(pnlCard3, TYPERSTELLUNG);
+        pnlView.add(pnlCard4, SAMMLUNGERSTELLUNG);
+        pnlView.add(pnlCard5, OBJEKTERSTELLUNG);
+        pnlView.add(pnlCard6, FELDERSTELLUNG);
+        pnlView.add(pnlCard7, VERWALTUNG);*/
         
-              
+        
+        pnlView.add(pnlCard1, "1");
+        pnlView.add(pnlCard2, "2");
+        pnlView.add(pnlCard3, "3");
+        pnlView.add(pnlCard4, "4");
+        pnlView.add(pnlCard5, "5");
+        pnlView.add(pnlCard6, "6");
+        pnlView.add(pnlCard7, "7");
+          
 /*    	
 *-------------------------------------------------------
 *  PANEL - View-Card1-SAMMLUNGEN
 *-------------------------------------------------------	
 */
+        JLabel lblCard1 = new JLabel(SAMMLUNGEN);
+        pnlCard1.add(lblCard1);
 
+        pnlCard1.setBackground(new Color(255,255,255));
+        
+        lblCard1.setBounds(50, 50, 120, 30);
+        lblCard1.setVisible(true);
         
         
         
@@ -175,16 +136,26 @@ public class MainView extends JFrame implements MouseListener{
 *  PANEL - View-Card2-OBJEKT
 *-------------------------------------------------------	
 */
+        JLabel lblCard2 = new JLabel(OBJEKT);
+        pnlCard2.add(lblCard2);
 
+        pnlCard2.setBackground(new Color(255,255,255));
         
-        
+        lblCard2.setBounds(50, 50, 120, 30);
+        lblCard2.setVisible(true); 
         
 /*    	
 *-------------------------------------------------------
 *  PANEL - View-Card3-TYPERSTELLUNG
 *-------------------------------------------------------	
 */
+        JLabel lblCard3 = new JLabel(TYPERSTELLUNG);
+        pnlCard3.add(lblCard3);
+
+        pnlCard3.setBackground(new Color(255,255,255));
         
+        lblCard3.setBounds(50, 50, 120, 30);
+        lblCard3.setVisible(true); 
         
        
         
@@ -193,7 +164,13 @@ public class MainView extends JFrame implements MouseListener{
 *  PANEL - View-Card4-SAMMLUNGERSTELLUNG
 *-------------------------------------------------------	
 */
-  
+        JLabel lblCard4 = new JLabel(SAMMLUNGERSTELLUNG);
+        pnlCard4.add(lblCard4);
+
+        pnlCard4.setBackground(new Color(255,255,255));
+        
+        lblCard4.setBounds(50, 50, 120, 30);
+        lblCard4.setVisible(true); 
         
      
         
@@ -203,7 +180,13 @@ public class MainView extends JFrame implements MouseListener{
 *-------------------------------------------------------	
 */
 
+        JLabel lblCard5 = new JLabel(OBJEKTERSTELLUNG);
+        pnlCard5.add(lblCard5);
+
+        pnlCard5.setBackground(new Color(255,255,255));
         
+        lblCard5.setBounds(50, 50, 120, 30);
+        lblCard5.setVisible(true); 
     
         
 /*    	
@@ -212,7 +195,13 @@ public class MainView extends JFrame implements MouseListener{
 *-------------------------------------------------------	
 */
         
-    
+        JLabel lblCard6 = new JLabel(FELDERSTELLUNG);
+        pnlCard6.add(lblCard6);
+
+        pnlCard6.setBackground(new Color(255,255,255));
+        
+        lblCard6.setBounds(50, 50, 120, 30);
+        lblCard6.setVisible(true); 
         
         
 /*    	
@@ -220,11 +209,106 @@ public class MainView extends JFrame implements MouseListener{
 *  PANEL - View-Card7-VERWALTUNG
 *-------------------------------------------------------	
 */
-     
+        JLabel lblCard7 = new JLabel(VERWALTUNG);
+        pnlCard7.add(lblCard7);
+
+        pnlCard7.setBackground(new Color(255,255,255));
+        
+        lblCard7.setBounds(50, 50, 120, 30);
+        lblCard7.setVisible(true); 
         
         
         
-		
+        
+        
+        
+        
+        
+/*        
+*-------------------------------------------------------
+*  PANEL - NAVIGATION - pnlNavigation
+*-------------------------------------------------------
+*/
+        pnlNavigation.setLayout(null);
+        pnlNavigation.setBounds(0,100,225,500);
+        pnlNavigation.setBackground(Color.WHITE);
+                
+        lblNavigation = new Label();
+        pnlNavigation.add(lblNavigation);
+        lblNavigation.setBackground(new Color(222,222,222));
+        lblNavigation.setForeground(new Color(0,0,0));
+        lblNavigation.setAlignment(1);
+        lblNavigation.setBounds(31, 10, 156, 30);
+        lblNavigation.setFont(new Font((lblNavigation.getFont()).getFontName(), (lblNavigation.getFont()).getStyle(), 16));
+      	lblNavigation.setText("Navigationspunkte");
+       	Font f = lblNavigation.getFont();
+       	lblNavigation.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
+            	
+            	
+        lblNaviStuff = new Label();
+        pnlNavigation.add(lblNaviStuff);
+        lblNaviStuff.setBackground(new Color(255,255,255));
+        lblNaviStuff.setForeground(new Color(0,0,0));
+        lblNaviStuff.setAlignment(1);
+        lblNaviStuff.setBounds(10, 420, 205, 30);
+        lblNaviStuff.setFont(new Font((lblNavigation.getFont()).getFontName(), (lblNavigation.getFont()).getStyle(), 10));
+        lblNaviStuff.setText("If you think, Java-GUI is easy...");
+        f = lblNavigation.getFont();
+        lblNavigation.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+                
+            	
+            	
+        cmdSammlung = new JButton("Sammlungen anzeigen");
+        pnlNavigation.add(cmdSammlung);
+        cmdSammlung.setVisible(true);
+        cmdSammlung.setBounds(20, 100, 185, 30);
+            	
+        cmdVerwaltung = new JButton("Sammlungen verwalten");
+        pnlNavigation.add(cmdVerwaltung);
+        cmdVerwaltung.setVisible(true);
+        cmdVerwaltung.setBounds(20, 150, 185, 30);
+            	
+        cmdInfo = new JButton("Über SYO");
+        pnlNavigation.add(cmdInfo);
+        cmdInfo.setVisible(true);
+        cmdInfo.setBounds(20, 200, 185, 30);
+            	
+        cmdStuff = new JButton("Noch so ein Button");
+        pnlNavigation.add(cmdStuff);
+        cmdStuff.setVisible(true);
+        cmdStuff.setBounds(20, 250, 185, 30);
+            	
+            	
+            	
+        //Previous & Next - Buttons / Only for Testing
+        cmdPrevious = new JButton("<-- Previous");
+        pnlNavigation.add(cmdPrevious);
+        cmdPrevious.setVisible(true);
+        cmdPrevious.setBounds(50, 310, 120, 36);
+        cmdPrevious.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	if (currentCard > 1) {
+                	currentCard -= 1;
+                    cl.show(pnlView, "" + (currentCard));
+                }
+            }
+        });
+
+            	
+        cmdNext = new JButton("Next -->");
+        pnlNavigation.add(cmdNext);
+        cmdNext.setVisible(true);
+        cmdNext.setBounds(50, 350, 120, 36);
+        cmdNext.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		if (currentCard < 8) {
+                	currentCard += 1;
+                    cl.show(pnlView, "" + (currentCard));
+        		}
+        	}
+       	});
+            	
+
 /*
 *-------------------------------------------------------
 *  PANEL - CONTENT - pnlContent
@@ -281,51 +365,11 @@ public class MainView extends JFrame implements MouseListener{
 	
 	
 	
+	
 //----PAINT-METHODE------------------------------------------	
 	
 	public void paint(Graphics g) {
 		lblNavigation.setVisible(true);
 		
     }
-
-
-	
-	
-	
-	
-	
-	
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 }

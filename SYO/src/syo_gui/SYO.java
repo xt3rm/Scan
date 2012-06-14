@@ -4,5 +4,6 @@ public class SYO  {
 
 	public static void main(String[] args) {
 		new MainView("SYO");
+		
 	}
 }

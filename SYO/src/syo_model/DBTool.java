@@ -337,7 +337,8 @@ public class DBTool {
 	
 	public ResultSet selectAllInfoFromObject() {
 		String selAll = "SELECT * FROM Objekt AS O JOIN Eigenschaft AS E ON" +
-				"O.ID_Objekt = E.Objekt_ID";
+				"O.ID_Objekt = E.Objekt_ID" +
+				"JOIN Typ As T ON T.ID_Typ = O.Typ_ID";
 		try {
 			statement = connection.createStatement();
 			statement.execute(selAll);

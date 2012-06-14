@@ -368,8 +368,5 @@ public class MainView extends JFrame{
 	
 //----PAINT-METHODE------------------------------------------	
 	
-	public void paint(Graphics g) {
-		lblNavigation.setVisible(true);
-		
-    }
+
 }

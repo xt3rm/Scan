@@ -33,9 +33,18 @@ public class MainView extends JFrame implements MouseListener{
     
     Label lblNavigation;
     JButton cmdSammlung;
+    JButton cmdVerwaltung;
+    JButton cmdInfo;
+    JButton cmdStuff;
     
-    final static String SAMMLUNGEN = "Card mit Sammlungen";
-    final static String TYPERSTELLUNG = "Card mit Typerstellung";
+    final static String SAMMLUNGEN = "Alle Sammlungen werden angezeigt";
+    final static String OBJEKT = "Objekt kann angezeigt werden";
+    final static String TYPERSTELLUNG = "Neuer Typ kann erstellt werden";
+    final static String SAMMLUNGERSTELLUNG = "Neue Sammlung kann erstellt werden";
+    final static String OBJEKTERSTELLUNG = "Neues Objekt kann erstellt werden";
+    final static String FELDERSTELLUNG = "Ein neues Feld kann erstellt werden";
+    final static String VERWALTUNG = "Die Verwaltung wird angezeigt";
+
     
     
 	public MainView(String title) {
@@ -69,6 +78,22 @@ public class MainView extends JFrame implements MouseListener{
     	cmdSammlung = new JButton("Sammlungen anzeigen");
     	pnlNavigation.add(cmdSammlung);
     	cmdSammlung.setVisible(true);
+    	cmdSammlung.setBounds(20, 100, 185, 30);
+    	
+    	cmdVerwaltung = new JButton("Sammlungen verwalten");
+    	pnlNavigation.add(cmdVerwaltung);
+    	cmdVerwaltung.setVisible(true);
+    	cmdVerwaltung.setBounds(20, 150, 185, 30);
+    	
+    	cmdInfo = new JButton("Über SYO");
+    	pnlNavigation.add(cmdInfo);
+    	cmdInfo.setVisible(true);
+    	cmdInfo.setBounds(20, 200, 185, 30);
+    	
+    	cmdStuff = new JButton("Noch so ein Button");
+    	pnlNavigation.add(cmdStuff);
+    	cmdStuff.setVisible(true);
+    	cmdStuff.setBounds(20, 250, 185, 30);
     	
     	
         

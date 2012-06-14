@@ -11,12 +11,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-class MainView extends JFrame {
+class JPaneDemo extends JFrame {
  
     
     private int currentCard = 1;
-
 	private CardLayout cl;
 
     JPanel pnlContent = new JPanel();
@@ -39,12 +37,12 @@ class MainView extends JFrame {
     final static String TYPERSTELLUNG = "Neuer Typ kann erstellt werden";
     final static String SAMMLUNGERSTELLUNG = "Neue Sammlung kann erstellt werden";
     final static String OBJEKTERSTELLUNG = "Neues Objekt kann erstellt werden";
-    final static String FELDERSTELLUNG = "Erstellung eines neuen Feldes";
+    final static String FELDERSTELLUNG = "Ein neues Feld kann erstellt werden";
     final static String VERWALTUNG = "Die Verwaltung wird angezeigt";
 
     
-    MainView() {
-        this.setTitle("SYO - Alles ist besser | Unser Motto: Das Beste ist Schlecht genug!!");	
+    JPaneDemo() {
+        this.setTitle("dsf");	
 		this.setSize(900, 600);
 		this.setResizable(false);
 		this.setVisible(true);
@@ -106,7 +104,6 @@ class MainView extends JFrame {
         lblCard1.setBounds(50, 50, 120, 30);
         lblCard1.setVisible(true);
         
-
         
         cmdneueSammlung = new JButton("Sammlungen anzeigen");
         pnlCard1.add(cmdneueSammlung);
@@ -125,9 +122,8 @@ class MainView extends JFrame {
 
         pnlCard2.setBackground(new Color(255,255,255));
         
-        lblCard2.setBounds(100, 100, 120, 30);
+        lblCard2.setBounds(50, 50, 120, 30);
         lblCard2.setVisible(true); 
-        repaint();
         
 /*    	
 *-------------------------------------------------------
@@ -182,18 +178,11 @@ class MainView extends JFrame {
         
         JLabel lblCard6 = new JLabel(FELDERSTELLUNG);
         pnlCard6.add(lblCard6);
+
+        pnlCard6.setBackground(new Color(255,255,255));
+        
         lblCard6.setBounds(50, 50, 120, 30);
         lblCard6.setVisible(true); 
-        
-        JLabel lblCard6Feldname = new JLabel("Feldname");
-        pnlCard6.add(lblCard6Feldname);
-        lblCard6Feldname.setBounds(20, 100, 120, 30);
-        lblCard6Feldname.setVisible(true);
-        
-        
-        
-        
-        pnlCard6.setBackground(new Color(255,255,255));
         
         
 /*    	
@@ -297,21 +286,12 @@ class MainView extends JFrame {
         	}
        	});
         
-        
-        
-        
-        
-        
-        
-        
         pnlContent.setLayout(null);
         pnlContent.setSize(900,600);  
         pnlContent.add(new WhitePanel());
         pnlContent.setBackground(new Color(222,222,222));
         pnlContent.add(pnlNavigation);
         pnlContent.add(pnlView);
-
         getContentPane().add(pnlContent);
     }
 }
-

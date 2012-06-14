@@ -1,6 +1,7 @@
 package syo_gui;
 
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -23,9 +24,14 @@ public class MainView extends JFrame implements MouseListener{
 	JPanel pnlContent = new JPanel();
 	HeadlinePanel pnlHeadline;
     JPanel pnlNavigation = new JPanel();
-    JPanel pnlView = new JPanel();
-    Label lblNavigation; 
+    JPanel pnlView;
+    Label lblNavigation;
+    JPanel card1;
+    JPanel card2;
 	
+    final static String SAMMLUNGEN = "Card mit Sammlungen";
+    final static String TYPERSTELLUNG = "Card mit Typerstellung";
+    
     
 	public MainView(String title) {
 		this.setTitle(title);
@@ -33,22 +39,7 @@ public class MainView extends JFrame implements MouseListener{
 		this.setResizable(false);
 		this.setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-        		
-		
-/*
-*-------------------------------------------------------
-*  PANEL - CONTENT - pnlContent
-*-------------------------------------------------------       
-*/
-        
-		pnlContent.setLayout(null);
-        pnlContent.setSize(900,600);  
-        pnlContent.add(new MainView.HeadlinePanel());
-        pnlContent.setBackground(new Color(222,222,222));
-        pnlContent.add(pnlNavigation);
-        pnlContent.add(pnlView);
-        this.getContentPane().add(pnlContent);
-        
+        		        
 /*        
 *-------------------------------------------------------
 *  PANEL - NAVIGATION - pnlNavigation
@@ -73,11 +64,47 @@ public class MainView extends JFrame implements MouseListener{
 *  PANEL - View - pnlView
 *-------------------------------------------------------	
 */
-    	pnlView.setLayout(null);
+    	
+    	pnlView = new JPanel(null);
         pnlView.setBounds(230,100,700,500);
         pnlView.setBackground(Color.WHITE);
 
+        card1 = new JPanel();
+        card2 = new JPanel();
+        
+        pnlView.add(card1, SAMMLUNGEN);
+        pnlView.add(card2, TYPERSTELLUNG);
+        
         repaint();
+
+
+        
+        
+        
+/*    	
+*-------------------------------------------------------
+*  PANEL - View-Card1-Sammlungen
+*-------------------------------------------------------	
+*/
+     
+        
+        
+        
+		
+/*
+*-------------------------------------------------------
+*  PANEL - CONTENT - pnlContent
+*-------------------------------------------------------       
+*/
+                
+        pnlContent.setLayout(null);
+        pnlContent.setSize(900,600);  
+        pnlContent.add(new MainView.HeadlinePanel());
+        pnlContent.setBackground(new Color(222,222,222));
+        pnlContent.add(pnlNavigation);
+        pnlContent.add(pnlView);
+        this.getContentPane().add(pnlContent);
+        
         
 	}
 	

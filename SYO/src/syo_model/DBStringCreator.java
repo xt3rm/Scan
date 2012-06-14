@@ -16,6 +16,7 @@ public class DBStringCreator {
 	private String tblEigenschaft;
 	private String tblTyp_Feld;
 	private String tblObjekt_Sammlung;
+	private String viewAllObjInfo;
 
 	/**
 	 * Constructor. Sets the SQL-Statements.
@@ -75,6 +76,11 @@ public class DBStringCreator {
 				+ "CONSTRAINT FK_Objekt_Sammlung_Objekt FOREIGN KEY (Objekt_ID) REFERENCES objekt (ID_Objekt) ON DELETE CASCADE,"
 				+ "CONSTRAINT FK_Objekt_Sammlung_Sammlung FOREIGN KEY (Sammlung_ID) REFERENCES sammlung (ID_Sammlung) ON DELETE CASCADE"
 				+ ") ENGINE=InnoDB DEFAULT CHARSET=latin1";
+		
+		setViewAllObjInfo("CREATE VIEW allObjInfo AS " +
+				"SELECT * FROM Objekt AS O JOIN Eigenschaft AS E ON " +
+				"O.ID_Objekt = E.Objekt_ID " +
+				"JOIN Typ As T ON T.ID_Typ = O.Typ_ID");
 	}
 
 	
@@ -133,6 +139,14 @@ public class DBStringCreator {
 
 	public String getTblObjekt_Sammlung() {
 		return tblObjekt_Sammlung;
+	}
+
+	public void setViewAllObjInfo(String viewAllObjInfo) {
+		this.viewAllObjInfo = viewAllObjInfo;
+	}
+
+	public String getViewAllObjInfo() {
+		return viewAllObjInfo;
 	}
 
 }

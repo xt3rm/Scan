@@ -67,7 +67,7 @@ public class DBTool {
 			// Zwischentabellen erzeugen
 			statement.executeUpdate(creator.getTblObjekt_Sammlung());
 			statement.executeUpdate(creator.getTblTyp_Feld());
-
+			statement.execute(creator.getViewAllObjInfo());
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

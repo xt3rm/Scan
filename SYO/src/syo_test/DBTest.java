@@ -46,4 +46,20 @@ public class DBTest {
 		assert(DBTool.getInstance().getRowCount("sammlung") == 1);
 	}
 	
+	@Test
+	public void testUpdateObjekt() {
+		DBTool.getInstance().addSammlung("TestSammlung");
+		assert(DBTool.getInstance().getRowCount("sammlung") == 1);
+		
+		DBTool.getInstance().addTyp("TestTyp");
+		assert(DBTool.getInstance().getRowCount("typ") == 1);
+		
+		DBTool.getInstance().addStringFeld("Tester", 2);
+		assert(DBTool.getInstance().getRowCount("feld") == 1);
+		assert(DBTool.getInstance().getRowCount("typ_feld") == 1);
+		DBTool.getInstance().addObject("Testobjekt", 2, 2);
+		assert(DBTool.getInstance().getRowCount("objekt") == 1);
+		assert(DBTool.getInstance().getRowCount("objekt_sammlung") == 1);
+	}
+	
 }

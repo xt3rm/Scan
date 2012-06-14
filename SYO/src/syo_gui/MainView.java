@@ -39,7 +39,6 @@ public class MainView extends JFrame {
         pnlNavigation.setBounds(0,100,225,500);
         pnlView.setBounds(230,100,700,500);
 
-         
         this.getContentPane().add(pnlNavigation);
         pnlNavigation.setBackground(Color.WHITE);
         
@@ -49,6 +48,20 @@ public class MainView extends JFrame {
         this.getContentPane().add(pnlContent);
         pnlContent.add(new MainView.HeadlinePanel());
         pnlContent.setBackground(Color.lightGray);
+        
+//-------------------------------------------------------
+//  PANEL - NAVIGATION - pnlNavigation
+//-------------------------------------------------------
+        
+    	
+    	
+//-------------------------------------------------------
+//  PANEL - CONTENT - pnlContent
+//-------------------------------------------------------
+   	//Ja, ich weiss, hier steht noch  nichts!!	
+    	
+    	
+        
         
         
 	}
@@ -80,18 +93,7 @@ public class MainView extends JFrame {
         }
     }
 	
-//-------------------------------------------------------
-//  PANEL - NAVIGATION - pnlNavigation
-//-------------------------------------------------------
-	//Ja, ich weiss, hier steht noch  nichts!!
-	
-	
-//-------------------------------------------------------
-//  PANEL - CONTENT - pnlContent
-//-------------------------------------------------------
-	//Ja, ich weiss, hier steht noch  nichts!!	
-	
-	
+
 	public void paint(Graphics g) {
 
     }

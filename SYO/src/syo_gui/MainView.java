@@ -29,6 +29,12 @@ public class MainView extends JFrame implements MouseListener{
     JPanel pnlView;
     JPanel card1;
     JPanel card2;
+    JPanel card3;
+    JPanel card4;
+    JPanel card5;
+    JPanel card6;
+    JPanel card7;
+    
     
     
     Label lblNavigation;
@@ -37,6 +43,9 @@ public class MainView extends JFrame implements MouseListener{
     JButton cmdVerwaltung;
     JButton cmdInfo;
     JButton cmdStuff;
+    
+    JButton cmdPrevious;
+    JButton cmdNext;
     
     final static String SAMMLUNGEN = "Alle Sammlungen werden angezeigt";
     final static String OBJEKT = "Objekt kann angezeigt werden";
@@ -81,7 +90,7 @@ public class MainView extends JFrame implements MouseListener{
         lblNaviStuff.setBackground(new Color(255,255,255));
         lblNaviStuff.setForeground(new Color(0,0,0));
         lblNaviStuff.setAlignment(1);
-        lblNaviStuff.setBounds(10, 390, 205, 30);
+        lblNaviStuff.setBounds(10, 420, 205, 30);
         lblNaviStuff.setFont(new Font((lblNavigation.getFont()).getFontName(), (lblNavigation.getFont()).getStyle(), 10));
         lblNaviStuff.setText("If you think, Java-GUI is easy...");
         f = lblNavigation.getFont();
@@ -97,42 +106,118 @@ public class MainView extends JFrame implements MouseListener{
     	cmdVerwaltung = new JButton("Sammlungen verwalten");
     	pnlNavigation.add(cmdVerwaltung);
     	cmdVerwaltung.setVisible(true);
-    	cmdVerwaltung.setBounds(20, 160, 185, 30);
+    	cmdVerwaltung.setBounds(20, 150, 185, 30);
     	
     	cmdInfo = new JButton("Über SYO");
     	pnlNavigation.add(cmdInfo);
     	cmdInfo.setVisible(true);
-    	cmdInfo.setBounds(20, 220, 185, 30);
+    	cmdInfo.setBounds(20, 200, 185, 30);
     	
     	cmdStuff = new JButton("Noch so ein Button");
     	pnlNavigation.add(cmdStuff);
     	cmdStuff.setVisible(true);
-    	cmdStuff.setBounds(20, 280, 185, 30);
+    	cmdStuff.setBounds(20, 250, 185, 30);
     	
     	
-        
+    	//Previous & Next - Buttons / Only for Testing
+        cmdPrevious = new JButton("<-- Previous");
+    	pnlNavigation.add(cmdPrevious);
+    	cmdPrevious.setVisible(true);
+    	cmdPrevious.setBounds(50, 310, 120, 36);
+    	
+    	cmdNext = new JButton("Next -->");
+    	pnlNavigation.add(cmdNext);
+    	cmdNext.setVisible(true);
+    	cmdNext.setBounds(50, 350, 120, 36);
+    	
 /*    	
 *-------------------------------------------------------
 *  PANEL - View - pnlView
 *-------------------------------------------------------	
-*/
-    	
+*/  	
     	pnlView = new JPanel(null);
         pnlView.setBounds(230,100,700,500);
         pnlView.setBackground(Color.WHITE);
 
+        
+        
+    	//card-Definition
         card1 = new JPanel();
         card2 = new JPanel();
+        card3 = new JPanel();
+        card4 = new JPanel();
+        card5 = new JPanel();
+        card6 = new JPanel();
+        card7 = new JPanel();
         
         pnlView.add(card1, SAMMLUNGEN);
-        pnlView.add(card2, TYPERSTELLUNG);
+        pnlView.add(card2, OBJEKT);
+        pnlView.add(card3, TYPERSTELLUNG);
+        pnlView.add(card4, SAMMLUNGERSTELLUNG);
+        pnlView.add(card5, OBJEKTERSTELLUNG);
+        pnlView.add(card6, FELDERSTELLUNG);
+        pnlView.add(card7, VERWALTUNG);
         
-        repaint();
+        
+        
+              
+/*    	
+*-------------------------------------------------------
+*  PANEL - View-Card1-SAMMLUNGEN
+*-------------------------------------------------------	
+*/
 
+        
+        
         
 /*    	
 *-------------------------------------------------------
-*  PANEL - View-Card1-Sammlungen
+*  PANEL - View-Card2-OBJEKT
+*-------------------------------------------------------	
+*/
+
+        
+        
+        
+/*    	
+*-------------------------------------------------------
+*  PANEL - View-Card3-TYPERSTELLUNG
+*-------------------------------------------------------	
+*/
+        
+        
+       
+        
+/*    	
+*-------------------------------------------------------
+*  PANEL - View-Card4-SAMMLUNGERSTELLUNG
+*-------------------------------------------------------	
+*/
+  
+        
+     
+        
+/*    	
+*-------------------------------------------------------
+*  PANEL - View-Card5-OBJEKTERSTELLUNG 
+*-------------------------------------------------------	
+*/
+
+        
+    
+        
+/*    	
+*-------------------------------------------------------
+*  PANEL - View-Card6-FELDERSTELLUNG
+*-------------------------------------------------------	
+*/
+        
+    
+        
+        
+/*    	
+*-------------------------------------------------------
+*  PANEL - View-Card7-VERWALTUNG
 *-------------------------------------------------------	
 */
      

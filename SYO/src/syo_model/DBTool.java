@@ -1,6 +1,5 @@
 package syo_model;
 
-import java.util.ArrayList;
 import java.sql.*;
 
 /**
@@ -47,6 +46,7 @@ public class DBTool {
 	 * @param name
 	 */
 	public void setupDB(String name) {
+		closeDB(); // Close the connection this is for tests
 		DBStringCreator creator = new DBStringCreator();
 		db = name;
 		String createDB = "CREATE DATABASE  IF NOT EXISTS " + name
@@ -72,7 +72,7 @@ public class DBTool {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
-		closeDB();
+		
 	}
 
 	/**
@@ -140,7 +140,6 @@ public class DBTool {
 			connection = DriverManager
 					.getConnection("jdbc:mysql://" + host + "/" + db + "?"
 							+ "user=" + user + "&password=" + password);
-
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
@@ -174,25 +173,28 @@ public class DBTool {
 		}
 	}
 
+	/**
+	 * 
+	 * @param tblName
+	 * @return
+	 */
 	public int getRowCount(String tblName) {
-		connectDB();
 		int count = 0;
 		String countRows = "SELECT COUNT(*) FROM " + tblName;
 		try {
 			statement = connection.createStatement();
 			if (statement.execute(countRows)) {
-                rSet = statement.getResultSet();
-            }
-			while (rSet.next()){
-				count = rSet.getInt(1);
+				rSet = statement.getResultSet();
+			}
+			while (rSet.next()) {
+				count = rSet.getRow();
 			}
 
-        } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        } 
-		closeDB();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
 		return count;
 	}
 
@@ -205,7 +207,6 @@ public class DBTool {
 	public void addSammlung(String name) {
 		String sammlung = "INSERT INTO Sammlung (ID_Sammlung, Sammlungname) VALUES (NULL,'"
 				+ name + "')";
-		connectDB();
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(sammlung);
@@ -214,7 +215,6 @@ public class DBTool {
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
-		closeDB();
 	}
 
 	/**
@@ -225,12 +225,10 @@ public class DBTool {
 	 * @param typID
 	 *            The ID of the type of the object
 	 */
-	public void addObject(String name, int typID, int sammlungID) {
-		String objekt = "INSERT INTO Objekt (ID_Objekt, ObjektName, Typ_ID) VALUES (NULL,'"
-				+ name + "', '" + typID + "')";
+	public void addObject(String name, int typID, int sammlungID, String barcode) {
+		String objekt = "INSERT INTO Objekt (ID_Objekt, ObjektName, Typ_ID, Barcode) VALUES (NULL,'"
+				+ name + "', '" + typID + "','" + barcode +"')";
 		int key = -1;
-		connectDB();
-
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(objekt, Statement.RETURN_GENERATED_KEYS); // Der
@@ -252,8 +250,6 @@ public class DBTool {
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
-
-		closeDB();
 	}
 
 	/**
@@ -267,7 +263,6 @@ public class DBTool {
 	public void addTyp(String name) {
 		String typ = "INSERT INTO typ (ID_Typ, TypName) VALUES (NULL,'" + name
 				+ "')";
-		connectDB();
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(typ);
@@ -276,7 +271,6 @@ public class DBTool {
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
-		closeDB();
 	}
 
 	/**
@@ -291,7 +285,6 @@ public class DBTool {
 		String feld = "INSERT INTO feld (ID_Feld, FeldName) VALUES (NULL,'"
 				+ name + "')";
 		int key = -1;
-		connectDB();
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(feld, Statement.RETURN_GENERATED_KEYS); // Der
@@ -312,8 +305,33 @@ public class DBTool {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
-
-			connectDB();
 		}
+	}
+
+	public void addEigenschaft(String wert, int objektID, int feldID) {
+		String eigenschaft = "INSERT INTO eigenschaft (Objekt_ID, Feld_ID, Wert) VALUES ("
+				+ objektID + "," + feldID + ",'" + wert + "')";
+		try {
+			statement = connection.createStatement();
+			statement.executeUpdate(eigenschaft);
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+	}
+
+	public ResultSet selectAllFromTable(String tblName) {
+		String select = "SELECT * FROM " + tblName;
+		try {
+			statement = connection.createStatement();
+			statement.execute(select);
+			rSet = statement.getResultSet();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		return rSet;
 	}
 }

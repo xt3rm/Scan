@@ -11,12 +11,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-class MainView extends JFrame {
+class JPaneDemo extends JFrame {
  
     
     private int currentCard = 1;
-
 	private CardLayout cl;
 
     JPanel pnlContent = new JPanel();
@@ -43,7 +41,7 @@ class MainView extends JFrame {
     final static String VERWALTUNG = "Die Verwaltung wird angezeigt";
 
     
-    MainView() {
+    JPaneDemo() {
         this.setTitle("dsf");	
 		this.setSize(900, 600);
 		this.setResizable(false);
@@ -288,20 +286,12 @@ class MainView extends JFrame {
         	}
        	});
         
-        
-        
-        
-        
-        
-        
-        
         pnlContent.setLayout(null);
         pnlContent.setSize(900,600);  
         pnlContent.add(new WhitePanel());
         pnlContent.setBackground(new Color(222,222,222));
         pnlContent.add(pnlNavigation);
         pnlContent.add(pnlView);
-
         getContentPane().add(pnlContent);
     }
 }

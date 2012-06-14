@@ -1,31 +1,40 @@
 package syo_gui;
 
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Label;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-class MainView extends JFrame {
+
+
+
+
+
+
+class JPaneDemo extends JFrame {
  
     
     private int currentCard = 1;
-
 	private CardLayout cl;
+
 
     JPanel pnlContent = new JPanel();
     JPanel pnlNavigation = new JPanel();
     private JPanel pnlView;
+       
+    
     
     Label lblNavigation;
     Label lblNaviStuff;
-
+    
+    
     JButton cmdSammlung;
     JButton cmdVerwaltung;
     JButton cmdInfo;
@@ -41,9 +50,12 @@ class MainView extends JFrame {
     final static String OBJEKTERSTELLUNG = "Neues Objekt kann erstellt werden";
     final static String FELDERSTELLUNG = "Ein neues Feld kann erstellt werden";
     final static String VERWALTUNG = "Die Verwaltung wird angezeigt";
-
     
-    MainView() {
+    
+    
+    JPaneDemo() {
+        
+        
         this.setTitle("dsf");	
 		this.setSize(900, 600);
 		this.setResizable(false);
@@ -57,6 +69,7 @@ class MainView extends JFrame {
 	    JPanel pnlCard5;
 	    JPanel pnlCard6;
 	    JPanel pnlCard7;
+		
 		
     	
 /*  	
@@ -200,7 +213,10 @@ class MainView extends JFrame {
         lblCard7.setBounds(50, 50, 120, 30);
         lblCard7.setVisible(true); 
         
-
+        
+        
+        
+        
         
         
         
@@ -295,13 +311,44 @@ class MainView extends JFrame {
         
         
         
+        
+        
+        
         pnlContent.setLayout(null);
         pnlContent.setSize(900,600);  
-        pnlContent.add(new WhitePanel());
+        pnlContent.add(new JPaneDemo.WhitePanel());
         pnlContent.setBackground(new Color(222,222,222));
         pnlContent.add(pnlNavigation);
         pnlContent.add(pnlView);
-
         getContentPane().add(pnlContent);
     }
+    
+    
+   /* public static void main(String[] args) {
+        new JPaneDemo().setVisible(true);
+ 
+    }*/
+    
+    class WhitePanel extends JPanel 
+    {
+        private Image theImage;
+        public WhitePanel() 
+        {
+            this.setSize(900,95);
+        	this.setBackground(Color.WHITE);
+        	this.setVisible(true);
+            try {                
+                theImage = ImageIO.read(new File("syo_logo.jpg"));
+                theImage = theImage.getScaledInstance((900),(95),theImage.SCALE_SMOOTH );
+            } catch (IOException ex) {
+                    ex.printStackTrace();
+            }  
+        }
+        
+        @Override
+        public void paint(Graphics g) {
+             g.drawImage(theImage, 0, 0, null); // see javadoc for more info on the parameters
+        }
+    }
+ 
 }

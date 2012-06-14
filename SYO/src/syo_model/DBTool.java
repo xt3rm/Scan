@@ -42,16 +42,74 @@ public class DBTool {
 		}
 		return instance;
 	}
+	
+	/**
+	 * Creates the given database.
+	 * 
+	 * @param name
+	 */
+	public void setupDB(String name) {
+		db = name;
+		String createDB = "CREATE DATABASE  IF NOT EXISTS " + name + " DEFAULT CHARACTER SET utf8";
+		try {
+			connectForCreation();
+			statement = connection.createStatement();
+			statement.executeUpdate(createDB);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		closeDB();
+	}
+	
+	/**
+	 * Deletes the given Database.
+	 * 
+	 * @param name
+	 */
+	public void dropDB(String name) {
+		String drop = "DROP DATABASE IF EXISTS " + name;
+		try {
+			connectDB();
+			statement = connection.createStatement();
+			statement.execute(drop);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		closeDB();
+	}
+	
+	/**
+	 * 
+	 */
+	private void connectForCreation() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (ClassNotFoundException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+		} catch (InstantiationException ex) {
+			ex.printStackTrace();
+			System.out.println("SQLException: " + ex.getMessage());
+		} catch (IllegalAccessException ex) {
+			ex.printStackTrace();
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+		try {
+			connection = DriverManager
+					.getConnection("jdbc:mysql://" + host + "/?"
+							+ "user=" + user + "&password=" + password);
+			System.out.println("jdbc:mysql://" + host + "/?"
+				+ "user=" + user + "&password=" + password);
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+	}
 
 	/**
 	 * Opens the connection to the database.
 	 * 
-	 * @param host
-	 * @param db
-	 * @param user
-	 * @param password
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
 	 */
 	public void connectDB() {
 		try {

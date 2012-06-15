@@ -4,10 +4,12 @@ import java.sql.*;
 import java.util.Observable;
 
 /**
+ * This class provides the basic functionality to setup and access the database.
+ * The Singleton pattern is used to prevent multiple instances.
  * 
- * @author kuepfers
+ * @author ebrogt
  */
-public class DBTool extends Observable{
+public class DBTool extends Observable {
 
 	private Connection connection;
 	private Statement statement = null;
@@ -73,7 +75,7 @@ public class DBTool extends Observable{
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
-		
+
 	}
 
 	/**
@@ -175,9 +177,10 @@ public class DBTool extends Observable{
 	}
 
 	/**
+	 * Returns the number of rows in a table.
 	 * 
 	 * @param tblName
-	 * @return
+	 * @return int count
 	 */
 	public int getRowCount(String tblName) {
 		int count = 0;
@@ -216,7 +219,7 @@ public class DBTool extends Observable{
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
-		}	
+		}
 	}
 
 	/**
@@ -229,7 +232,7 @@ public class DBTool extends Observable{
 	 */
 	public void addObject(String name, int typID, int sammlungID, String barcode) {
 		String objekt = "INSERT INTO Objekt (ID_Objekt, ObjektName, Typ_ID, Barcode) VALUES (NULL,'"
-				+ name + "', '" + typID + "','" + barcode +"')";
+				+ name + "', '" + typID + "','" + barcode + "')";
 		int key = -1;
 		try {
 			statement = connection.createStatement();
@@ -313,6 +316,16 @@ public class DBTool extends Observable{
 		}
 	}
 
+	/**
+	 * Adds an entry to table Eigenschaft.
+	 * 
+	 * @param wert
+	 *            The value to be inserted.
+	 * @param objektID
+	 *            int The id of the corresponding object.
+	 * @param feldID
+	 *            int The id of the inserted feld.
+	 */
 	public void addEigenschaft(String wert, int objektID, int feldID) {
 		String eigenschaft = "INSERT INTO eigenschaft (Objekt_ID, Feld_ID, Wert) VALUES ("
 				+ objektID + "," + feldID + ",'" + wert + "')";
@@ -324,10 +337,17 @@ public class DBTool extends Observable{
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
-			
+
 		}
 	}
 
+	/**
+	 * Selects everything from a given table.
+	 * 
+	 * @param tblName
+	 *            The name of the table-
+	 * @return ResultSet
+	 */
 	public ResultSet selectAllFromTable(String tblName) {
 		String select = "SELECT * FROM " + tblName;
 		try {
@@ -341,7 +361,16 @@ public class DBTool extends Observable{
 		}
 		return rSet;
 	}
-	
+
+	/**
+	 * Selects a row with the specified ID from a table.
+	 * 
+	 * @param tblName
+	 *            String. The name of the table.
+	 * @param id
+	 *            int The ID of the row. (Primary Key)
+	 * @return ResultSet
+	 */
 	public ResultSet selectFromTableID(String tblName, int id) {
 		String select = "SELECT * FROM " + tblName + "WHERE ID_" + tblName;
 		try {
@@ -355,11 +384,37 @@ public class DBTool extends Observable{
 		}
 		return rSet;
 	}
-	
+
+	/**
+	 * Selects all Objekte of a Sammlung.
+	 * 
+	 * @param sammlungID
+	 * @return ResultSet
+	 */
+	public ResultSet selectObjectsOfSammlungByID(int sammlungID) {
+		String selObj = "SELECT * FROM Objekt AS O "
+				+ "JOIN Objekt_Sammlung AS OS ON"
+				+ "O.ID_Objekt = OS.Objekt_ID" + "WHERE " + sammlungID
+				+ " = OS.Objekt_ID";
+		try {
+			statement = connection.createStatement();
+			statement.execute(selObj);
+			rSet = statement.getResultSet();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		return rSet;
+	}
+
+	/**
+	 * Selects all info to all Objekte
+	 * 
+	 * @return ResultSet
+	 */
 	public ResultSet selectAllInfoFromObject() {
-		String selAll = "SELECT * FROM Objekt AS O JOIN Eigenschaft AS E ON" +
-				"O.ID_Objekt = E.Objekt_ID" +
-				"JOIN Typ As T ON T.ID_Typ = O.Typ_ID";
+		String selAll = "SELECT * FROM allObjInfo";
 		try {
 			statement = connection.createStatement();
 			statement.execute(selAll);
@@ -371,7 +426,10 @@ public class DBTool extends Observable{
 		}
 		return rSet;
 	}
-	
+
+	/**
+	 * Combines setChanged and notifyObservers in one method.
+	 */
 	private void propagateChange() {
 		this.setChanged();
 		this.notifyObservers();

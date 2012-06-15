@@ -79,12 +79,11 @@ public class DBStringCreator {
 		
 		// Create views
 		setViewAllObjInfo("CREATE OR REPLACE VIEW allObjInfo AS " +
-				"SELECT * FROM Objekt AS O JOIN Eigenschaft AS E ON " +
+				"SELECT * FROM Objekt AS O " +
+				"JOIN Eigenschaft AS E ON " +
 				"O.ID_Objekt = E.Objekt_ID " +
 				"JOIN Typ As T ON T.ID_Typ = O.Typ_ID");
 	}
-
-	
 	
 	public void setTblSammlung(String tblSammlung) {
 		this.tblSammlung = tblSammlung;

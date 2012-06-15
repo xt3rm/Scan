@@ -18,7 +18,7 @@ import syo_model.DBTool;
 
 
 @SuppressWarnings("serial")
-class MainView extends JFrame implements Observer {
+public class MainView extends JFrame implements Observer {
  
     
     private int currentCard = 1;
@@ -49,7 +49,7 @@ class MainView extends JFrame implements Observer {
     final static String VERWALTUNG = "Die Verwaltung wird angezeigt";
 
     
-    MainView() {
+    public MainView() {
     	DBTool.getInstance().addObserver(this);
         this.setTitle("SYO - Alles ist besser | Unser Motto: Das Beste ist Schlecht genug!!");	
 		this.setSize(900, 600);

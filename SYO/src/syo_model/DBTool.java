@@ -1,12 +1,13 @@
 package syo_model;
 
 import java.sql.*;
+import java.util.Observable;
 
 /**
  * 
  * @author kuepfers
  */
-public class DBTool {
+public class DBTool extends Observable{
 
 	private Connection connection;
 	private Statement statement = null;
@@ -323,6 +324,20 @@ public class DBTool {
 
 	public ResultSet selectAllFromTable(String tblName) {
 		String select = "SELECT * FROM " + tblName;
+		try {
+			statement = connection.createStatement();
+			statement.execute(select);
+			rSet = statement.getResultSet();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		return rSet;
+	}
+	
+	public ResultSet selectFromTableID(String tblName, int id) {
+		String select = "SELECT * FROM " + tblName + "WHERE ID_" + tblName;
 		try {
 			statement = connection.createStatement();
 			statement.execute(select);

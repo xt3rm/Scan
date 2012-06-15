@@ -22,13 +22,13 @@ public class DBStringCreator {
 	 * Constructor. Sets the SQL-Statements.
 	 */
 	public DBStringCreator() {
-		tblSammlung = "CREATE TABLE sammlung ("
+		setTblSammlung("CREATE TABLE IF NOT EXISTS sammlung ("
 				+ "ID_Sammlung int(11) NOT NULL AUTO_INCREMENT, "
 				+ "SammlungName varchar(100) NOT NULL,"
 				+ "PRIMARY KEY (ID_Sammlung)"
-				+ ") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1";
+				+ ") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1");
 
-		tblObjekt = "CREATE TABLE objekt ("
+		setTblObjekt("CREATE TABLE IF NOT EXISTS objekt ("
 				+ "ID_Objekt int(11) NOT NULL AUTO_INCREMENT,"
 				+ "ObjektName varchar(50) NOT NULL,"
 				+ "Typ_ID int(11) NOT NULL,"
@@ -36,27 +36,27 @@ public class DBStringCreator {
 				+ "PRIMARY KEY (ID_Objekt),"
 				+ "KEY FK_Objekt_Typ (Typ_ID),"
 				+ "CONSTRAINT FK_Objekt_Typ FOREIGN KEY (Typ_ID) REFERENCES typ (ID_Typ)"
-				+ ") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1";
+				+ ") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1");
 
-		tblFeld = "CREATE TABLE feld (ID_Feld int(11) NOT NULL AUTO_INCREMENT,"
+		setTblFeld("CREATE TABLE IF NOT EXISTS feld (ID_Feld int(11) NOT NULL AUTO_INCREMENT,"
 				+ "  FeldName varchar(50) NOT NULL," + "PRIMARY KEY (ID_Feld)"
-				+ ") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1";
+				+ ") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1");
 
-		tblTyp = "CREATE TABLE typ ("
+		setTblTyp("CREATE TABLE IF NOT EXISTS typ ("
 				+ "ID_Typ int(11) NOT NULL AUTO_INCREMENT,"
 				+ " TypName varchar(50) NOT NULL," + " PRIMARY KEY (ID_Typ)"
-				+ ") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1";
+				+ ") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1");
 
-		tblTyp_Feld = "CREATE TABLE typ_feld ("
+		setTblTyp_Feld("CREATE TABLE IF NOT EXISTS typ_feld ("
 				+ "Typ_ID int(11) NOT NULL,"
 				+ "Feld_ID int(11) NOT NULL,"
 				+ "PRIMARY KEY (Typ_ID,Feld_ID),"
 				+ "KEY FK_Typ_Feld_Feld (Feld_ID),"
 				+ "CONSTRAINT FK_Typ_Feld_Feld FOREIGN KEY (Feld_ID) REFERENCES feld (ID_Feld) ON DELETE CASCADE,"
 				+ "CONSTRAINT FK_Typ_Feld_Typ FOREIGN KEY (Typ_ID) REFERENCES typ (ID_Typ) ON DELETE CASCADE"
-				+ ") ENGINE=InnoDB DEFAULT CHARSET=latin1";
+				+ ") ENGINE=InnoDB DEFAULT CHARSET=latin1");
 
-		tblEigenschaft = "CREATE TABLE eigenschaft ("
+		setTblEigenschaft("CREATE TABLE IF NOT EXISTS eigenschaft ("
 				+ "Objekt_ID int(11) NOT NULL,"
 				+ "Feld_ID int(11) NOT NULL,"
 				+ "Wert varchar(1000) DEFAULT NULL,"
@@ -66,18 +66,18 @@ public class DBStringCreator {
 				+ "KEY Fk_Eigenschaft_Feld_ID (Feld_ID),"
 				+ "CONSTRAINT Fk_Eigenschaft_Feld_ID FOREIGN KEY (Feld_ID) REFERENCES feld (ID_Feld) ON DELETE CASCADE ON UPDATE NO ACTION,"
 				+ "CONSTRAINT Fk_Eigenschaft_Objekt_ID FOREIGN KEY (Objekt_ID) REFERENCES objekt (ID_Objekt) ON DELETE CASCADE ON UPDATE NO ACTION"
-				+ ") ENGINE=InnoDB DEFAULT CHARSET=latin1";
+				+ ") ENGINE=InnoDB DEFAULT CHARSET=latin1");
 
-		tblObjekt_Sammlung = "CREATE TABLE objekt_sammlung ("
+		setTblObjekt_Sammlung("CREATE TABLE IF NOT EXISTS objekt_sammlung ("
 				+ "Objekt_ID int(11) NOT NULL,"
 				+ "Sammlung_ID int(11) NOT NULL,"
 				+ "PRIMARY KEY (Objekt_ID,Sammlung_ID),"
 				+ "KEY FK_Objekt_Sammlung_Sammlung (Sammlung_ID),"
 				+ "CONSTRAINT FK_Objekt_Sammlung_Objekt FOREIGN KEY (Objekt_ID) REFERENCES objekt (ID_Objekt) ON DELETE CASCADE,"
 				+ "CONSTRAINT FK_Objekt_Sammlung_Sammlung FOREIGN KEY (Sammlung_ID) REFERENCES sammlung (ID_Sammlung) ON DELETE CASCADE"
-				+ ") ENGINE=InnoDB DEFAULT CHARSET=latin1";
-		
-		setViewAllObjInfo("CREATE VIEW allObjInfo AS " +
+				+ ") ENGINE=InnoDB DEFAULT CHARSET=latin1");
+		// Create views
+		setViewAllObjInfo("CREATE OR REPLACE VIEW allObjInfo AS " +
 				"SELECT * FROM Objekt AS O JOIN Eigenschaft AS E ON " +
 				"O.ID_Objekt = E.Objekt_ID " +
 				"JOIN Typ As T ON T.ID_Typ = O.Typ_ID");

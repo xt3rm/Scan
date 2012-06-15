@@ -6,13 +6,19 @@ import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import syo_model.DBTool;
 
-class MainView extends JFrame {
+
+@SuppressWarnings("serial")
+class MainView extends JFrame implements Observer {
  
     
     private int currentCard = 1;
@@ -44,6 +50,7 @@ class MainView extends JFrame {
 
     
     MainView() {
+    	DBTool.getInstance().addObserver(this);
         this.setTitle("SYO - Alles ist besser | Unser Motto: Das Beste ist Schlecht genug!!");	
 		this.setSize(900, 600);
 		this.setResizable(false);
@@ -313,5 +320,12 @@ class MainView extends JFrame {
 
         getContentPane().add(pnlContent);
     }
+
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

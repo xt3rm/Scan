@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 
 
+@SuppressWarnings("serial")
 class JPaneDemo extends JFrame {
  
     
@@ -339,7 +340,7 @@ class JPaneDemo extends JFrame {
         	this.setVisible(true);
             try {                
                 theImage = ImageIO.read(new File("syo_logo.jpg"));
-                theImage = theImage.getScaledInstance((900),(95),theImage.SCALE_SMOOTH );
+                theImage = theImage.getScaledInstance((900),(95),Image.SCALE_SMOOTH );
             } catch (IOException ex) {
                     ex.printStackTrace();
             }  

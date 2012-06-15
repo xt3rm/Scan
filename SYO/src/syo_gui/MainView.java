@@ -7,17 +7,27 @@ import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
 import javax.swing.ListSelectionModel;
 
 
-class MainView extends JFrame {
+import syo_model.DBTool;
+
+
+
+@SuppressWarnings("serial")
+public class MainView extends JFrame implements Observer {
  
     
     private int currentCard = 1;
@@ -50,7 +60,8 @@ class MainView extends JFrame {
     final static String TEST = "Die Verwaltung wird angezeigt";
 
     
-    MainView() {
+    public MainView() {
+    	DBTool.getInstance().addObserver(this);
         this.setTitle("SYO - Alles ist besser | Unser Motto: Das Beste ist Schlecht genug!!");	
 		this.setSize(900, 600);
 		this.setResizable(false);
@@ -92,6 +103,7 @@ class MainView extends JFrame {
         pnlCard7 = new JPanel(null);
         pnlCard8 = new JPanel(null);
         pnlCard9 = new JPanel(null);
+
         
         
         pnlView.add(pnlCard1, "1");
@@ -112,21 +124,42 @@ class MainView extends JFrame {
         
         JLabel lblCard1 = new JLabel(SAMMLUNGEN);
         pnlCard1.add(lblCard1);
-        JButton cmdneueSammlung;
+        
+        
 
         pnlCard1.setBackground(new Color(255,255,255));
         
-        lblCard1.setBounds(50, 50, 120, 30);
+        lblCard1.setBounds(100, 20, 300, 30);
         lblCard1.setVisible(true);
+        
+        JButton cmdCard1neueSammlung;
+        cmdCard1neueSammlung = new JButton("neue Sammlung");
+        pnlCard1.add(cmdCard1neueSammlung);
+        cmdCard1neueSammlung.setVisible(true);
+        cmdCard1neueSammlung.setBounds(420, 70, 185, 30);
+        
+        String List[] = {"Blabla","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja"};
         
 
         
-        cmdneueSammlung = new JButton("Sammlungen anzeigen");
-        pnlCard1.add(cmdneueSammlung);
-        cmdneueSammlung.setVisible(true);
-        cmdneueSammlung.setBounds(100, 100, 185, 30);
+        cmdCard1neueSammlung = new JButton("Sammlungen anzeigen");
+        pnlCard1.add(cmdCard1neueSammlung);
+        cmdCard1neueSammlung.setVisible(true);
+        cmdCard1neueSammlung.setBounds(100, 100, 185, 30);
+
+        JList liCard1Sammlungen = new JList(List);
+        pnlCard1.add(liCard1Sammlungen);
+        liCard1Sammlungen.setVisible(true);
+        liCard1Sammlungen.setBounds(30,150,500,200);
+
         
         
+        /*JComboBox cmbCard1Sammlungen = new JComboBox(List);
+        pnlCard1.add (cmbCard1Sammlungen);
+        cmbCard1Sammlungen.setVisible(true);
+        cmbCard1Sammlungen.setBounds(10,80,200,30);
+   
+
 /*    	
 *-------------------------------------------------------
 *  PANEL - View-Card2-OBJEKT - pnlCard2
@@ -134,13 +167,37 @@ class MainView extends JFrame {
 */
         JLabel lblCard2 = new JLabel(OBJEKT);
         pnlCard2.add(lblCard2);
-      
 
         pnlCard2.setBackground(new Color(255,255,255));
         
-        lblCard2.setBounds(100, 100, 120, 30);
+        lblCard2.setBounds(100, 20, 300, 30);
         lblCard2.setVisible(true); 
         repaint();
+        
+        JLabel lblCard2Sammlung = new JLabel("Titel");
+        pnlCard2.add(lblCard2Sammlung);
+        lblCard2Sammlung.setBounds(50, 90, 300, 30);      
+        lblCard2Sammlung.setVisible(true); 
+        repaint();
+
+        
+        JList liCard2Sammlung = new JList(List);
+        pnlCard2.add(liCard2Sammlung);
+        liCard2Sammlung.setVisible(true);
+        liCard2Sammlung.setBounds(30,150,350,200); 
+        
+        
+        JButton cmdCard2bearbeiten;
+        cmdCard2bearbeiten = new JButton("bearbeiten");
+        pnlCard2.add(cmdCard2bearbeiten);
+        cmdCard2bearbeiten.setVisible(true);
+        cmdCard2bearbeiten.setBounds(420, 70, 185, 30);
+        
+        JButton cmdCard2zurueck;
+        cmdCard2zurueck = new JButton("zurück");
+        pnlCard2.add(cmdCard2zurueck);
+        cmdCard2zurueck.setVisible(true);
+        cmdCard2zurueck.setBounds(420, 120, 185, 30);
         
 /*    	
 *-------------------------------------------------------
@@ -152,10 +209,46 @@ class MainView extends JFrame {
 
         pnlCard3.setBackground(new Color(255,255,255));
         
-        lblCard3.setBounds(50, 50, 120, 30);
+        lblCard3.setBounds(100, 20, 300, 30);
         lblCard3.setVisible(true); 
         
-       
+        JLabel lblCard3Typname = new JLabel("Typname:");
+        pnlCard3.add(lblCard3Typname);
+        lblCard3Typname.setBounds(50, 90, 300, 30);      
+        lblCard3Typname.setVisible(true); 
+        repaint();
+      
+        
+        JTextField txtCard3Typname = new JTextField();  
+        pnlCard3.add (txtCard3Typname);
+        txtCard3Typname.setVisible(true);
+        txtCard3Typname.setBounds(130,90,185,30);
+        
+        JList liCard3Felder = new JList(List);
+        pnlCard3.add(liCard3Felder);
+        liCard3Felder.setVisible(true);
+        liCard3Felder.setBounds(30,150,350,200); 
+        
+        
+        JButton cmdCard3neuesFeld;
+        cmdCard3neuesFeld = new JButton("Neues Feld");
+        pnlCard3.add(cmdCard3neuesFeld);
+        cmdCard3neuesFeld.setVisible(true);
+        cmdCard3neuesFeld.setBounds(420, 70, 185, 30);
+        
+        
+        JButton cmdCard3entfernen;
+        cmdCard3entfernen = new JButton("entfernen");
+        pnlCard3.add(cmdCard3entfernen);
+        cmdCard3entfernen.setVisible(true);
+        cmdCard3entfernen.setBounds(420, 120, 185, 30);
+        
+        
+        JButton cmdCard3weiter;
+        cmdCard3weiter = new JButton("weiter");
+        pnlCard3.add(cmdCard3weiter);
+        cmdCard3weiter.setVisible(true);
+        cmdCard3weiter.setBounds(420, 170, 185, 30);
         
 /*    	
 *-------------------------------------------------------
@@ -170,7 +263,8 @@ class MainView extends JFrame {
         lblCard4.setBounds(50, 50, 120, 30);
         lblCard4.setVisible(true); 
         
-     
+
+       
         
 /*    	
 *-------------------------------------------------------
@@ -210,6 +304,7 @@ class MainView extends JFrame {
         pnlCard6.add(txtCard6Feldname);
         txtCard6Feldname.setBounds(170, 200, 180, 30);
         
+
         
         
         JButton cmdCard6Abbrechen;
@@ -224,6 +319,9 @@ class MainView extends JFrame {
         pnlCard6.add(cmdCard6OK);
         cmdCard6OK.setVisible(true);
         cmdCard6OK.setBounds(400, 230, 120, 30);
+
+        pnlCard6.setBackground(new Color(255,255,255));
+
         
         
 
@@ -260,8 +358,8 @@ class MainView extends JFrame {
         lblCard8.setBounds(100, 20, 200, 30);
         lblCard8.setVisible(true); 
                 
-        String List[] = {"Element1" , "Element2", "Element3", "Element4", "Element5", "Element6", "Element7"};
-        JList liCard8Objekte = new JList(List);
+        String Listeli[] = {"Element1" , "Element2", "Element3", "Element4", "Element5", "Element6", "Element7"};
+        JList liCard8Objekte = new JList(Listeli);
         pnlCard8.add(liCard8Objekte);
         liCard8Objekte.setVisible(true);
         liCard8Objekte.setBounds(50,150,200,300);
@@ -382,5 +480,12 @@ class MainView extends JFrame {
 
         getContentPane().add(pnlContent);
     }
+
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		System.out.println("Update");
+		
+	}
 }
 

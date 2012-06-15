@@ -211,11 +211,12 @@ public class DBTool extends Observable{
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(sammlung);
+			propagateChange();
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
-		}
+		}	
 	}
 
 	/**
@@ -246,6 +247,7 @@ public class DBTool extends Observable{
 			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
 					+ key + ", " + sammlungID + ")";
 			statement.executeUpdate(objekt_sammlung);
+			propagateChange();
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
@@ -267,6 +269,7 @@ public class DBTool extends Observable{
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(typ);
+			propagateChange();
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
@@ -302,6 +305,7 @@ public class DBTool extends Observable{
 			String objekt_sammlung = "INSERT INTO Typ_Feld (Typ_ID, Feld_ID) VALUES ("
 					+ typID + ", " + key + ")";
 			statement.executeUpdate(objekt_sammlung);
+			propagateChange();
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
@@ -315,11 +319,12 @@ public class DBTool extends Observable{
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(eigenschaft);
+			propagateChange();
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
-			this.notifyObservers();
+			
 		}
 	}
 
@@ -365,5 +370,10 @@ public class DBTool extends Observable{
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
 		return rSet;
+	}
+	
+	private void propagateChange() {
+		this.setChanged();
+		this.notifyObservers();
 	}
 }

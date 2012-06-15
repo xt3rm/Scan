@@ -76,6 +76,7 @@ public class DBStringCreator {
 				+ "CONSTRAINT FK_Objekt_Sammlung_Objekt FOREIGN KEY (Objekt_ID) REFERENCES objekt (ID_Objekt) ON DELETE CASCADE,"
 				+ "CONSTRAINT FK_Objekt_Sammlung_Sammlung FOREIGN KEY (Sammlung_ID) REFERENCES sammlung (ID_Sammlung) ON DELETE CASCADE"
 				+ ") ENGINE=InnoDB DEFAULT CHARSET=latin1");
+		
 		// Create views
 		setViewAllObjInfo("CREATE OR REPLACE VIEW allObjInfo AS " +
 				"SELECT * FROM Objekt AS O JOIN Eigenschaft AS E ON " +

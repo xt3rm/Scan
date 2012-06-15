@@ -5,13 +5,17 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
+import syo_controller.DBController;
 import syo_model.DBTool;
 
 public class DBControllerTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		new DBController();
+		
 		DBTool.getInstance().setupDB("testsyo");
 		DBTool.getInstance().addSammlung("TestSammlung");
 		assertTrue(DBTool.getInstance().getRowCount("sammlung") == 1);
@@ -37,4 +41,8 @@ public class DBControllerTestCase {
 		DBTool.getInstance().closeDB();
 	}
 
+	@Test
+	public void testTest() {
+		DBTool.getInstance().addSammlung("TestSammlugng");
+	}
 }

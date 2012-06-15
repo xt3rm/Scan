@@ -14,15 +14,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import syo_controller.DBController;
 import syo_model.DBTool;
 
 
 @SuppressWarnings("serial")
 public class MainView extends JFrame implements Observer {
  
+	private DBController dbc;
     
     private int currentCard = 1;
-
+    
 	private CardLayout cl;
 
     JPanel pnlContent = new JPanel();
@@ -51,6 +53,7 @@ public class MainView extends JFrame implements Observer {
     
     public MainView() {
     	DBTool.getInstance().addObserver(this);
+    	dbc = new DBController(this);
         this.setTitle("SYO - Alles ist besser | Unser Motto: Das Beste ist Schlecht genug!!");	
 		this.setSize(900, 600);
 		this.setResizable(false);

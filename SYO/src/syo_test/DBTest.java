@@ -72,8 +72,8 @@ public class DBTest {
 	@Test
 	public void testSelectAllFromTable() {
 		ArrayList<String> rs = DBTool.getInstance().selectColumnFromTable("objekt", "ObjektName");
-		assertTrue(rs.get(0).equals("TestObjekt"));
+		assertTrue(rs.get(0).equals("Testobjekt"));
 		ArrayList<String> rt = DBTool.getInstance().selectColumnFromTable("allObjInfo", "Wert");
-		assertTrue(rs.get(0).equals("TestWert"));
+		assertTrue(rt.get(0).equals("TestWert"));
 	}	
 }

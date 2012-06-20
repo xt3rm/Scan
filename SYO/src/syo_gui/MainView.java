@@ -22,13 +22,21 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
+import syo_controller.DBController;
 import syo_model.DBTool;
 
 
 @SuppressWarnings("serial")
 public class MainView extends JFrame implements Observer {
- 
     
+	// Listen
+	ArrayList<String> liSammlung;
+	ArrayList<String> liObjekt;
+	ArrayList<String> liTyp;
+	ArrayList<String> liFeld;
+	// controller
+	private DBController ctrl;
+	
     private int currentCard = 1;
 
 	private CardLayout cl;
@@ -47,6 +55,9 @@ public class MainView extends JFrame implements Observer {
     
     JButton cmdPrevious;
     JButton cmdNext;
+
+    JTextField txtCard4neueSammlung;
+    JList liCard1Sammlungen;
     
     final static String SAMMLUNGEN = "Meine Sammlungen";
     final static String OBJEKT = "Objekte der ausgewählten Sammlung";
@@ -61,6 +72,7 @@ public class MainView extends JFrame implements Observer {
     
     public MainView() {
     	DBTool.getInstance().addObserver(this);
+    	ctrl = new DBController(this);
         this.setTitle("SYO - Alles ist besser | Unser Motto: Das Beste ist Schlecht genug!!");	
 		this.setSize(900, 600);
 		this.setResizable(false);
@@ -139,11 +151,13 @@ public class MainView extends JFrame implements Observer {
             }
         });
         
-        ArrayList<String> myList = DBTool.getInstance().selectColumnFromTable("sammlung", "SammlungName");
+        DBTool.getInstance().connectDB();
+        liSammlung = DBTool.getInstance().selectColumnFromTable("sammlung", "SammlungName");
+        DBTool.getInstance().closeDB();
         
         String ListCard1[] = {"ListCard1","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","42","42","42","42","42","42","42"};
         
-        JList liCard1Sammlungen = new JList(myList.toArray());
+        liCard1Sammlungen = new JList(liSammlung.toArray());
 
         pnlCard1.add(liCard1Sammlungen);
         
@@ -171,10 +185,14 @@ public class MainView extends JFrame implements Observer {
         lblCard2Sammlung.setBounds(30, 90, 300, 30);      
         lblCard2Sammlung.setVisible(true); 
         repaint();
-
+        
+        DBTool.getInstance().connectDB();
+        liObjekt = DBTool.getInstance().selectObjectsOfSammlungByID(1);
+        DBTool.getInstance().closeDB();
+        
         String ListCard2[] = {"ListCard2","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","42","42","42","42","42","42","42"};
         
-        JList liCard2Sammlung = new JList(ListCard2);
+        JList liCard2Sammlung = new JList(liObjekt.toArray());
         pnlCard2.add(liCard2Sammlung);
 
         JScrollPane scrollPaneCard2 = new JScrollPane(liCard2Sammlung);
@@ -220,7 +238,9 @@ public class MainView extends JFrame implements Observer {
         txtCard3Typname.setVisible(true);
         txtCard3Typname.setBounds(130,90,185,30);
         
-        
+        DBTool.getInstance().connectDB();
+        liTyp = DBTool.getInstance().selectColumnFromTable("Typ", "TypName");
+        DBTool.getInstance().closeDB();
         
         String ListCard3[] = {"ListCard3","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","42","42","42","42","42","42","42"};
         
@@ -228,7 +248,7 @@ public class MainView extends JFrame implements Observer {
         pnlCard3.add(liCard3Felder);
         
 
-        JList liCard3Sammlung = new JList(ListCard3);
+        JList liCard3Sammlung = new JList(liTyp.toArray());
         pnlCard2.add(liCard3Sammlung);
 
         JScrollPane scrollPaneCard3 = new JScrollPane(liCard3Sammlung);
@@ -236,10 +256,7 @@ public class MainView extends JFrame implements Observer {
         scrollPaneCard3.setBounds(30,150,250,200);
         scrollPaneCard3.setVisible(true);
         
-        
 
-        
-        
         JButton cmdCard3NeuesFeld;
         cmdCard3NeuesFeld = new JButton("Neues Feld");
         pnlCard3.add(cmdCard3NeuesFeld);
@@ -288,7 +305,7 @@ public class MainView extends JFrame implements Observer {
         lblCard4Sammlungsname.setVisible(true); 
         repaint();
         
-        JTextField txtCard4neueSammlung = new JTextField();  
+        txtCard4neueSammlung = new JTextField();  
         pnlCard4.add(txtCard4neueSammlung);
         txtCard4neueSammlung.setVisible(true);
         txtCard4neueSammlung.setBounds(140,90,185,30);
@@ -300,6 +317,7 @@ public class MainView extends JFrame implements Observer {
         cmdCard4ok.setBounds(440, 60, 185, 30);
         cmdCard4ok.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
+            	ctrl.createSammlung(txtCard4neueSammlung.getText());
             	cl.show(pnlView, "" + (1));
             }
         });
@@ -632,12 +650,18 @@ public class MainView extends JFrame implements Observer {
         pnlContent.add(pnlView);
 
         getContentPane().add(pnlContent);
+        DBTool.getInstance().closeDB();
     }
-
+    
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		System.out.println("Update");
+		DBTool.getInstance().connectDB();
+		liSammlung = ctrl.updateList();
+		liCard1Sammlungen.setListData(liSammlung.toArray());
+		this.txtCard4neueSammlung.setText(""); // Clear the text
+		DBTool.getInstance().closeDB();
 		
 	}
 }

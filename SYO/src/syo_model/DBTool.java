@@ -72,6 +72,8 @@ public class DBTool extends Observable {
 			statement.executeUpdate(creator.getTblObjekt_Sammlung());
 			statement.executeUpdate(creator.getTblTyp_Feld());
 			statement.execute(creator.getViewAllObjInfo());
+			//close DB
+			closeDB();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -398,21 +400,26 @@ public class DBTool extends Observable {
 	 * @param sammlungID
 	 * @return ResultSet
 	 */
-	public ResultSet selectObjectsOfSammlungByID(int sammlungID) {
+	public ArrayList<String> selectObjectsOfSammlungByID(int sammlungID) {
 		String selObj = "SELECT * FROM Objekt AS O "
-				+ "JOIN Objekt_Sammlung AS OS ON"
-				+ "O.ID_Objekt = OS.Objekt_ID" + "WHERE " + sammlungID
-				+ " = OS.Objekt_ID";
+				+ "JOIN Objekt_Sammlung AS OS ON "
+				+ "O.ID_Objekt = OS.Objekt_ID " + "WHERE " + sammlungID
+				+ " = OS.Sammlung_ID";
+		ArrayList<String> result = new ArrayList<String>();
+		
 		try {
 			statement = connection.createStatement();
 			statement.execute(selObj);
 			rSet = statement.getResultSet();
+			while(rSet.next()) {
+				result.add(rSet.getString("ObjektName"));
+			}
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
-		return rSet;
+		return result;
 	}
 
 	/**
@@ -420,18 +427,22 @@ public class DBTool extends Observable {
 	 * 
 	 * @return ResultSet
 	 */
-	public ResultSet selectAllInfoFromObject() {
+	public ArrayList<String> selectColumnFromObjectInfo(String colName) {
 		String selAll = "SELECT * FROM allObjInfo";
+		ArrayList<String> result = new ArrayList<String>();
 		try {
 			statement = connection.createStatement();
 			statement.execute(selAll);
 			rSet = statement.getResultSet();
+			while(rSet.next()) {
+				result.add(rSet.getString(colName));
+			}
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
-		return rSet;
+		return result;
 	}
 
 	/**

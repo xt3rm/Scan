@@ -1,5 +1,6 @@
 package syo_controller;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,7 +37,17 @@ public class DBController implements Observer {
 	}
 
 	public void createSammlung(String name) {
+		DBTool.getInstance().connectDB();
 		DBTool.getInstance().addSammlung(name);
+		DBTool.getInstance().closeDB();
+	}
+	
+	
+	
+	// Update Methods
+	
+	public ArrayList<String> updateList() {
+		return DBTool.getInstance().selectColumnFromTable("sammlung", "SammlungName");
 	}
 
 }

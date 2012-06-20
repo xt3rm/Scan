@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Observable;
 
-
 /**
  * This class provides the basic functionality to setup and access the database.
  * The Singleton pattern is used to prevent multiple instances.
@@ -227,16 +226,14 @@ public class DBTool extends Observable {
 	}
 
 	/**
-	 * Adds an object to the database.
 	 * 
 	 * @param name
-	 *            The name of the object.
 	 * @param typID
-	 *            The ID of the type of the object
+	 * @param sammlungID
 	 */
-	public void addObject(String name, int typID, int sammlungID, String barcode) {
-		String objekt = "INSERT INTO Objekt (ID_Objekt, ObjektName, Typ_ID, Barcode) VALUES (NULL,'"
-				+ name + "', '" + typID + "','" + barcode + "')";
+	public void addObject(String name, int typID, int sammlungID) {
+		String objekt = "INSERT INTO Objekt (ID_Objekt, ObjektName, Typ_ID) VALUES (NULL,'"
+				+ name + "', '" + typID + "')";
 		int key = -1;
 		try {
 			statement = connection.createStatement();
@@ -251,6 +248,43 @@ public class DBTool extends Observable {
 			while (rSet.next()) {
 				key = rSet.getInt(1);
 
+			}
+			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
+					+ key + ", " + sammlungID + ")";
+			statement.executeUpdate(objekt_sammlung);
+			objekt = "UPDATE objekt SET Barcode = '" + key + "' WHERE ID_Objekt ='" + key + "'";
+			statement.executeUpdate(objekt);
+			propagateChange();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+	}
+
+	/**
+	 * 
+	 * @param name
+	 * @param typID
+	 * @param sammlungID
+	 * @param barcode
+	 */
+	public void addObject(String name, int typID, int sammlungID, String barcode) {
+		String objekt = "INSERT INTO Objekt (ID_Objekt, ObjektName, Typ_ID) VALUES (NULL,'"
+				+ name + "', '" + typID + "','" + barcode + "')";
+		int key = -1;
+		try {
+			statement = connection.createStatement();
+			statement.executeUpdate(objekt, Statement.RETURN_GENERATED_KEYS); // Der
+																				// generierte
+																				// Key
+																				// soll
+																				// bereitgestellt
+																				// werden.
+			rSet = statement.getGeneratedKeys();
+			// Den neu erzeugten Primary Key in key speichern.
+			while (rSet.next()) {
+				key = rSet.getInt(1);
 			}
 			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
 					+ key + ", " + sammlungID + ")";
@@ -360,7 +394,7 @@ public class DBTool extends Observable {
 	 */
 	public void deleteItemOfTableByID(String tblName, int id) {
 		String delete = "DELETE FROM " + tblName + " WHERE ID_" + tblName
-			+ "= " + id;
+				+ "= " + id;
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(delete);
@@ -384,16 +418,16 @@ public class DBTool extends Observable {
 	 *            The name of the table-
 	 * @return ResultSet
 	 */
-	public ArrayList<DBObjekt> selectColumnFromTable(String tblName,
-			String colName) {
+	public ArrayList<DBBasisObjekt> selectAllFromTable(String tblName) {
 		String select = "SELECT * FROM " + tblName;
-		ArrayList<DBObjekt> result = new ArrayList<DBObjekt>();
+		ArrayList<DBBasisObjekt> result = new ArrayList<DBBasisObjekt>();
 		try {
 			statement = connection.createStatement();
 			statement.execute(select);
 			rSet = statement.getResultSet();
 			while (rSet.next()) {
-				DBObjekt obj = new DBObjekt(rSet.getString(2), rSet.getInt(1));
+				DBBasisObjekt obj = new DBBasisObjekt(rSet.getString(2),
+						rSet.getInt(1));
 				result.add(obj);
 			}
 		} catch (SQLException ex) {
@@ -433,19 +467,19 @@ public class DBTool extends Observable {
 	 * @param sammlungID
 	 * @return ResultSet
 	 */
-	public ArrayList<DBObjekt> selectObjectsOfSammlungByID(int sammlungID) {
+	public ArrayList<DBBasisObjekt> selectObjectsOfSammlungByID(int sammlungID) {
 		String selObj = "SELECT * FROM Objekt AS O "
 				+ "JOIN Objekt_Sammlung AS OS ON "
 				+ "O.ID_Objekt = OS.Objekt_ID " + "WHERE " + sammlungID
 				+ " = OS.Sammlung_ID";
-		ArrayList<DBObjekt> result = new ArrayList<DBObjekt>();
+		ArrayList<DBBasisObjekt> result = new ArrayList<DBBasisObjekt>();
 
 		try {
 			statement = connection.createStatement();
 			statement.execute(selObj);
 			rSet = statement.getResultSet();
 			while (rSet.next()) {
-				result.add(new DBObjekt(rSet.getString(2), rSet.getInt(1)));
+				result.add(new DBBasisObjekt(rSet.getString(2), rSet.getInt(1)));
 			}
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
@@ -458,7 +492,7 @@ public class DBTool extends Observable {
 	/**
 	 * Selects all info to all Objekte
 	 * 
-	 * @return ResultSet
+	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> selectColumnFromObjectInfo(String colName) {
 		String selAll = "SELECT * FROM allObjInfo";

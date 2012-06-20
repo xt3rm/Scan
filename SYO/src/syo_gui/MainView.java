@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -134,9 +135,10 @@ public class MainView extends JFrame implements Observer {
         cmdCard1neueSammlung.setVisible(true);
         cmdCard1neueSammlung.setBounds(420, 70, 185, 30);
         
+        ArrayList<String> myList = DBTool.getInstance().selectColumnFromTable("sammlung", "SammlungName");
         String[] List = {"Blabla","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","42","42","42","42","42","42","42"};
         
-        JList liCard1Sammlungen = new JList(List);
+        JList liCard1Sammlungen = new JList(myList.toArray());
         pnlCard1.add(liCard1Sammlungen);
         
         

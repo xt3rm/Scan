@@ -26,17 +26,7 @@ public class DBController implements Observer {
 		this.mainView = mainView;
 		DBTool.getInstance().addObserver(this);
 		sammlungen = new ArrayList<String>();
-		ResultSet rs = DBTool.getInstance().selectAllFromTable("sammlung");
-		try {
-			while (rs.next()) {
-
-				sammlungen.add(rs.getString("SammlungName"));
-
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//Change
 	}
 
 	@Override

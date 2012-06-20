@@ -233,13 +233,27 @@ public class MainView extends JFrame implements Observer {
         
         
 
+        JButton cmdCard3Feldhinzufuegen;
+        cmdCard3Feldhinzufuegen = new JButton("Feld zum Typ hinzufügen");
+        pnlCard3.add(cmdCard3Feldhinzufuegen);
+        cmdCard3Feldhinzufuegen.setVisible(true);
+        cmdCard3Feldhinzufuegen.setBounds(440, 90, 185, 30);
+        
+        
+        String ListCard3_2[] = {"Feld1","Feld2","Feld3","Feld1","42","jaja","weiss ni","42","jaja","42","42","42","42","42","42","42","42"};
+        
+        
+        JComboBox cmbCard3Feldauswaehlen = new JComboBox(ListCard3_2);
+        pnlCard3.add (cmbCard3Feldauswaehlen);
+        cmbCard3Feldauswaehlen.setVisible(true);
+        cmbCard3Feldauswaehlen.setBounds(440,150,185,30);
         
         
         JButton cmdCard3NeuesFeld;
-        cmdCard3NeuesFeld = new JButton("Neues Feld");
+        cmdCard3NeuesFeld = new JButton("Neues Feld generieren");
         pnlCard3.add(cmdCard3NeuesFeld);
         cmdCard3NeuesFeld.setVisible(true);
-        cmdCard3NeuesFeld.setBounds(440, 60, 185, 30);
+        cmdCard3NeuesFeld.setBounds(440, 230, 185, 30);
         cmdCard3NeuesFeld.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
             	cl.show(pnlView, "" + (6));
@@ -251,14 +265,14 @@ public class MainView extends JFrame implements Observer {
         cmdCard3entfernen = new JButton("entfernen");
         pnlCard3.add(cmdCard3entfernen);
         cmdCard3entfernen.setVisible(true);
-        cmdCard3entfernen.setBounds(440, 110, 185, 30);
+        cmdCard3entfernen.setBounds(440, 270, 185, 30);
         
         
         JButton cmdCard3weiter;
         cmdCard3weiter = new JButton("weiter");
         pnlCard3.add(cmdCard3weiter);
         cmdCard3weiter.setVisible(true);
-        cmdCard3weiter.setBounds(440, 160, 185, 30);
+        cmdCard3weiter.setBounds(440, 310, 185, 30);
         cmdCard3weiter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
             	cl.show(pnlView, "" + (5));
@@ -393,7 +407,7 @@ public class MainView extends JFrame implements Observer {
         txtCard56Feldname.setBounds(100,90,185,30);
         
         
-        
+        /*
         JRadioButton rbtnCard6Text = new JRadioButton("Text", true);
         JRadioButton rbtnCard6Zahl = new JRadioButton("Zahl" , false);
         
@@ -408,7 +422,7 @@ public class MainView extends JFrame implements Observer {
         pnlCard6.add(rbtnCard6Zahl);
         rbtnCard6Zahl.setVisible(true);
         rbtnCard6Zahl.setBounds(100, 220, 185,30);
-        
+        */
         
         JButton cmdCard6weiter;
         cmdCard6weiter = new JButton("weiter");

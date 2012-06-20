@@ -250,7 +250,7 @@ public class MainView extends JFrame implements Observer {
         });
         
         DBTool.getInstance().connectDB();
-        liSammlung = DBTool.getInstance().selectColumnFromTable("sammlung", "SammlungName");
+        liSammlung = ctrl.updateSammlung();
         DBTool.getInstance().closeDB();
         
         
@@ -581,6 +581,11 @@ public class MainView extends JFrame implements Observer {
         
   
         cmdCard7Sammlunglöschen = new JButton("Sammlung löschen");
+        cmdCard7Sammlunglöschen.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (6));
+            }
+        });
         pnlCard7.add(cmdCard7Sammlunglöschen);
         cmdCard7Sammlunglöschen.setVisible(true);
         cmdCard7Sammlunglöschen.setBounds(440, 60, 185, 30);
@@ -750,12 +755,16 @@ public class MainView extends JFrame implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		System.out.println("Update");
-		DBTool.getInstance().connectDB();
-		liSammlung = ctrl.updateList();
+		// Update Sammlung
+		liSammlung = ctrl.updateSammlung();
 		liCard1Sammlungen.setListData(liSammlung.toArray());
 		this.txtCard4neueSammlung.setText(""); // Clear the text
-		DBTool.getInstance().closeDB();
+		// Update object
 		
+		// Update typ
+		
+		// Update feld
+
 	}
 }
 

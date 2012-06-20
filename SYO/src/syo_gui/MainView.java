@@ -42,6 +42,8 @@ public class MainView extends JFrame implements Observer {
 
 	private CardLayout cl;
 
+ 
+
 	JPanel pnlContent = new JPanel();
 	JPanel pnlNavigation = new JPanel();
 	private JPanel pnlView;
@@ -168,6 +170,7 @@ public class MainView extends JFrame implements Observer {
 
 		pnlView = new JPanel();
 		pnlView.setLayout(cl);
+
 
 		pnlView.setBounds(230, 100, 700, 500);
 		pnlView.setBackground(Color.RED);
@@ -702,6 +705,7 @@ public class MainView extends JFrame implements Observer {
 		getContentPane().add(pnlContent);
 		DBTool.getInstance().closeDB();
 	}
+
 
 	@Override
 	public void update(Observable arg0, Object arg1) {

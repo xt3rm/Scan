@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import syo_model.DBTool;
 
@@ -237,11 +238,31 @@ public class MainView extends JFrame implements Observer {
 
         pnlCard4.setBackground(new Color(255,255,255));
         
-        lblCard4.setBounds(50, 50, 120, 30);
+        lblCard4.setBounds(100, 20, 300, 30);
         lblCard4.setVisible(true); 
         
-
+        JLabel lblCard4Sammlungsname = new JLabel("Sammlungsname:");
+        pnlCard4.add(lblCard4Sammlungsname);
+        lblCard4Sammlungsname.setBounds(30, 90, 300, 30);      
+        lblCard4Sammlungsname.setVisible(true); 
+        repaint();
+        
+        JTextField txtCard4neueSammlung = new JTextField();  
+        pnlCard4.add(txtCard4neueSammlung);
+        txtCard4neueSammlung.setVisible(true);
+        txtCard4neueSammlung.setBounds(140,90,185,30);
        
+        JButton cmdCard4ok;
+        cmdCard4ok = new JButton("ok");
+        pnlCard4.add(cmdCard4ok);
+        cmdCard4ok.setVisible(true);
+        cmdCard4ok.setBounds(420, 90, 185, 30);
+        
+        JButton cmdCard4abbrechen;
+        cmdCard4abbrechen = new JButton("abbrechen");
+        pnlCard4.add(cmdCard4abbrechen);
+        cmdCard4abbrechen.setVisible(true);
+        cmdCard4abbrechen.setBounds(420, 140, 185, 30);
         
 /*    	
 *-------------------------------------------------------
@@ -263,10 +284,10 @@ public class MainView extends JFrame implements Observer {
         lblCard5Name.setVisible(true); 
         repaint();
 
-        JTextField txtCard5neueSammlung = new JTextField();  
-        pnlCard5.add(txtCard5neueSammlung);
-        txtCard5neueSammlung.setVisible(true);
-        txtCard5neueSammlung.setBounds(80,90,185,30);
+        JTextField txtCard5neuesObjekt = new JTextField();  
+        pnlCard5.add(txtCard5neuesObjekt);
+        txtCard5neuesObjekt.setVisible(true);
+        txtCard5neuesObjekt.setBounds(80,90,185,30);
     
         JComboBox cmbCard5Typauswählen = new JComboBox(List);
         pnlCard5.add (cmbCard5Typauswählen);
@@ -354,9 +375,18 @@ public class MainView extends JFrame implements Observer {
         lblCard7.setBounds(50, 50, 120, 30);
         lblCard7.setVisible(true); 
         
-
+       JList liCard7Sammlungen = new JList(List);
+        pnlCard7.add(liCard7Sammlungen);
+        liCard7Sammlungen.setVisible(true);
+        liCard7Sammlungen.setBounds(30,150,350,200);
         
         
+  
+        JButton cmdCard7Sammlunglöschen;
+        cmdCard7Sammlunglöschen = new JButton("Sammlung löschen");
+        pnlCard7.add(cmdCard7Sammlunglöschen);
+        cmdCard7Sammlunglöschen.setVisible(true);
+        cmdCard7Sammlunglöschen.setBounds(460, 70, 185, 30);
         
 /*        
 *-------------------------------------------------------

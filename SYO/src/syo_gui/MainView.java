@@ -263,6 +263,7 @@ public class MainView extends JFrame implements Observer {
         scrollPaneCard1.setBounds(30,150,500,200);
         scrollPaneCard1.setVisible(true);
         
+        
 /*    	
 *-------------------------------------------------------
 *  PANEL - View-Card2-OBJEKT - pnlCard2

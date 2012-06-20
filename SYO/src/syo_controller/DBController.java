@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import syo_model.DBTool;
 import syo_gui.MainView;
+import syo_model.DBObjekt;
+import syo_model.DBTool;
 
 public class DBController implements Observer {
 
 	private MainView mainView;
 	private ArrayList<String> sammlungen;
+	
 
 	public ArrayList<String> getSammlungen() {
 		return sammlungen;
@@ -59,10 +61,17 @@ public class DBController implements Observer {
 
 	// Update Methods
 
-	public ArrayList<String> updateSammlung() {
+	public ArrayList<DBObjekt> updateSammlung() {
 		DBTool.getInstance().connectDB();
-		ArrayList<String> result = DBTool.getInstance().selectColumnFromTable(
+		ArrayList<DBObjekt> result = DBTool.getInstance().selectColumnFromTable(
 				"sammlung", "SammlungName");
+		DBTool.getInstance().closeDB();
+		return result;
+	}
+	
+	public ArrayList<DBObjekt> getObjektOfSammlung(DBObjekt obj) {
+		DBTool.getInstance().connectDB();
+		ArrayList<DBObjekt> result = DBTool.getInstance().selectObjectsOfSammlungByID(obj.getId());
 		DBTool.getInstance().closeDB();
 		return result;
 	}

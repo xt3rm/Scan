@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Observable;
 
+
 /**
  * This class provides the basic functionality to setup and access the database.
  * The Singleton pattern is used to prevent multiple instances.
@@ -358,8 +359,8 @@ public class DBTool extends Observable {
 	 *            int The id of the object.
 	 */
 	public void deleteItemOfTableByID(String tblName, int id) {
-		String delete = "DELETE * FROM " + tblName + " WHERE " + tblName
-				+ "_ID = " + id;
+		String delete = "DELETE FROM " + tblName + " WHERE ID_" + tblName
+			+ "= " + id;
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(delete);
@@ -383,16 +384,17 @@ public class DBTool extends Observable {
 	 *            The name of the table-
 	 * @return ResultSet
 	 */
-	public ArrayList<String> selectColumnFromTable(String tblName,
+	public ArrayList<DBObjekt> selectColumnFromTable(String tblName,
 			String colName) {
 		String select = "SELECT * FROM " + tblName;
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<DBObjekt> result = new ArrayList<DBObjekt>();
 		try {
 			statement = connection.createStatement();
 			statement.execute(select);
 			rSet = statement.getResultSet();
 			while (rSet.next()) {
-				result.add(rSet.getString(colName));
+				DBObjekt obj = new DBObjekt(rSet.getString(2), rSet.getInt(1));
+				result.add(obj);
 			}
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
@@ -431,19 +433,19 @@ public class DBTool extends Observable {
 	 * @param sammlungID
 	 * @return ResultSet
 	 */
-	public ArrayList<String> selectObjectsOfSammlungByID(int sammlungID) {
+	public ArrayList<DBObjekt> selectObjectsOfSammlungByID(int sammlungID) {
 		String selObj = "SELECT * FROM Objekt AS O "
 				+ "JOIN Objekt_Sammlung AS OS ON "
 				+ "O.ID_Objekt = OS.Objekt_ID " + "WHERE " + sammlungID
 				+ " = OS.Sammlung_ID";
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<DBObjekt> result = new ArrayList<DBObjekt>();
 
 		try {
 			statement = connection.createStatement();
 			statement.execute(selObj);
 			rSet = statement.getResultSet();
 			while (rSet.next()) {
-				result.add(rSet.getString("ObjektName"));
+				result.add(new DBObjekt(rSet.getString(2), rSet.getInt(1)));
 			}
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());

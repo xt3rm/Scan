@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import syo_model.DBObjekt;
 import syo_model.DBTool;
 
 public class DBTest {
@@ -71,9 +72,9 @@ public class DBTest {
 	
 	@Test
 	public void testSelectAllFromTable() {
-		ArrayList<String> rs = DBTool.getInstance().selectColumnFromTable("objekt", "ObjektName");
+		ArrayList<DBObjekt> rs = DBTool.getInstance().selectColumnFromTable("objekt", "ObjektName");
 		assertTrue(rs.get(0).equals("Testobjekt"));
-		ArrayList<String> rt = DBTool.getInstance().selectColumnFromTable("allObjInfo", "Wert");
+		ArrayList<DBObjekt> rt = DBTool.getInstance().selectColumnFromTable("allObjInfo", "Wert");
 		assertTrue(rt.get(0).equals("TestWert"));
 	}	
 }

@@ -126,7 +126,7 @@ public class MainView extends JFrame implements Observer {
         cmdCard1neueSammlung.setVisible(true);
         cmdCard1neueSammlung.setBounds(420, 70, 185, 30);
         
-        String List[] = {"Blabla","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","42","42","42","42","42","42","42"};
+        String[] List = {"Blabla","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","42","42","42","42","42","42","42"};
         
         JList liCard1Sammlungen = new JList(List);
         pnlCard1.add(liCard1Sammlungen);

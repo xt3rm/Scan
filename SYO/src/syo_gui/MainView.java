@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import syo_model.DBTool;
 
@@ -53,6 +54,8 @@ public class MainView extends JFrame implements Observer {
     final static String OBJEKTERSTELLUNG = "Neues Objekt kann erstellt werden";
     final static String FELDERSTELLUNG = "Erstellung eines neuen Feldes";
     final static String VERWALTUNG = "Die Verwaltung wird angezeigt";
+    final static String UBER_SYO = "SYO - scan your object";
+    final static String STUFF = "Das ist ein Text";
 
     
     public MainView() {
@@ -70,6 +73,8 @@ public class MainView extends JFrame implements Observer {
 	    JPanel pnlCard5;
 	    JPanel pnlCard6;
 	    JPanel pnlCard7;
+	    JPanel pnlCard8;
+	    JPanel pnlCard9;
 		
     	
 /*  	
@@ -94,6 +99,8 @@ public class MainView extends JFrame implements Observer {
         pnlCard5 = new JPanel(null);
         pnlCard6 = new JPanel(null);
         pnlCard7 = new JPanel(null);
+        pnlCard8 = new JPanel(null);
+        pnlCard9 = new JPanel(null);
         
         
         pnlView.add(pnlCard1, "1");
@@ -103,7 +110,8 @@ public class MainView extends JFrame implements Observer {
         pnlView.add(pnlCard5, "5");
         pnlView.add(pnlCard6, "6");
         pnlView.add(pnlCard7, "7");
-          
+        pnlView.add(pnlCard8, "8");
+        pnlView.add(pnlCard9, "9");  
 /*    	
 *-------------------------------------------------------
 *  PANEL - View-Card1-SAMMLUNGEN - pnlCard1
@@ -246,11 +254,31 @@ public class MainView extends JFrame implements Observer {
 
         pnlCard4.setBackground(new Color(255,255,255));
         
-        lblCard4.setBounds(50, 50, 120, 30);
+        lblCard4.setBounds(100, 20, 300, 30);
         lblCard4.setVisible(true); 
         
-
+        JLabel lblCard4Sammlungsname = new JLabel("Sammlungsname:");
+        pnlCard4.add(lblCard4Sammlungsname);
+        lblCard4Sammlungsname.setBounds(30, 90, 300, 30);      
+        lblCard4Sammlungsname.setVisible(true); 
+        repaint();
+        
+        JTextField txtCard4neueSammlung = new JTextField();  
+        pnlCard4.add(txtCard4neueSammlung);
+        txtCard4neueSammlung.setVisible(true);
+        txtCard4neueSammlung.setBounds(140,90,185,30);
        
+        JButton cmdCard4ok;
+        cmdCard4ok = new JButton("ok");
+        pnlCard4.add(cmdCard4ok);
+        cmdCard4ok.setVisible(true);
+        cmdCard4ok.setBounds(420, 90, 185, 30);
+        
+        JButton cmdCard4abbrechen;
+        cmdCard4abbrechen = new JButton("abbrechen");
+        pnlCard4.add(cmdCard4abbrechen);
+        cmdCard4abbrechen.setVisible(true);
+        cmdCard4abbrechen.setBounds(420, 140, 185, 30);
         
 /*    	
 *-------------------------------------------------------
@@ -272,10 +300,10 @@ public class MainView extends JFrame implements Observer {
         lblCard5Name.setVisible(true); 
         repaint();
 
-        JTextField txtCard5neueSammlung = new JTextField();  
-        pnlCard5.add(txtCard5neueSammlung);
-        txtCard5neueSammlung.setVisible(true);
-        txtCard5neueSammlung.setBounds(80,90,185,30);
+        JTextField txtCard5neuesObjekt = new JTextField();  
+        pnlCard5.add(txtCard5neuesObjekt);
+        txtCard5neuesObjekt.setVisible(true);
+        txtCard5neuesObjekt.setBounds(80,90,185,30);
     
         JComboBox cmbCard5Typauswählen = new JComboBox(List);
         pnlCard5.add (cmbCard5Typauswählen);
@@ -363,9 +391,64 @@ public class MainView extends JFrame implements Observer {
         lblCard7.setBounds(50, 50, 120, 30);
         lblCard7.setVisible(true); 
         
+       JList liCard7Sammlungen = new JList(List);
+        pnlCard7.add(liCard7Sammlungen);
+        liCard7Sammlungen.setVisible(true);
+        liCard7Sammlungen.setBounds(30,150,350,200);
 
+  
+        JButton cmdCard7Sammlunglöschen;
+        cmdCard7Sammlunglöschen = new JButton("Sammlung löschen");
+        pnlCard7.add(cmdCard7Sammlunglöschen);
+        cmdCard7Sammlunglöschen.setVisible(true);
+        cmdCard7Sammlunglöschen.setBounds(460, 70, 185, 30);
+
+/*    	
+*-------------------------------------------------------
+*  PANEL - View-Card8-Über SYO - pnlCard8
+*-------------------------------------------------------	
+*/
+        JLabel lblCard8 = new JLabel(UBER_SYO);
+        pnlCard8.add(lblCard8);
+
+        pnlCard8.setBackground(new Color(255,255,255));
+              
+        lblCard8.setBounds(100, 20, 200, 30);
+        lblCard8.setVisible(true);
         
+        JLabel lblCard8Info = new JLabel("<html>Die Bedienung von SYO ist nicht einfach.<br>Für Fragen, Probleme, " +
+        		"Komplikationen wenden Sie sich bitte an eine kompetente Fachperson.<br>" +
+        		"Falls diese Ihnen nicht weiterhelfen kann, so melden Sie sich bei der <br>" +
+        		"Konkurenz und Sie werden feststellen, dass Ihnen dort noch weniger geholfen <br>" +
+        		"werden kann.<br><br>" +
+        		"SYO dankt für Ihre Treue<br><br><br>" +
+        		"Die Software SYO - scan your objects ist frei erhältlich und wird unter GPL gehandelt.<br>" +
+        		"Jegliche komperzielle Änderungen oder kostenpflichtige Veröffentlichungen können strafrechtlich Verfolgt werden.<br><br>" +
+        		"SYO hält sich vor, Hot Dogs zu verkaufen!</html>");
+        pnlCard8.add(lblCard8Info);
+        lblCard8Info.setBounds(70, 100, 500, 250);
+        lblCard8Info.setVisible(true);
+
+                
+                
+/*    	
+*-------------------------------------------------------
+*  PANEL - View-Card9-Stuff - pnlCard9
+*-------------------------------------------------------	
+*/
+        JLabel lblCard9 = new JLabel(STUFF);
+        pnlCard9.add(lblCard9);
+
+        pnlCard9.setBackground(new Color(255,255,255));
+                        
+        lblCard9.setBounds(100, 20, 120, 30);
+        lblCard9.setVisible(true); 
+                        
         
+                        
+                        
+        
+>>>>>>> develop_test
         
 /*        
 *-------------------------------------------------------
@@ -405,16 +488,36 @@ public class MainView extends JFrame implements Observer {
         pnlNavigation.add(cmdSammlung);
         cmdSammlung.setVisible(true);
         cmdSammlung.setBounds(20, 100, 185, 30);
+        cmdSammlung.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (1));
+            }
+        });
+        
+        
             	
         cmdVerwaltung = new JButton("Sammlungen verwalten");
         pnlNavigation.add(cmdVerwaltung);
         cmdVerwaltung.setVisible(true);
         cmdVerwaltung.setBounds(20, 150, 185, 30);
+        cmdVerwaltung.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (7));
+            }
+        });
+        
+        
             	
         cmdInfo = new JButton("Über SYO");
         pnlNavigation.add(cmdInfo);
         cmdInfo.setVisible(true);
         cmdInfo.setBounds(20, 200, 185, 30);
+        cmdInfo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (8));
+            }
+        });
+        
             	
         cmdStuff = new JButton("Noch so ein Button");
         pnlNavigation.add(cmdStuff);
@@ -422,7 +525,7 @@ public class MainView extends JFrame implements Observer {
         cmdStuff.setBounds(20, 250, 185, 30);
             	
             	
-            	
+         	
         //Previous & Next - Buttons / Only for Testing
         cmdPrevious = new JButton("<-- Previous");
         pnlNavigation.add(cmdPrevious);
@@ -444,16 +547,12 @@ public class MainView extends JFrame implements Observer {
         cmdNext.setBounds(50, 350, 120, 36);
         cmdNext.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
-        		if (currentCard < 8) {
+        		if (currentCard < 10) {
                 	currentCard += 1;
                     cl.show(pnlView, "" + (currentCard));
         		}
         	}
        	});
-        
-        
-        
-        
         
         
         

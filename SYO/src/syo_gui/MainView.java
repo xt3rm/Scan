@@ -2,7 +2,6 @@ package syo_gui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -10,30 +9,26 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import javax.swing.ListSelectionModel;
-
-
-import syo_controller.DBController;
 import syo_model.DBTool;
-
 
 
 @SuppressWarnings("serial")
 public class MainView extends JFrame implements Observer {
  
-	private DBController dbc;
     
     private int currentCard = 1;
-    
+
 	private CardLayout cl;
 
     JPanel pnlContent = new JPanel();
@@ -56,15 +51,12 @@ public class MainView extends JFrame implements Observer {
     final static String TYPERSTELLUNG = "Neuer Typ kann erstellt werden";
     final static String SAMMLUNGERSTELLUNG = "Neue Sammlung kann erstellt werden";
     final static String OBJEKTERSTELLUNG = "Neues Objekt kann erstellt werden";
-    final static String FELDERSTELLUNG = "Neues Feld erstellen";
+    final static String FELDERSTELLUNG = "Erstellung eines neuen Feldes";
     final static String VERWALTUNG = "Die Verwaltung wird angezeigt";
-    final static String DIESAMMLUNG = "Objekte der Sammlung";
-    final static String TEST = "Die Verwaltung wird angezeigt";
 
     
     public MainView() {
     	DBTool.getInstance().addObserver(this);
-    	dbc = new DBController(this);
         this.setTitle("SYO - Alles ist besser | Unser Motto: Das Beste ist Schlecht genug!!");	
 		this.setSize(900, 600);
 		this.setResizable(false);
@@ -78,8 +70,6 @@ public class MainView extends JFrame implements Observer {
 	    JPanel pnlCard5;
 	    JPanel pnlCard6;
 	    JPanel pnlCard7;
-	    JPanel pnlCard8;
-	    JPanel pnlCard9;
 		
     	
 /*  	
@@ -104,9 +94,6 @@ public class MainView extends JFrame implements Observer {
         pnlCard5 = new JPanel(null);
         pnlCard6 = new JPanel(null);
         pnlCard7 = new JPanel(null);
-        pnlCard8 = new JPanel(null);
-        pnlCard9 = new JPanel(null);
-
         
         
         pnlView.add(pnlCard1, "1");
@@ -116,8 +103,6 @@ public class MainView extends JFrame implements Observer {
         pnlView.add(pnlCard5, "5");
         pnlView.add(pnlCard6, "6");
         pnlView.add(pnlCard7, "7");
-        pnlView.add(pnlCard8, "8");
-        pnlView.add(pnlCard9, "9");
           
 /*    	
 *-------------------------------------------------------
@@ -143,24 +128,13 @@ public class MainView extends JFrame implements Observer {
         
         String List[] = {"Blabla","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja"};
         
-
-        
-        cmdCard1neueSammlung = new JButton("Sammlungen anzeigen");
-        pnlCard1.add(cmdCard1neueSammlung);
-        cmdCard1neueSammlung.setVisible(true);
-        cmdCard1neueSammlung.setBounds(100, 100, 185, 30);
-
         JList liCard1Sammlungen = new JList(List);
         pnlCard1.add(liCard1Sammlungen);
         liCard1Sammlungen.setVisible(true);
         liCard1Sammlungen.setBounds(30,150,500,200);
-
         
         
-        /*JComboBox cmbCard1Sammlungen = new JComboBox(List);
-        pnlCard1.add (cmbCard1Sammlungen);
-        cmbCard1Sammlungen.setVisible(true);
-        cmbCard1Sammlungen.setBounds(10,80,200,30);
+       
    
 
 /*    	
@@ -204,7 +178,7 @@ public class MainView extends JFrame implements Observer {
         
 /*    	
 *-------------------------------------------------------
-*  PANEL - View-Card3-TYPERSTELLUNG
+*  PANEL - View-Card3-TYPERSTELLUNG - pnlCard3
 *-------------------------------------------------------	
 */
         JLabel lblCard3 = new JLabel(TYPERSTELLUNG);
@@ -255,7 +229,7 @@ public class MainView extends JFrame implements Observer {
         
 /*    	
 *-------------------------------------------------------
-*  PANEL - View-Card4-SAMMLUNGERSTELLUNG
+*  PANEL - View-Card4-SAMMLUNGERSTELLUNG - pnlCard4
 *-------------------------------------------------------	
 */
         JLabel lblCard4 = new JLabel(SAMMLUNGERSTELLUNG);
@@ -271,7 +245,7 @@ public class MainView extends JFrame implements Observer {
         
 /*    	
 *-------------------------------------------------------
-*  PANEL - View-Card5-OBJEKTERSTELLUNG 
+*  PANEL - View-Card5-OBJEKTERSTELLUNG - pnlCard5
 *-------------------------------------------------------	
 */
 
@@ -280,109 +254,110 @@ public class MainView extends JFrame implements Observer {
 
         pnlCard5.setBackground(new Color(255,255,255));
         
-        lblCard5.setBounds(50, 50, 120, 30);
+        lblCard5.setBounds(100, 20, 200, 30);
         lblCard5.setVisible(true); 
-    
         
+        JLabel lblCard5Name = new JLabel("Name:");
+        pnlCard5.add(lblCard5Name);
+        lblCard5Name.setBounds(30, 90, 300, 30);      
+        lblCard5Name.setVisible(true); 
+        repaint();
+
+        JTextField txtCard5neueSammlung = new JTextField();  
+        pnlCard5.add(txtCard5neueSammlung);
+        txtCard5neueSammlung.setVisible(true);
+        txtCard5neueSammlung.setBounds(80,90,185,30);
+    
+        JComboBox cmbCard5Typauswählen = new JComboBox(List);
+        pnlCard5.add (cmbCard5Typauswählen);
+        cmbCard5Typauswählen.setVisible(true);
+        cmbCard5Typauswählen.setBounds(30,140,235,30);
+        
+        JButton cmdCard5NeuerTyp;
+        cmdCard5NeuerTyp = new JButton("Neuer Typ");
+        pnlCard5.add(cmdCard5NeuerTyp);
+        cmdCard5NeuerTyp.setVisible(true);
+        cmdCard5NeuerTyp.setBounds(420, 90, 185, 30);
+        
+        JButton cmdCard5weiter;
+        cmdCard5weiter = new JButton("weiter");
+        pnlCard5.add(cmdCard5weiter);
+        cmdCard5weiter.setVisible(true);
+        cmdCard5weiter.setBounds(420, 140, 185, 30);
 /*    	
 *-------------------------------------------------------
-*  PANEL - View-Card6-FELDERSTELLUNG
+*  PANEL - View-Card6-FELDERSTELLUNG pnl Card6
 *-------------------------------------------------------	
 */
         
-        JLabel lblCard6 = new JLabel(FELDERSTELLUNG+" - Card6");
+        JLabel lblCard6 = new JLabel(FELDERSTELLUNG);
         pnlCard6.add(lblCard6);
-        lblCard6.setBounds(100, 20, 250, 30);
+        
+        pnlCard6.setBackground(new Color(255,255,255));
+        
+        lblCard6.setBounds(100, 20, 300, 30);
         lblCard6.setVisible(true); 
+        
         
         JLabel lblCard6Feldname = new JLabel("Feldname:");
         pnlCard6.add(lblCard6Feldname);
-        lblCard6Feldname.setBounds(80, 200, 100, 30);
-        lblCard6Feldname.setVisible(true);
-        
-        pnlCard6.setBackground(new Color(255,255,255));
-        
-        JTextField txtCard6Feldname;
-        txtCard6Feldname = new JTextField(10);
-        pnlCard6.add(txtCard6Feldname);
-        txtCard6Feldname.setBounds(170, 200, 180, 30);
-        
+        lblCard6Feldname.setBounds(30, 90, 300, 30);      
+        lblCard6Feldname.setVisible(true); 
+        repaint();
 
+        JTextField txtCard56Feldname = new JTextField();  
+        pnlCard6.add(txtCard56Feldname);
+        txtCard56Feldname.setVisible(true);
+        txtCard56Feldname.setBounds(100,90,185,30);
         
         
-        JButton cmdCard6Abbrechen;
-        cmdCard6Abbrechen = new JButton("Abbrechen");
-        pnlCard6.add(cmdCard6Abbrechen);
-        cmdCard6Abbrechen.setVisible(true);
-        cmdCard6Abbrechen.setBounds(400, 180, 120, 30);
+        
+        JRadioButton rbtnCard6Text = new JRadioButton("Text", true);
+        JRadioButton rbtnCard6Zahl = new JRadioButton("Zahl" , false);
+        
+        ButtonGroup rbtnGroupCard6 = new ButtonGroup();
+        rbtnGroupCard6.add(rbtnCard6Text);
+        rbtnGroupCard6.add(rbtnCard6Zahl);
+ 
+        pnlCard6.add(rbtnCard6Text);
+        rbtnCard6Text.setVisible(true);
+        rbtnCard6Text.setBounds(400, 90, 185,30);
+        
+        pnlCard6.add(rbtnCard6Zahl);
+        rbtnCard6Zahl.setVisible(true);
+        rbtnCard6Zahl.setBounds(400, 140, 185,30);
+        
+        JButton cmdCard6abbrechen;
+        cmdCard6abbrechen = new JButton("abbrechen");
+        pnlCard6.add(cmdCard6abbrechen);
+        cmdCard6abbrechen.setVisible(true);
+        cmdCard6abbrechen.setBounds(70, 370, 185, 30);
         
         
-        JButton cmdCard6OK;
-        cmdCard6OK = new JButton("OK");
-        pnlCard6.add(cmdCard6OK);
-        cmdCard6OK.setVisible(true);
-        cmdCard6OK.setBounds(400, 230, 120, 30);
-
-        pnlCard6.setBackground(new Color(255,255,255));
-
+        JButton cmdCard6weiter;
+        cmdCard6weiter = new JButton("weiter");
+        pnlCard6.add(cmdCard6weiter);
+        cmdCard6weiter.setVisible(true);
+        cmdCard6weiter.setBounds(70, 420, 185, 30);
         
         
-
 /*    	
 *-------------------------------------------------------
-*  PANEL - View-Card7-VERWALTUNG
+*  PANEL - View-Card7-VERWALTUNG - pnlCard7
 *-------------------------------------------------------	
 */
-        JLabel lblCard7 = new JLabel(VERWALTUNG+" - Card7");
-        
+        JLabel lblCard7 = new JLabel(VERWALTUNG);
         pnlCard7.add(lblCard7);
 
         pnlCard7.setBackground(new Color(255,255,255));
         
-        lblCard7.setBounds(100, 20, 250, 30);
+        lblCard7.setBounds(50, 50, 120, 30);
         lblCard7.setVisible(true); 
         
-        
-           
-/*    	
-*-------------------------------------------------------
-*  PANEL - View-Card8-DIEVERWALTUNG-pnlCard8
-*-------------------------------------------------------	
-*/
-        JLabel lblCard8 = new JLabel(DIESAMMLUNG+" - Card8");
-        JButton cmdCard8Objektdelete;
-        JButton cmdCard8neuesObjekt;
-        JButton cmdCard8drucken;
 
         
-        pnlCard8.add(lblCard8);
-        pnlCard8.setBackground(new Color(255,255,255));
-           
-        lblCard8.setBounds(100, 20, 200, 30);
-        lblCard8.setVisible(true); 
-                
-        String Listeli[] = {"Element1" , "Element2", "Element3", "Element4", "Element5", "Element6", "Element7"};
-        JList liCard8Objekte = new JList(Listeli);
-        pnlCard8.add(liCard8Objekte);
-        liCard8Objekte.setVisible(true);
-        liCard8Objekte.setBounds(50,150,200,300);
         
-        cmdCard8Objektdelete = new JButton("Objekt löschen");
-        pnlCard8.add(cmdCard8Objektdelete);
-        cmdCard8Objektdelete.setVisible(true);
-        cmdCard8Objektdelete.setBounds(400, 150, 170, 30);
         
-        cmdCard8neuesObjekt = new JButton("neues Objekt");
-        pnlCard8.add(cmdCard8neuesObjekt);
-        cmdCard8neuesObjekt.setVisible(true);
-        cmdCard8neuesObjekt.setBounds(400, 190, 170, 30);
-            
-        cmdCard8drucken = new JButton("drucken");
-        pnlCard8.add(cmdCard8drucken);
-        cmdCard8drucken.setVisible(true);
-        cmdCard8drucken.setBounds(400, 230, 170, 30);
-
-
 /*        
 *-------------------------------------------------------
 *  PANEL - NAVIGATION - pnlNavigation
@@ -460,7 +435,7 @@ public class MainView extends JFrame implements Observer {
         cmdNext.setBounds(50, 350, 120, 36);
         cmdNext.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
-        		if (currentCard < 10) {
+        		if (currentCard < 8) {
                 	currentCard += 1;
                     cl.show(pnlView, "" + (currentCard));
         		}

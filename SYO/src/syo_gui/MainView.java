@@ -53,6 +53,8 @@ public class MainView extends JFrame implements Observer {
     final static String OBJEKTERSTELLUNG = "Neues Objekt kann erstellt werden";
     final static String FELDERSTELLUNG = "Erstellung eines neuen Feldes";
     final static String VERWALTUNG = "Die Verwaltung wird angezeigt";
+    final static String UBER_SYO = "SYO - scan your object";
+    final static String STUFF = "Das ist ein Text";
 
     
     public MainView() {
@@ -70,6 +72,8 @@ public class MainView extends JFrame implements Observer {
 	    JPanel pnlCard5;
 	    JPanel pnlCard6;
 	    JPanel pnlCard7;
+	    JPanel pnlCard8;
+	    JPanel pnlCard9;
 		
     	
 /*  	
@@ -94,6 +98,8 @@ public class MainView extends JFrame implements Observer {
         pnlCard5 = new JPanel(null);
         pnlCard6 = new JPanel(null);
         pnlCard7 = new JPanel(null);
+        pnlCard8 = new JPanel(null);
+        pnlCard9 = new JPanel(null);
         
         
         pnlView.add(pnlCard1, "1");
@@ -103,7 +109,8 @@ public class MainView extends JFrame implements Observer {
         pnlView.add(pnlCard5, "5");
         pnlView.add(pnlCard6, "6");
         pnlView.add(pnlCard7, "7");
-          
+        pnlView.add(pnlCard8, "8");
+        pnlView.add(pnlCard9, "9");  
 /*    	
 *-------------------------------------------------------
 *  PANEL - View-Card1-SAMMLUNGEN - pnlCard1
@@ -357,6 +364,51 @@ public class MainView extends JFrame implements Observer {
 
         
         
+/*    	
+*-------------------------------------------------------
+*  PANEL - View-Card8-Über SYO - pnlCard8
+*-------------------------------------------------------	
+*/
+        JLabel lblCard8 = new JLabel(UBER_SYO);
+        pnlCard8.add(lblCard8);
+
+        pnlCard8.setBackground(new Color(255,255,255));
+              
+        lblCard8.setBounds(100, 20, 200, 30);
+        lblCard8.setVisible(true);
+        
+        JLabel lblCard8Info = new JLabel("<html>Die Bedienung von SYO ist nicht einfach.<br>Für Fragen, Probleme, " +
+        		"Komplikationen wenden Sie sich bitte an eine kompetente Fachperson.<br>" +
+        		"Falls diese Ihnen nicht weiterhelfen kann, so melden Sie sich bei der <br>" +
+        		"Konkurenz und Sie werden feststellen, dass Ihnen dort noch weniger geholfen <br>" +
+        		"werden kann.<br><br>" +
+        		"SYO dankt für Ihre Treue<br><br><br>" +
+        		"Die Software SYO - scan your objects ist frei erhältlich und wird unter GPL gehandelt.<br>" +
+        		"Jegliche komperzielle Änderungen oder kostenpflichtige Veröffentlichungen können strafrechtlich Verfolgt werden.<br><br>" +
+        		"SYO hält sich vor, Hot Dogs zu verkaufen!</html>");
+        pnlCard8.add(lblCard8Info);
+        lblCard8Info.setBounds(70, 100, 500, 250);
+        lblCard8Info.setVisible(true);
+
+                
+                
+/*    	
+*-------------------------------------------------------
+*  PANEL - View-Card9-Stuff - pnlCard9
+*-------------------------------------------------------	
+*/
+        JLabel lblCard9 = new JLabel(STUFF);
+        pnlCard9.add(lblCard9);
+
+        pnlCard9.setBackground(new Color(255,255,255));
+                        
+        lblCard9.setBounds(100, 20, 120, 30);
+        lblCard9.setVisible(true); 
+                        
+        
+                        
+                        
+        
         
 /*        
 *-------------------------------------------------------
@@ -396,16 +448,36 @@ public class MainView extends JFrame implements Observer {
         pnlNavigation.add(cmdSammlung);
         cmdSammlung.setVisible(true);
         cmdSammlung.setBounds(20, 100, 185, 30);
+        cmdSammlung.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (1));
+            }
+        });
+        
+        
             	
         cmdVerwaltung = new JButton("Sammlungen verwalten");
         pnlNavigation.add(cmdVerwaltung);
         cmdVerwaltung.setVisible(true);
         cmdVerwaltung.setBounds(20, 150, 185, 30);
+        cmdVerwaltung.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (7));
+            }
+        });
+        
+        
             	
         cmdInfo = new JButton("Über SYO");
         pnlNavigation.add(cmdInfo);
         cmdInfo.setVisible(true);
         cmdInfo.setBounds(20, 200, 185, 30);
+        cmdInfo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (8));
+            }
+        });
+        
             	
         cmdStuff = new JButton("Noch so ein Button");
         pnlNavigation.add(cmdStuff);
@@ -413,7 +485,7 @@ public class MainView extends JFrame implements Observer {
         cmdStuff.setBounds(20, 250, 185, 30);
             	
             	
-            	
+         	
         //Previous & Next - Buttons / Only for Testing
         cmdPrevious = new JButton("<-- Previous");
         pnlNavigation.add(cmdPrevious);
@@ -435,16 +507,12 @@ public class MainView extends JFrame implements Observer {
         cmdNext.setBounds(50, 350, 120, 36);
         cmdNext.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
-        		if (currentCard < 8) {
+        		if (currentCard < 10) {
                 	currentCard += 1;
                     cl.show(pnlView, "" + (currentCard));
         		}
         	}
        	});
-        
-        
-        
-        
         
         
         

@@ -1,8 +1,5 @@
 package syo_controller;
 
-import java.sql.Array;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -27,7 +24,7 @@ public class DBController implements Observer {
 		this.mainView = mainView;
 		DBTool.getInstance().addObserver(this);
 		sammlungen = new ArrayList<String>();
-		//Change
+		// Change
 	}
 
 	@Override
@@ -36,18 +33,38 @@ public class DBController implements Observer {
 
 	}
 
+	/**
+	 * Creates a Sammlungsobjekt.
+	 * 
+	 * @param name
+	 *            The name of the Sammlung
+	 */
 	public void createSammlung(String name) {
 		DBTool.getInstance().connectDB();
 		DBTool.getInstance().addSammlung(name);
 		DBTool.getInstance().closeDB();
 	}
-	
-	
-	
+
+	/**
+	 * Deletes a Sammlungsobjekt.
+	 * 
+	 * @param id
+	 *            The id of the Sammlung
+	 */
+	public void deleteSammlung(int id) {
+		DBTool.getInstance().connectDB();
+		DBTool.getInstance().deleteItemOfTableByID("sammlung", id);
+		DBTool.getInstance().closeDB();
+	}
+
 	// Update Methods
-	
-	public ArrayList<String> updateList() {
-		return DBTool.getInstance().selectColumnFromTable("sammlung", "SammlungName");
+
+	public ArrayList<String> updateSammlung() {
+		DBTool.getInstance().connectDB();
+		ArrayList<String> result = DBTool.getInstance().selectColumnFromTable(
+				"sammlung", "SammlungName");
+		DBTool.getInstance().closeDB();
+		return result;
 	}
 
 }

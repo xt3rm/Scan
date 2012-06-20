@@ -72,7 +72,7 @@ public class DBTool extends Observable {
 			statement.executeUpdate(creator.getTblObjekt_Sammlung());
 			statement.executeUpdate(creator.getTblTyp_Feld());
 			statement.execute(creator.getViewAllObjInfo());
-			//close DB
+			// close DB
 			closeDB();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -249,7 +249,7 @@ public class DBTool extends Observable {
 			// Den neu erzeugten Primary Key in key speichern.
 			while (rSet.next()) {
 				key = rSet.getInt(1);
-				
+
 			}
 			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
 					+ key + ", " + sammlungID + ")";
@@ -345,6 +345,37 @@ public class DBTool extends Observable {
 		}
 	}
 
+	// Delete-Statements //
+	// *******************//
+	// *******************//
+
+	/**
+	 * Adds an entry to table Eigenschaft.
+	 * 
+	 * @param tblName
+	 *            String The name of the table.
+	 * @param id
+	 *            int The id of the object.
+	 */
+	public void deleteItemOfTableByID(String tblName, int id) {
+		String delete = "DELETE * FROM " + tblName + " WHERE " + tblName
+				+ "_ID = " + id;
+		try {
+			statement = connection.createStatement();
+			statement.executeUpdate(delete);
+			propagateChange();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+
+		}
+	}
+
+	// Select-Statements //
+	// *******************//
+	// *******************//
+
 	/**
 	 * Selects everything from a given table.
 	 * 
@@ -352,14 +383,15 @@ public class DBTool extends Observable {
 	 *            The name of the table-
 	 * @return ResultSet
 	 */
-	public ArrayList<String> selectColumnFromTable(String tblName, String colName) {
+	public ArrayList<String> selectColumnFromTable(String tblName,
+			String colName) {
 		String select = "SELECT * FROM " + tblName;
 		ArrayList<String> result = new ArrayList<String>();
 		try {
 			statement = connection.createStatement();
 			statement.execute(select);
 			rSet = statement.getResultSet();
-			while(rSet.next()) {
+			while (rSet.next()) {
 				result.add(rSet.getString(colName));
 			}
 		} catch (SQLException ex) {
@@ -370,7 +402,6 @@ public class DBTool extends Observable {
 		return result;
 	}
 
-	
 	/**
 	 * Selects a row with the specified ID from a table.
 	 * 
@@ -406,12 +437,12 @@ public class DBTool extends Observable {
 				+ "O.ID_Objekt = OS.Objekt_ID " + "WHERE " + sammlungID
 				+ " = OS.Sammlung_ID";
 		ArrayList<String> result = new ArrayList<String>();
-		
+
 		try {
 			statement = connection.createStatement();
 			statement.execute(selObj);
 			rSet = statement.getResultSet();
-			while(rSet.next()) {
+			while (rSet.next()) {
 				result.add(rSet.getString("ObjektName"));
 			}
 		} catch (SQLException ex) {
@@ -434,7 +465,7 @@ public class DBTool extends Observable {
 			statement = connection.createStatement();
 			statement.execute(selAll);
 			rSet = statement.getResultSet();
-			while(rSet.next()) {
+			while (rSet.next()) {
 				result.add(rSet.getString(colName));
 			}
 		} catch (SQLException ex) {

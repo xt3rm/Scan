@@ -133,12 +133,21 @@ public class MainView extends JFrame implements Observer {
         cmdCard1neueSammlung.setVisible(true);
         cmdCard1neueSammlung.setBounds(420, 70, 185, 30);
         
-        String List[] = {"Blabla","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja"};
+        String List[] = {"Blabla","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","42","42","42","42","42","42","42"};
         
         JList liCard1Sammlungen = new JList(List);
         pnlCard1.add(liCard1Sammlungen);
+        
+        
+        
         liCard1Sammlungen.setVisible(true);
-        liCard1Sammlungen.setBounds(30,150,500,200);
+       // liCard1Sammlungen.setBounds(30,150,500,200);
+        JScrollPane scrollPane = new JScrollPane(liCard1Sammlungen);
+        pnlCard1.add(scrollPane);
+        scrollPane.setBounds(30,150,500,200);
+        scrollPane.setVisible(true);
+        
+        
         
         
        

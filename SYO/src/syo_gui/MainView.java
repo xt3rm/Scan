@@ -47,8 +47,6 @@ public class MainView extends JFrame implements Observer {
     
     
 
-
-    
     
     
 //--Namen der verschiedenen Cards --    
@@ -62,6 +60,7 @@ public class MainView extends JFrame implements Observer {
     final static String UBER_SYO = "SYO - scan your object | Info";
     final static String STUFF = "Das ist ein Text";
 
+    
     
 //-- Cards des pnlView --    
     JPanel pnlCard1;
@@ -87,6 +86,7 @@ public class MainView extends JFrame implements Observer {
     
     JButton cmdPrevious;
     JButton cmdNext;
+    
     
     
 //--------- Komponenten Card1 - Alle Samlungen anzeigen ------    

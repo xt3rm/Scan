@@ -201,6 +201,7 @@ public class MainView extends JFrame implements Observer {
 		 * -------------------------------------------------------
 		 */
 
+	
 		lblCard1 = new JLabel("<html><bold>" + SAMMLUNGEN + "</bold></html>");
 		pnlCard1.add(lblCard1);
 

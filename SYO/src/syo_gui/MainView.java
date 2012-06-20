@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -138,9 +139,12 @@ public class MainView extends JFrame implements Observer {
             }
         });
         
+        ArrayList<String> myList = DBTool.getInstance().selectColumnFromTable("sammlung", "SammlungName");
+        
         String ListCard1[] = {"ListCard1","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","42","42","42","42","42","42","42"};
         
-        JList liCard1Sammlungen = new JList(ListCard1);
+        JList liCard1Sammlungen = new JList(myList.toArray());
+
         pnlCard1.add(liCard1Sammlungen);
         
         JScrollPane scrollPane = new JScrollPane(liCard1Sammlungen);
@@ -522,9 +526,6 @@ public class MainView extends JFrame implements Observer {
                         
         lblCard9.setBounds(100, 20, 120, 30);
         lblCard9.setVisible(true); 
-                        
-        
-                        
 
 /*        
 *-------------------------------------------------------

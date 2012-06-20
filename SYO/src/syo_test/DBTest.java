@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Before;
@@ -70,24 +71,9 @@ public class DBTest {
 	
 	@Test
 	public void testSelectAllFromTable() {
-		ResultSet rs = null;
-		try {
-			rs = DBTool.getInstance().selectAllFromTable("objekt");
-			while (rs.next()) {
-				assertTrue(rs.getString("ObjektName").equals("Testobjekt"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-		}
-		try {
-			rs = DBTool.getInstance().selectAllFromTable("allObjInfo");
-			while (rs.next()) {
-				assertTrue(rs.getString("Wert").equals("TestWert"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-		}
+		ArrayList<String> rs = DBTool.getInstance().selectColumnFromTable("objekt", "ObjektName");
+		assertTrue(rs.get(0).equals("TestObjekt"));
+		ArrayList<String> rt = DBTool.getInstance().selectColumnFromTable("allObjInfo", "Wert");
+		assertTrue(rs.get(0).equals("TestWert"));
 	}	
 }

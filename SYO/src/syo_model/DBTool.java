@@ -1,6 +1,7 @@
 package syo_model;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Observable;
 
 /**
@@ -246,6 +247,7 @@ public class DBTool extends Observable {
 			// Den neu erzeugten Primary Key in key speichern.
 			while (rSet.next()) {
 				key = rSet.getInt(1);
+				
 			}
 			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
 					+ key + ", " + sammlungID + ")";
@@ -348,20 +350,25 @@ public class DBTool extends Observable {
 	 *            The name of the table-
 	 * @return ResultSet
 	 */
-	public ResultSet selectAllFromTable(String tblName) {
+	public ArrayList<String> selectColumnFromTable(String tblName, String colName) {
 		String select = "SELECT * FROM " + tblName;
+		ArrayList<String> result = new ArrayList<String>();
 		try {
 			statement = connection.createStatement();
 			statement.execute(select);
 			rSet = statement.getResultSet();
+			while(rSet.next()) {
+				result.add(rSet.getString(colName));
+			}
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
-		return rSet;
+		return result;
 	}
 
+	
 	/**
 	 * Selects a row with the specified ID from a table.
 	 * 

@@ -195,13 +195,27 @@ public class MainView extends JFrame implements Observer {
 		pnlView.add(pnlCard7, "7");
 		pnlView.add(pnlCard8, "8");
 		pnlView.add(pnlCard9, "9");
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card1-SAMMLUNGEN - pnlCard1
-		 * -------------------------------------------------------
-		 */
-
+		
+		createPnlCard1();
+		createPnlCard2();
+		createPnlCard3();
+		createPnlCard4();
+		createPnlCard5();
+		createPnlCard6();
+		createPnlCard7();
+		createPnlCard8();
+		createPnlCard9();
+		createNavigation();
+		
+		
+		
+	}
 	
+
+	/**
+	 * Creates PanelCard 1
+	 */
+	public void createPnlCard1() {
 		lblCard1 = new JLabel("<html><bold>" + SAMMLUNGEN + "</bold></html>");
 		pnlCard1.add(lblCard1);
 
@@ -246,11 +260,12 @@ public class MainView extends JFrame implements Observer {
 		scrollPaneCard1.setBounds(30, 150, 500, 200);
 		scrollPaneCard1.setVisible(true);
 
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card2-OBJEKT - pnlCard2
-		 * -------------------------------------------------------
-		 */
+	}
+	
+	/**
+	 * Creates PanelCard 2
+	 */
+	public void createPnlCard2() {
 		lblCard2 = new JLabel(OBJEKT);
 		pnlCard2.add(lblCard2);
 
@@ -291,13 +306,12 @@ public class MainView extends JFrame implements Observer {
 		pnlCard2.add(cmdCard2zurueck);
 		cmdCard2zurueck.setVisible(true);
 		cmdCard2zurueck.setBounds(440, 110, 185, 30);
-
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card3-TYPERSTELLUNG - pnlCard3
-		 * -------------------------------------------------------
-		 */
-
+	}
+	
+	/**
+	 * Creates PanelCard 3
+	 */
+	public void createPnlCard3() {
 		lblCard3 = new JLabel(TYPERSTELLUNG);
 		pnlCard3.add(lblCard3);
 
@@ -373,11 +387,13 @@ public class MainView extends JFrame implements Observer {
 				cl.show(pnlView, "" + (5));
 			}
 		});
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card4-SAMMLUNGERSTELLUNG - pnlCard4
-		 * -------------------------------------------------------
-		 */
+		
+	}
+	
+	/**
+	 * Creates PanelCard 4
+	 */
+	public void createPnlCard4() {
 		lblCard4 = new JLabel(SAMMLUNGERSTELLUNG);
 		pnlCard4.add(lblCard4);
 
@@ -417,13 +433,12 @@ public class MainView extends JFrame implements Observer {
 				cl.show(pnlView, "" + (1));
 			}
 		});
-
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card5-OBJEKTERSTELLUNG - pnlCard5
-		 * -------------------------------------------------------
-		 */
-
+	}
+	
+	/**
+	 * Creates PanelCard 5
+	 */
+	public void createPnlCard5() {
 		lblCard5 = new JLabel(OBJEKTERSTELLUNG);
 		pnlCard5.add(lblCard5);
 
@@ -480,13 +495,12 @@ public class MainView extends JFrame implements Observer {
 		});
 		cmdCard5weiter.setVisible(true);
 		cmdCard5weiter.setBounds(440, 110, 185, 30);
+	}
 
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card6-FELDERSTELLUNG pnl Card6
-		 * -------------------------------------------------------
-		 */
-
+	/**
+	 * Creates PanelCard 6
+	 */
+	public void createPnlCard6() {
 		lblCard6 = new JLabel(FELDERSTELLUNG);
 		pnlCard6.add(lblCard6);
 
@@ -525,12 +539,12 @@ public class MainView extends JFrame implements Observer {
 				cl.show(pnlView, "" + (3));
 			}
 		});
-
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card7-VERWALTUNG - pnlCard7
-		 * -------------------------------------------------------
-		 */
+	}
+	
+	/**
+	 * Creates PanelCard 7
+	 */
+	public void createPnlCard7() {
 		lblCard7 = new JLabel(VERWALTUNG);
 		pnlCard7.add(lblCard7);
 
@@ -560,12 +574,12 @@ public class MainView extends JFrame implements Observer {
 		pnlCard7.add(cmdCard7Sammlunglöschen);
 		cmdCard7Sammlunglöschen.setVisible(true);
 		cmdCard7Sammlunglöschen.setBounds(440, 60, 185, 30);
-
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card8-Über SYO - pnlCard8
-		 * -------------------------------------------------------
-		 */
+	}
+	
+	/**
+	 * Creates PanelCard 8
+	 */
+	public void createPnlCard8() {
 		lblCard8 = new JLabel(UBER_SYO);
 		pnlCard8.add(lblCard8);
 
@@ -588,11 +602,12 @@ public class MainView extends JFrame implements Observer {
 		lblCard8Info.setBounds(70, 100, 500, 250);
 		lblCard8Info.setVisible(true);
 
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card9-Stuff - pnlCard9
-		 * -------------------------------------------------------
-		 */
+	}
+	
+	/**
+	 * Creates PanelCard 9
+	 */
+	public void createPnlCard9() {
 		lblCard9 = new JLabel(STUFF);
 		pnlCard9.add(lblCard9);
 
@@ -600,12 +615,13 @@ public class MainView extends JFrame implements Observer {
 
 		lblCard9.setBounds(100, 20, 120, 30);
 		lblCard9.setVisible(true);
+	}
+	
+	/**
+	 * Creates the Navigation
+	 */
+	public void createNavigation() {
 
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * NAVIGATION - pnlNavigation
-		 * -------------------------------------------------------
-		 */
 		pnlNavigation.setLayout(null);
 		pnlNavigation.setBounds(0, 100, 225, 500);
 		pnlNavigation.setBackground(Color.WHITE);
@@ -706,6 +722,7 @@ public class MainView extends JFrame implements Observer {
 		getContentPane().add(pnlContent);
 		DBTool.getInstance().closeDB();
 	}
+
 
 
 	@Override

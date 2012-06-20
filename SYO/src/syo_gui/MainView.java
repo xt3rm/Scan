@@ -47,14 +47,14 @@ public class MainView extends JFrame implements Observer {
     JButton cmdPrevious;
     JButton cmdNext;
     
-    final static String SAMMLUNGEN = "Alle Sammlungen werden angezeigt";
-    final static String OBJEKT = "Objekt kann angezeigt werden";
-    final static String TYPERSTELLUNG = "Neuer Typ kann erstellt werden";
-    final static String SAMMLUNGERSTELLUNG = "Neue Sammlung kann erstellt werden";
-    final static String OBJEKTERSTELLUNG = "Neues Objekt kann erstellt werden";
+    final static String SAMMLUNGEN = "Meine Sammlungen";
+    final static String OBJEKT = "Objekte der ausgewählten Sammlung";
+    final static String TYPERSTELLUNG = "Erstellung eines neuen Typs";
+    final static String SAMMLUNGERSTELLUNG = "Erstellung einer neuen Sammlugn";
+    final static String OBJEKTERSTELLUNG = "Erstellung eines neuen Objektes";
     final static String FELDERSTELLUNG = "Erstellung eines neuen Feldes";
-    final static String VERWALTUNG = "Die Verwaltung wird angezeigt";
-    final static String UBER_SYO = "SYO - scan your object";
+    final static String VERWALTUNG = "SYO - Verwaltung";
+    final static String UBER_SYO = "SYO - scan your object | Info";
     final static String STUFF = "Das ist ein Text";
 
     
@@ -118,40 +118,36 @@ public class MainView extends JFrame implements Observer {
 *-------------------------------------------------------	
 */	
         
-        JLabel lblCard1 = new JLabel(SAMMLUNGEN);
+        JLabel lblCard1 = new JLabel("<html><bold>"+ SAMMLUNGEN +"</bold></html>");
         pnlCard1.add(lblCard1);
         
-        
-
         pnlCard1.setBackground(new Color(255,255,255));
         
         lblCard1.setBounds(100, 20, 300, 30);
         lblCard1.setVisible(true);
+  
         
         JButton cmdCard1neueSammlung;
         cmdCard1neueSammlung = new JButton("neue Sammlung");
         pnlCard1.add(cmdCard1neueSammlung);
         cmdCard1neueSammlung.setVisible(true);
-        cmdCard1neueSammlung.setBounds(420, 70, 185, 30);
+        cmdCard1neueSammlung.setBounds(420, 60, 185, 30);
+        cmdCard1neueSammlung.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (4));
+            }
+        });
         
         String List[] = {"Blabla","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","42","42","42","42","42","42","42"};
         
         JList liCard1Sammlungen = new JList(List);
         pnlCard1.add(liCard1Sammlungen);
         
-        
-        
-        liCard1Sammlungen.setVisible(true);
-       // liCard1Sammlungen.setBounds(30,150,500,200);
         JScrollPane scrollPane = new JScrollPane(liCard1Sammlungen);
         pnlCard1.add(scrollPane);
         scrollPane.setBounds(30,150,500,200);
         scrollPane.setVisible(true);
         
-        
-        
-        
-       
    
 
 /*    	
@@ -174,24 +170,28 @@ public class MainView extends JFrame implements Observer {
         lblCard2Sammlung.setVisible(true); 
         repaint();
 
+        String ListCard2[] = {"Blabla","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","42","42","42","42","42","42","42"};
         
-        JList liCard2Sammlung = new JList(List);
+        JList liCard2Sammlung = new JList(ListCard2);
         pnlCard2.add(liCard2Sammlung);
-        liCard2Sammlung.setVisible(true);
-        liCard2Sammlung.setBounds(30,150,350,200); 
+
+        JScrollPane scrollPaneCard2 = new JScrollPane(liCard2Sammlung);
+        pnlCard2.add(scrollPaneCard2);
+        scrollPaneCard2.setBounds(30,150,500,200);
+        scrollPaneCard2.setVisible(true);
         
         
         JButton cmdCard2bearbeiten;
         cmdCard2bearbeiten = new JButton("bearbeiten");
         pnlCard2.add(cmdCard2bearbeiten);
         cmdCard2bearbeiten.setVisible(true);
-        cmdCard2bearbeiten.setBounds(420, 70, 185, 30);
+        cmdCard2bearbeiten.setBounds(420, 60, 185, 30);
         
         JButton cmdCard2zurueck;
         cmdCard2zurueck = new JButton("zurück");
         pnlCard2.add(cmdCard2zurueck);
         cmdCard2zurueck.setVisible(true);
-        cmdCard2zurueck.setBounds(420, 120, 185, 30);
+        cmdCard2zurueck.setBounds(420, 110, 185, 30);
         
 /*    	
 *-------------------------------------------------------
@@ -224,11 +224,16 @@ public class MainView extends JFrame implements Observer {
         liCard3Felder.setBounds(30,150,350,200); 
         
         
-        JButton cmdCard3neuesFeld;
-        cmdCard3neuesFeld = new JButton("Neues Feld");
-        pnlCard3.add(cmdCard3neuesFeld);
-        cmdCard3neuesFeld.setVisible(true);
-        cmdCard3neuesFeld.setBounds(420, 70, 185, 30);
+        JButton cmdCard3NeuesFeld;
+        cmdCard3NeuesFeld = new JButton("Neues Feld");
+        pnlCard3.add(cmdCard3NeuesFeld);
+        cmdCard3NeuesFeld.setVisible(true);
+        cmdCard3NeuesFeld.setBounds(420, 70, 185, 30);
+        cmdCard3NeuesFeld.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (6));
+            }
+        });
         
         
         JButton cmdCard3entfernen;
@@ -243,7 +248,11 @@ public class MainView extends JFrame implements Observer {
         pnlCard3.add(cmdCard3weiter);
         cmdCard3weiter.setVisible(true);
         cmdCard3weiter.setBounds(420, 170, 185, 30);
-        
+        cmdCard3weiter.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (5));
+            }
+        });
 /*    	
 *-------------------------------------------------------
 *  PANEL - View-Card4-SAMMLUNGERSTELLUNG - pnlCard4
@@ -273,12 +282,22 @@ public class MainView extends JFrame implements Observer {
         pnlCard4.add(cmdCard4ok);
         cmdCard4ok.setVisible(true);
         cmdCard4ok.setBounds(420, 90, 185, 30);
+        cmdCard4ok.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (1));
+            }
+        });
         
         JButton cmdCard4abbrechen;
         cmdCard4abbrechen = new JButton("abbrechen");
         pnlCard4.add(cmdCard4abbrechen);
         cmdCard4abbrechen.setVisible(true);
         cmdCard4abbrechen.setBounds(420, 140, 185, 30);
+        cmdCard4abbrechen.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (1));
+            }
+        });
         
 /*    	
 *-------------------------------------------------------
@@ -296,31 +315,42 @@ public class MainView extends JFrame implements Observer {
         
         JLabel lblCard5Name = new JLabel("Name:");
         pnlCard5.add(lblCard5Name);
-        lblCard5Name.setBounds(30, 90, 300, 30);      
+        lblCard5Name.setBounds(30, 100, 300, 30);      
         lblCard5Name.setVisible(true); 
         repaint();
 
         JTextField txtCard5neuesObjekt = new JTextField();  
         pnlCard5.add(txtCard5neuesObjekt);
         txtCard5neuesObjekt.setVisible(true);
-        txtCard5neuesObjekt.setBounds(80,90,185,30);
+        txtCard5neuesObjekt.setBounds(80,100,185,30);
+    
+        JLabel lblCard5VorhandeneTypen = new JLabel("Typ: ");
+        pnlCard5.add(lblCard5VorhandeneTypen);
+        lblCard5VorhandeneTypen.setBounds(30,170,60,30);
+        lblCard5VorhandeneTypen.setVisible(true);
     
         JComboBox cmbCard5Typauswählen = new JComboBox(List);
         pnlCard5.add (cmbCard5Typauswählen);
         cmbCard5Typauswählen.setVisible(true);
-        cmbCard5Typauswählen.setBounds(30,140,235,30);
+        cmbCard5Typauswählen.setBounds(90,170,235,30);
         
         JButton cmdCard5NeuerTyp;
         cmdCard5NeuerTyp = new JButton("Neuer Typ");
         pnlCard5.add(cmdCard5NeuerTyp);
         cmdCard5NeuerTyp.setVisible(true);
         cmdCard5NeuerTyp.setBounds(420, 90, 185, 30);
+        cmdCard5NeuerTyp.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (3));
+            }
+        });
         
         JButton cmdCard5weiter;
         cmdCard5weiter = new JButton("weiter");
         pnlCard5.add(cmdCard5weiter);
         cmdCard5weiter.setVisible(true);
         cmdCard5weiter.setBounds(420, 140, 185, 30);
+        
 /*    	
 *-------------------------------------------------------
 *  PANEL - View-Card6-FELDERSTELLUNG pnl Card6
@@ -369,6 +399,11 @@ public class MainView extends JFrame implements Observer {
         pnlCard6.add(cmdCard6abbrechen);
         cmdCard6abbrechen.setVisible(true);
         cmdCard6abbrechen.setBounds(70, 370, 185, 30);
+        cmdCard6abbrechen.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (3));
+            }
+        });
         
         
         JButton cmdCard6weiter;
@@ -376,6 +411,11 @@ public class MainView extends JFrame implements Observer {
         pnlCard6.add(cmdCard6weiter);
         cmdCard6weiter.setVisible(true);
         cmdCard6weiter.setBounds(70, 420, 185, 30);
+        cmdCard6weiter.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	cl.show(pnlView, "" + (3));
+            }
+        });
         
         
 /*    	
@@ -388,7 +428,7 @@ public class MainView extends JFrame implements Observer {
 
         pnlCard7.setBackground(new Color(255,255,255));
         
-        lblCard7.setBounds(50, 50, 120, 30);
+        lblCard7.setBounds(100, 20, 220, 30);
         lblCard7.setVisible(true); 
         
        JList liCard7Sammlungen = new JList(List);
@@ -446,10 +486,7 @@ public class MainView extends JFrame implements Observer {
                         
         
                         
-                        
-        
->>>>>>> develop_test
-        
+
 /*        
 *-------------------------------------------------------
 *  PANEL - NAVIGATION - pnlNavigation

@@ -433,9 +433,6 @@ public class MainView extends JFrame implements Observer {
         });
         
         
-        
-        
-        
 /*    	
 *-------------------------------------------------------
 *  PANEL - View-Card7-VERWALTUNG - pnlCard7

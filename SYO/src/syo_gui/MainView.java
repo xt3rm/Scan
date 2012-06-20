@@ -139,10 +139,11 @@ public class MainView extends JFrame implements Observer {
             }
         });
         
-
+        ArrayList<String> myList = DBTool.getInstance().selectColumnFromTable("sammlung", "SammlungName");
+        
         String ListCard1[] = {"ListCard1","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","42","42","42","42","42","42","42"};
         
-        JList liCard1Sammlungen = new JList(ListCard1);
+        JList liCard1Sammlungen = new JList(myList.toArray());
 
         pnlCard1.add(liCard1Sammlungen);
         

@@ -206,15 +206,14 @@ public class MainView extends JFrame implements Observer {
         
         JLabel lblCard3Typname = new JLabel("Typname:");
         pnlCard3.add(lblCard3Typname);
-        lblCard3Typname.setBounds(50, 90, 300, 30);      
+        lblCard3Typname.setBounds(30, 90, 300, 30);      
         lblCard3Typname.setVisible(true); 
-        repaint();
-      
+        
         
         JTextField txtCard3Typname = new JTextField();  
         pnlCard3.add (txtCard3Typname);
         txtCard3Typname.setVisible(true);
-        txtCard3Typname.setBounds(130,90,185,30);
+        txtCard3Typname.setBounds(100,90,185,30);
         
         
         
@@ -327,18 +326,18 @@ public class MainView extends JFrame implements Observer {
         
         JLabel lblCard5Name = new JLabel("Name:");
         pnlCard5.add(lblCard5Name);
-        lblCard5Name.setBounds(30, 100, 300, 30);      
+        lblCard5Name.setBounds(30, 90, 300, 30);      
         lblCard5Name.setVisible(true); 
         repaint();
 
         JTextField txtCard5neuesObjekt = new JTextField();  
         pnlCard5.add(txtCard5neuesObjekt);
         txtCard5neuesObjekt.setVisible(true);
-        txtCard5neuesObjekt.setBounds(80,100,185,30);
+        txtCard5neuesObjekt.setBounds(100,90,185,30);
     
         JLabel lblCard5VorhandeneTypen = new JLabel("Typ: ");
         pnlCard5.add(lblCard5VorhandeneTypen);
-        lblCard5VorhandeneTypen.setBounds(30,170,60,30);
+        lblCard5VorhandeneTypen.setBounds(30,150,60,30);
         lblCard5VorhandeneTypen.setVisible(true);
         
         
@@ -348,7 +347,7 @@ public class MainView extends JFrame implements Observer {
         JComboBox cmbCard5Typauswählen = new JComboBox(ListCard5);
         pnlCard5.add (cmbCard5Typauswählen);
         cmbCard5Typauswählen.setVisible(true);
-        cmbCard5Typauswählen.setBounds(90,170,235,30);
+        cmbCard5Typauswählen.setBounds(30,190,235,30);
         
         JButton cmdCard5NeuerTyp;
         cmdCard5NeuerTyp = new JButton("Neuer Typ");
@@ -451,7 +450,7 @@ public class MainView extends JFrame implements Observer {
         lblCard7.setVisible(true); 
         
 
-        String ListCard7[] = {"Blabla","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","43","44","45","42","42","42","42"};
+        String ListCard7[] = {"ListCard7","Supii","lala","weiss ni","42","jaja","weiss ni","42","jaja","42","43","44","45","42","42","42","42"};
         
         JList liCard7Sammlungen = new JList(ListCard7);
         pnlCard7.add(liCard7Sammlungen);

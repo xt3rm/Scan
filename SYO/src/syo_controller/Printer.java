@@ -138,7 +138,9 @@ public class Printer extends JFrame {
     	  }
 
     	  public void paintComponent(Graphics g) {
-    	    g.drawImage(img, 20, 50, null);
+    		  int breite = img.getWidth(null);
+    		  breite = (480-breite)/2;
+    		  g.drawImage(img, breite , 50, null);
     	  }
 
     	}

@@ -1,5 +1,7 @@
 package syo_controller;
 
+import java.util.ArrayList;
+
 
 
 /**
@@ -12,10 +14,12 @@ public class DBObjekt extends DBBasisObjekt {
 
 	private int sammlungID;
 	private DBTyp typ;
+	private ArrayList<DBFeld> felder;
 
 	public DBObjekt(String name, int id, DBTyp typ, int sammlungID) {
 		super(name, id);
 		this.setSammlungID(sammlungID);
+		felder = new ArrayList<DBFeld>();
 	}
 	/**
 	 * Used for initial creation.
@@ -41,5 +45,16 @@ public class DBObjekt extends DBBasisObjekt {
 	public DBTyp getTyp() {
 		return typ;
 	}
+	
+	public void addFeld(DBFeld feld) {
+		felder.add(feld);
+	}
+	
+	public void removeFeld(DBFeld feld) {
+		felder.remove(feld);
+	}
 
+	public ArrayList<DBFeld> getFelder() {
+		return this.felder;
+	}
 }

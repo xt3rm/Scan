@@ -499,6 +499,7 @@ public class MainView extends JFrame implements Observer {
 
 	/**
 	 * Creates PanelCard 6
+	 * 
 	 */
 	public void createPnlCard6() {
 		lblCard6 = new JLabel(FELDERSTELLUNG);

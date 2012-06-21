@@ -83,7 +83,7 @@ public class BarcodeGen {
 	
 	
 	public static void main(String args[]) throws ConfigurationException, BarcodeException, IOException{
-		BarcodeGen barli = new BarcodeGen(34526345);
+		BarcodeGen barli = new BarcodeGen(12341234);
 	}
 	
 }

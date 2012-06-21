@@ -77,12 +77,12 @@ public class MainView extends JFrame implements Observer {
 	// -- Navigationspanel --
 	Label lblNavigation;
 	Label lblNaviStuff;
+	JLabel lblMeldung;
 
 	JButton cmdSammlung;
 	JButton cmdVerwaltung;
 	JButton cmdInfo;
-	JButton cmdStuff;
-
+	
 	JButton cmdPrevious;
 	JButton cmdNext;
 
@@ -151,8 +151,13 @@ public class MainView extends JFrame implements Observer {
 	private JLabel lblCard8Info;
 
 	// --------- Komponenten Card9 - Irgendwelcher Stuff ------
-	JLabel lblCard9;
+	private JLabel lblCard9;
+	private JButton cmdCard9bearbeiten;
+	private JButton cmdCard9speichern;
+	private JButton cmdCard9abbrechen;
 
+	
+	
 	/**
 	 * Konstuktor der Klasse Main View() Die verschiedenen Panels werden
 	 * erstellt
@@ -167,8 +172,9 @@ public class MainView extends JFrame implements Observer {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		/*
-		 * ------------------------------------------------------- PANEL - View
-		 * - pnlView-------------------------------------------------------
+		 * ------------------------------------------------------- 
+		 * PANEL - View - pnlView
+		 * -------------------------------------------------------
 		 */
 		cl = new CardLayout();
 
@@ -212,7 +218,15 @@ public class MainView extends JFrame implements Observer {
 		createNavigation();
 		
 		
-		
+		pnlContent.setLayout(null);
+		pnlContent.setSize(900, 600);
+		pnlContent.add(new WhitePanel());
+		pnlContent.setBackground(new Color(222, 222, 222));
+		pnlContent.add(pnlNavigation);
+		pnlContent.add(pnlView);
+
+		getContentPane().add(pnlContent);
+		DBTool.getInstance().closeDB();
 	}
 	
 
@@ -237,8 +251,6 @@ public class MainView extends JFrame implements Observer {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (4));
 			}
-			
-			
 		});
 
 		DBTool.getInstance().connectDB();
@@ -261,12 +273,10 @@ public class MainView extends JFrame implements Observer {
 		});
 
 		pnlCard1.add(liCard1Sammlungen);
-
 		scrollPaneCard1 = new JScrollPane(liCard1Sammlungen);
 		pnlCard1.add(scrollPaneCard1);
 		scrollPaneCard1.setBounds(30, 150, 500, 200);
 		scrollPaneCard1.setVisible(true);
-
 	}
 	
 	/**
@@ -606,7 +616,6 @@ public class MainView extends JFrame implements Observer {
 		pnlCard8.add(lblCard8Info);
 		lblCard8Info.setBounds(70, 100, 500, 250);
 		lblCard8Info.setVisible(true);
-
 	}
 	
 	/**
@@ -620,7 +629,33 @@ public class MainView extends JFrame implements Observer {
 
 		lblCard9.setBounds(100, 20, 120, 30);
 		lblCard9.setVisible(true);
+		
+		cmdCard9bearbeiten = new JButton("bearbeiten");
+		pnlCard9.add(cmdCard9bearbeiten);
+		cmdCard9bearbeiten.setVisible(true);
+		cmdCard9bearbeiten.setBounds(440, 60, 185, 30);
+		
+		cmdCard9speichern = new JButton("speichern");
+		pnlCard9.add(cmdCard9speichern);
+		cmdCard9speichern.setVisible(true);
+		cmdCard9speichern.setBounds(440, 100, 185, 30);
+		
+		cmdCard9abbrechen = new JButton("abbrechen");
+		pnlCard9.add(cmdCard9abbrechen);
+		cmdCard9abbrechen.setVisible(true);
+		cmdCard9abbrechen.setBounds(440, 140, 185, 30);
+	
+		
+		
+
+		
 	}
+		
+		
+		
+		
+
+	
 	
 	/**
 	 * Creates the Navigation
@@ -654,6 +689,16 @@ public class MainView extends JFrame implements Observer {
 		lblNaviStuff.setText("If you think, Java-GUI is easy...");
 		f = lblNavigation.getFont();
 		lblNavigation.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		
+		
+		lblMeldung = new JLabel("<html><b>Meldezeile</b></html>");
+		pnlNavigation.add(lblMeldung);
+		lblMeldung.setBackground(Color.white);
+		lblMeldung.setForeground(Color.red);
+		lblMeldung.setBounds(20,250,185, 100);
+		lblMeldung.setFont(new Font("Arial", Font.PLAIN, 14));
+		
+		
 
 		cmdSammlung = new JButton("Sammlungen anzeigen");
 		pnlNavigation.add(cmdSammlung);
@@ -685,16 +730,12 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		cmdStuff = new JButton("Noch so ein Button");
-		pnlNavigation.add(cmdStuff);
-		cmdStuff.setVisible(true);
-		cmdStuff.setBounds(20, 250, 185, 30);
 
 		// Previous & Next - Buttons / Only for Testing
 		cmdPrevious = new JButton("<-- Previous");
 		pnlNavigation.add(cmdPrevious);
 		cmdPrevious.setVisible(true);
-		cmdPrevious.setBounds(50, 310, 120, 36);
+		cmdPrevious.setBounds(50, 330, 120, 36);
 		cmdPrevious.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (currentCard > 1) {
@@ -707,7 +748,7 @@ public class MainView extends JFrame implements Observer {
 		cmdNext = new JButton("Next -->");
 		pnlNavigation.add(cmdNext);
 		cmdNext.setVisible(true);
-		cmdNext.setBounds(50, 350, 120, 36);
+		cmdNext.setBounds(50, 375, 120, 36);
 		cmdNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (currentCard < 10) {
@@ -717,15 +758,7 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		pnlContent.setLayout(null);
-		pnlContent.setSize(900, 600);
-		pnlContent.add(new WhitePanel());
-		pnlContent.setBackground(new Color(222, 222, 222));
-		pnlContent.add(pnlNavigation);
-		pnlContent.add(pnlView);
 
-		getContentPane().add(pnlContent);
-		DBTool.getInstance().closeDB();
 	}
 
 

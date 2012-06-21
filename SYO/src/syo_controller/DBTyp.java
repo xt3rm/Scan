@@ -10,6 +10,10 @@ public class DBTyp extends DBBasisObjekt {
 		super(name, id);
 	}
 	
+	public DBTyp(){
+		super();
+	}
+	
 	public void addFeld(DBFeld feld) {
 		felder.add(feld);
 	}

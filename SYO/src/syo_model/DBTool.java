@@ -309,9 +309,29 @@ public class DBTool extends Observable {
 	 * @param feldIDs
 	 *            The list of the fields that belong to this type.
 	 */
-	public void addTyp(String name) {
+	public int addTyp(String name) {
 		String typ = "INSERT INTO typ (ID_Typ, TypName) VALUES (NULL,'" + name
 				+ "')";
+		int key = -1;
+		try {
+			statement = connection.createStatement();
+			statement.executeUpdate(typ, Statement.RETURN_GENERATED_KEYS);
+			rSet = statement.getGeneratedKeys();
+			// Den neu erzeugten Primary Key in key speichern.
+			while (rSet.next()) {
+				key = rSet.getInt(1);
+			}
+			propagateChange();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		return key;
+	}
+
+	public void addTyp_Feld(int typID, int feldID) {
+		String typ = "INSERT INTO Typ_Feld (Typ_ID, Feld_ID) VALUES (" + typID + "," + feldID +")";
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(typ);
@@ -399,7 +419,6 @@ public class DBTool extends Observable {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
-
 		}
 	}
 

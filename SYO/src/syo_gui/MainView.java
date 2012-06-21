@@ -117,6 +117,7 @@ public class MainView extends JFrame implements Observer {
 	private JButton cmdCard3NeuesFeld;
 	private JButton cmdCard3entfernen;
 	private JButton cmdCard3weiter;
+	private JButton cmdCard3zurueck;
 
 	// --------- Komponenten Card4 - Eine neue Sammlung wird erstellt ------
 	JLabel lblCard4;
@@ -133,6 +134,7 @@ public class MainView extends JFrame implements Observer {
 	private JComboBox cmbCard5Typauswählen;
 	private JButton cmdCard5NeuerTyp;
 	private JButton cmdCard5weiter;
+	private JButton cmdCard5zurueck;
 
 	// --------- Komponenten Card6 - Erstellung eines neuen Feldes ------
 	JLabel lblCard6;
@@ -311,7 +313,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard2zurueck = new JButton("zurück");
 		pnlCard2.add(cmdCard2zurueck);
 		cmdCard2zurueck.setVisible(true);
-		cmdCard2zurueck.setBounds(440, 110, 185, 30);
+		cmdCard2zurueck.setBounds(40, 420, 185, 30);
 	}
 
 	/**
@@ -393,10 +395,10 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		cmdCard3weiter = new JButton("weiter");
+		cmdCard3weiter = new JButton("ok");
 		pnlCard3.add(cmdCard3weiter);
 		cmdCard3weiter.setVisible(true);
-		cmdCard3weiter.setBounds(440, 310, 185, 30);
+		cmdCard3weiter.setBounds(440, 420, 185, 30);
 		cmdCard3weiter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (isFilledOut(txtCard3Typname) && !liChosenFeld.isEmpty()) {
@@ -406,6 +408,11 @@ public class MainView extends JFrame implements Observer {
 				}
 			}
 		});
+		
+		cmdCard3zurueck = new JButton("zurück");
+		pnlCard3.add(cmdCard3zurueck);
+		cmdCard3zurueck.setVisible(true);
+		cmdCard3zurueck.setBounds(40, 420, 185, 30);
 	}
 
 	/**
@@ -434,7 +441,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard4ok = new JButton("ok");
 		pnlCard4.add(cmdCard4ok);
 		cmdCard4ok.setVisible(true);
-		cmdCard4ok.setBounds(440, 60, 185, 30);
+		cmdCard4ok.setBounds(440, 420, 185, 30);
 		cmdCard4ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ctrl.createSammlung(txtCard4neueSammlung.getText());
@@ -442,10 +449,10 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		cmdCard4abbrechen = new JButton("abbrechen");
+		cmdCard4abbrechen = new JButton("zurück");
 		pnlCard4.add(cmdCard4abbrechen);
 		cmdCard4abbrechen.setVisible(true);
-		cmdCard4abbrechen.setBounds(440, 110, 185, 30);
+		cmdCard4abbrechen.setBounds(40, 420, 185, 30);
 		cmdCard4abbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (1));
@@ -499,7 +506,7 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		cmdCard5weiter = new JButton("Ok");
+		cmdCard5weiter = new JButton("ok");
 		pnlCard5.add(cmdCard5weiter);
 		cmdCard5weiter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -516,7 +523,12 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 		cmdCard5weiter.setVisible(true);
-		cmdCard5weiter.setBounds(440, 110, 185, 30);
+		cmdCard5weiter.setBounds(440, 420, 185, 30);
+		
+		cmdCard5zurueck = new JButton("zurück");
+		pnlCard5.add(cmdCard5zurueck);
+		cmdCard5zurueck.setVisible(true);
+		cmdCard5zurueck.setBounds(40, 420, 185, 30);
 	}
 
 	/**
@@ -543,10 +555,10 @@ public class MainView extends JFrame implements Observer {
 		txtCard56Feldname.setVisible(true);
 		txtCard56Feldname.setBounds(100, 90, 185, 30);
 
-		cmdCard6weiter = new JButton("Erstellen");
+		cmdCard6weiter = new JButton("ok");
 		pnlCard6.add(cmdCard6weiter);
 		cmdCard6weiter.setVisible(true);
-		cmdCard6weiter.setBounds(440, 60, 185, 30);
+		cmdCard6weiter.setBounds(440, 420, 185, 30);
 		cmdCard6weiter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ctrl.createFeld(txtCard56Feldname.getText());
@@ -554,10 +566,10 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		cmdCard6abbrechen = new JButton("abbrechen");
+		cmdCard6abbrechen = new JButton("zurück");
 		pnlCard6.add(cmdCard6abbrechen);
 		cmdCard6abbrechen.setVisible(true);
-		cmdCard6abbrechen.setBounds(440, 110, 185, 30);
+		cmdCard6abbrechen.setBounds(40, 420, 185, 30);
 		cmdCard6abbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (3));

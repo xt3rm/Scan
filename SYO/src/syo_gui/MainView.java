@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import syo_controller.BarcodeGen;
 import syo_controller.DBBasisObjekt;
 import syo_controller.DBController;
 import syo_controller.DBObjekt;
@@ -232,9 +233,12 @@ public class MainView extends JFrame implements Observer {
 		cmdCard1neueSammlung.setVisible(true);
 		cmdCard1neueSammlung.setBounds(440, 60, 185, 30);
 		cmdCard1neueSammlung.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (4));
 			}
+			
+			
 		});
 
 		DBTool.getInstance().connectDB();

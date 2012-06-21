@@ -1,7 +1,10 @@
 package syo_model;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Observable;
 
 /**
@@ -252,7 +255,8 @@ public class DBTool extends Observable {
 			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
 					+ key + ", " + sammlungID + ")";
 			statement.executeUpdate(objekt_sammlung);
-			objekt = "UPDATE objekt SET Barcode = '" + key + "' WHERE ID_Objekt ='" + key + "'";
+			objekt = "UPDATE objekt SET Barcode = '" + key
+					+ "' WHERE ID_Objekt ='" + key + "'";
 			statement.executeUpdate(objekt);
 			propagateChange();
 		} catch (SQLException ex) {
@@ -327,26 +331,18 @@ public class DBTool extends Observable {
 	 * @param length
 	 *            int the length of the field.
 	 */
-	public void addStringFeld(String name, int typID) {
+	public void addStringFeld(String name) {
 		String feld = "INSERT INTO feld (ID_Feld, FeldName) VALUES (NULL,'"
 				+ name + "')";
-		int key = -1;
 		try {
 			statement = connection.createStatement();
-			statement.executeUpdate(feld, Statement.RETURN_GENERATED_KEYS); // Der
-																			// generierte
-																			// Key
-																			// soll
-																			// bereitgestellt
-																			// werden.
-			rSet = statement.getGeneratedKeys();
-			// Den neu erzeugten Primary Key in key speichern.
-			while (rSet.next()) {
-				key = rSet.getInt(1);
-			}
-			String objekt_sammlung = "INSERT INTO Typ_Feld (Typ_ID, Feld_ID) VALUES ("
-					+ typID + ", " + key + ")";
-			statement.executeUpdate(objekt_sammlung);
+			statement.executeUpdate(feld); // Der
+											// generierte
+											// Key
+											// soll
+											// bereitgestellt
+											// werden.
+
 			propagateChange();
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
@@ -418,24 +414,18 @@ public class DBTool extends Observable {
 	 *            The name of the table-
 	 * @return ResultSet
 	 */
-	public ArrayList<DBBasisObjekt> selectAllFromTable(String tblName) {
+	public ResultSet selectAllFromTable(String tblName) {
 		String select = "SELECT * FROM " + tblName;
-		ArrayList<DBBasisObjekt> result = new ArrayList<DBBasisObjekt>();
 		try {
 			statement = connection.createStatement();
 			statement.execute(select);
 			rSet = statement.getResultSet();
-			while (rSet.next()) {
-				DBBasisObjekt obj = new DBBasisObjekt(rSet.getString(2),
-						rSet.getInt(1));
-				result.add(obj);
-			}
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
-		return result;
+		return rSet;
 	}
 
 	/**
@@ -467,26 +457,21 @@ public class DBTool extends Observable {
 	 * @param sammlungID
 	 * @return ResultSet
 	 */
-	public ArrayList<DBBasisObjekt> selectObjectsOfSammlungByID(int sammlungID) {
+	public ResultSet selectObjectsOfSammlungByID(int sammlungID) {
 		String selObj = "SELECT * FROM Objekt AS O "
 				+ "JOIN Objekt_Sammlung AS OS ON "
 				+ "O.ID_Objekt = OS.Objekt_ID " + "WHERE " + sammlungID
 				+ " = OS.Sammlung_ID";
-		ArrayList<DBBasisObjekt> result = new ArrayList<DBBasisObjekt>();
-
 		try {
 			statement = connection.createStatement();
 			statement.execute(selObj);
 			rSet = statement.getResultSet();
-			while (rSet.next()) {
-				result.add(new DBBasisObjekt(rSet.getString(2), rSet.getInt(1)));
-			}
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
-		return result;
+		return rSet;
 	}
 
 	/**
@@ -494,22 +479,19 @@ public class DBTool extends Observable {
 	 * 
 	 * @return ArrayList<String>
 	 */
-	public ArrayList<String> selectColumnFromObjectInfo(String colName) {
+	public ResultSet selectColumnFromObjectInfo(String colName) {
 		String selAll = "SELECT * FROM allObjInfo";
-		ArrayList<String> result = new ArrayList<String>();
+
 		try {
 			statement = connection.createStatement();
 			statement.execute(selAll);
 			rSet = statement.getResultSet();
-			while (rSet.next()) {
-				result.add(rSet.getString(colName));
-			}
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
-		return result;
+		return rSet;
 	}
 
 	/**

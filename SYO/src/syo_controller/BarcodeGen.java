@@ -27,6 +27,15 @@ import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 public class BarcodeGen {
 	private int barcodeID;
 	
+	/**
+	 * Der Konstruktor der Klasse BarcodeGen nimmt einen Barcode entgegen, in Form eines Intergers
+	 * Anschliessend kreiert er den dazugehörenden Barcode, generiert das passende Bild und sendet 
+	 * dieses zur Druckerklasse.
+	 * @param bari
+	 * @throws ConfigurationException
+	 * @throws BarcodeException
+	 * @throws IOException
+	 */
 	public BarcodeGen(int bari) throws ConfigurationException, BarcodeException, IOException{
 		
 		this.barcodeID = bari;
@@ -51,7 +60,11 @@ public class BarcodeGen {
 		
 	}
 	
-
+	/**
+	 * Die Methode buildCfg generiert den Barcode selbst.
+	 * @param type
+	 * @return
+	 */
 	private static Configuration buildCfg(String type) {
 		DefaultConfiguration cfg = new DefaultConfiguration("barcode");
 	
@@ -71,7 +84,7 @@ public class BarcodeGen {
 	
 	/*
 	public static void main(String args[]) throws ConfigurationException, BarcodeException, IOException{
-		BarcodeGen barli = new BarcodeGen(123456789);
+		BarcodeGen barli = new BarcodeGen(789231084);
 	}
 	*/
 }

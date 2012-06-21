@@ -22,27 +22,27 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import syo_controller.DBController;
-import syo_model.DBObjekt;
+import syo_model.DBBasisObjekt;
 import syo_model.DBTool;
 
 @SuppressWarnings("serial")
 public class MainView extends JFrame implements Observer {
 
 	// Listen
-	private ArrayList<DBObjekt> liSammlung;
-	private ArrayList<DBObjekt> liObjekt;
-	private ArrayList<DBObjekt> liTyp;
-	private ArrayList<DBObjekt> liFeld;
+	private ArrayList<DBBasisObjekt> liSammlung;
+	private ArrayList<DBBasisObjekt> liObjekt;
+	private ArrayList<DBBasisObjekt> liTyp;
+	private ArrayList<DBBasisObjekt> liFeld;
 	// controller
 	private DBController ctrl;
 	//Aktueller Knoten
-	private DBObjekt aktuellerKnoten = null;
+	private DBBasisObjekt aktuellerKnoten = null;
 	
 	private int currentCard = 1;
 
 	private CardLayout cl;
 
-	
+
 	JPanel pnlContent = new JPanel();
 	JPanel pnlNavigation = new JPanel();
 	private JPanel pnlView;
@@ -120,7 +120,6 @@ public class MainView extends JFrame implements Observer {
 	private JLabel lblCard5Name;
 	private JTextField txtCard5neuesObjekt;
 	private JLabel lblCard5VorhandeneTypen;
-	private String listCard5s[];
 	private JComboBox cmbCard5Typauswählen;
 	private JButton cmdCard5NeuerTyp;
 	private JButton cmdCard5weiter;
@@ -167,6 +166,7 @@ public class MainView extends JFrame implements Observer {
 
 		pnlView = new JPanel();
 		pnlView.setLayout(cl);
+
 
     	
         pnlView.setBounds(230,100,700,500);
@@ -723,6 +723,8 @@ public class MainView extends JFrame implements Observer {
     }
     
 =======
+=======
+>>>>>>> develop_test
 
 		pnlView.setBounds(230, 100, 700, 500);
 		pnlView.setBackground(Color.RED);
@@ -747,12 +749,27 @@ public class MainView extends JFrame implements Observer {
 		pnlView.add(pnlCard7, "7");
 		pnlView.add(pnlCard8, "8");
 		pnlView.add(pnlCard9, "9");
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card1-SAMMLUNGEN - pnlCard1
-		 * -------------------------------------------------------
-		 */
+		
+		createPnlCard1();
+		createPnlCard2();
+		createPnlCard3();
+		createPnlCard4();
+		createPnlCard5();
+		createPnlCard6();
+		createPnlCard7();
+		createPnlCard8();
+		createPnlCard9();
+		createNavigation();
+		
+		
+		
+	}
+	
 
+	/**
+	 * Creates PanelCard 1
+	 */
+	public void createPnlCard1() {
 		lblCard1 = new JLabel("<html><bold>" + SAMMLUNGEN + "</bold></html>");
 		pnlCard1.add(lblCard1);
 
@@ -780,9 +797,9 @@ public class MainView extends JFrame implements Observer {
 		liCard1Sammlungen.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					liObjekt = ctrl.getObjektOfSammlung((DBObjekt)liCard1Sammlungen
+					liObjekt = ctrl.getObjektOfSammlung((DBBasisObjekt)liCard1Sammlungen
 							.getSelectedValue());
-					aktuellerKnoten = (DBObjekt)liCard1Sammlungen
+					aktuellerKnoten = (DBBasisObjekt)liCard1Sammlungen
 					.getSelectedValue();
 					liCard2Sammlung.setListData(liObjekt.toArray());
 					cl.show(pnlView, "" + (2));
@@ -797,11 +814,12 @@ public class MainView extends JFrame implements Observer {
 		scrollPaneCard1.setBounds(30, 150, 500, 200);
 		scrollPaneCard1.setVisible(true);
 
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card2-OBJEKT - pnlCard2
-		 * -------------------------------------------------------
-		 */
+	}
+	
+	/**
+	 * Creates PanelCard 2
+	 */
+	public void createPnlCard2() {
 		lblCard2 = new JLabel(OBJEKT);
 		pnlCard2.add(lblCard2);
 
@@ -817,7 +835,7 @@ public class MainView extends JFrame implements Observer {
 		lblCard2Sammlung.setVisible(true);
 		repaint();
 
-		liObjekt = new ArrayList<DBObjekt>();
+		liObjekt = new ArrayList<DBBasisObjekt>();
 
 		liCard2Sammlung = new JList(liObjekt.toArray());
 		pnlCard2.add(liCard2Sammlung);
@@ -842,13 +860,12 @@ public class MainView extends JFrame implements Observer {
 		pnlCard2.add(cmdCard2zurueck);
 		cmdCard2zurueck.setVisible(true);
 		cmdCard2zurueck.setBounds(440, 110, 185, 30);
-
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card3-TYPERSTELLUNG - pnlCard3
-		 * -------------------------------------------------------
-		 */
-
+	}
+	
+	/**
+	 * Creates PanelCard 3
+	 */
+	public void createPnlCard3() {
 		lblCard3 = new JLabel(TYPERSTELLUNG);
 		pnlCard3.add(lblCard3);
 
@@ -868,7 +885,7 @@ public class MainView extends JFrame implements Observer {
 		txtCard3Typname.setBounds(100, 90, 185, 30);
 
 		DBTool.getInstance().connectDB();
-		liTyp = DBTool.getInstance().selectColumnFromTable("Typ", "TypName");
+		liTyp = DBTool.getInstance().selectAllFromTable("Typ");
 		DBTool.getInstance().closeDB();
 
 		listCard3s = new String[] { "ListCard3", "Supii", "lala", "weiss ni",
@@ -924,11 +941,13 @@ public class MainView extends JFrame implements Observer {
 				cl.show(pnlView, "" + (5));
 			}
 		});
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card4-SAMMLUNGERSTELLUNG - pnlCard4
-		 * -------------------------------------------------------
-		 */
+		
+	}
+	
+	/**
+	 * Creates PanelCard 4
+	 */
+	public void createPnlCard4() {
 		lblCard4 = new JLabel(SAMMLUNGERSTELLUNG);
 		pnlCard4.add(lblCard4);
 
@@ -968,13 +987,12 @@ public class MainView extends JFrame implements Observer {
 				cl.show(pnlView, "" + (1));
 			}
 		});
-
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card5-OBJEKTERSTELLUNG - pnlCard5
-		 * -------------------------------------------------------
-		 */
-
+	}
+	
+	/**
+	 * Creates PanelCard 5
+	 */
+	public void createPnlCard5() {
 		lblCard5 = new JLabel(OBJEKTERSTELLUNG);
 		pnlCard5.add(lblCard5);
 
@@ -999,11 +1017,9 @@ public class MainView extends JFrame implements Observer {
 		lblCard5VorhandeneTypen.setBounds(30, 150, 60, 30);
 		lblCard5VorhandeneTypen.setVisible(true);
 
-		listCard5s = new String[] { "ListCard5", "Supii", "lala", "weiss ni",
-				"42", "jaja", "weiss ni", "42", "jaja", "42", "42", "42", "42",
-				"42", "42", "42", "42" };
+		liTyp = ctrl.getEveryRowOfTable("typ");
 
-		cmbCard5Typauswählen = new JComboBox(listCard5s);
+		cmbCard5Typauswählen = new JComboBox(liTyp.toArray());
 		pnlCard5.add(cmbCard5Typauswählen);
 		cmbCard5Typauswählen.setVisible(true);
 		cmbCard5Typauswählen.setBounds(30, 190, 235, 30);
@@ -1018,17 +1034,27 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		cmdCard5weiter = new JButton("weiter");
+		cmdCard5weiter = new JButton("Ok");
 		pnlCard5.add(cmdCard5weiter);
+		cmdCard5weiter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(pnlView, "" + (2));
+				if (cmbCard5Typauswählen.getSelectedItem() != null) {
+					String name = txtCard5neuesObjekt.getText();
+					int typID = ((DBBasisObjekt)cmbCard5Typauswählen.getSelectedItem()).getId();
+					txtCard5neuesObjekt.setText("");
+					ctrl.createObjekt(name, typID, aktuellerKnoten.getId());
+				}
+			}
+		});
 		cmdCard5weiter.setVisible(true);
 		cmdCard5weiter.setBounds(440, 110, 185, 30);
+	}
 
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card6-FELDERSTELLUNG pnl Card6
-		 * -------------------------------------------------------
-		 */
-
+	/**
+	 * Creates PanelCard 6
+	 */
+	public void createPnlCard6() {
 		lblCard6 = new JLabel(FELDERSTELLUNG);
 		pnlCard6.add(lblCard6);
 
@@ -1047,20 +1073,6 @@ public class MainView extends JFrame implements Observer {
 		pnlCard6.add(txtCard56Feldname);
 		txtCard56Feldname.setVisible(true);
 		txtCard56Feldname.setBounds(100, 90, 185, 30);
-
-		/*
-		 * JRadioButton rbtnCard6Text = new JRadioButton("Text", true);
-		 * JRadioButton rbtnCard6Zahl = new JRadioButton("Zahl" , false);
-		 * 
-		 * ButtonGroup rbtnGroupCard6 = new ButtonGroup();
-		 * rbtnGroupCard6.add(rbtnCard6Text); rbtnGroupCard6.add(rbtnCard6Zahl);
-		 * 
-		 * pnlCard6.add(rbtnCard6Text); rbtnCard6Text.setVisible(true);
-		 * rbtnCard6Text.setBounds(100, 170, 185,30);
-		 * 
-		 * pnlCard6.add(rbtnCard6Zahl); rbtnCard6Zahl.setVisible(true);
-		 * rbtnCard6Zahl.setBounds(100, 220, 185,30);
-		 */
 
 		cmdCard6weiter = new JButton("weiter");
 		pnlCard6.add(cmdCard6weiter);
@@ -1081,12 +1093,12 @@ public class MainView extends JFrame implements Observer {
 				cl.show(pnlView, "" + (3));
 			}
 		});
-
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card7-VERWALTUNG - pnlCard7
-		 * -------------------------------------------------------
-		 */
+	}
+	
+	/**
+	 * Creates PanelCard 7
+	 */
+	public void createPnlCard7() {
 		lblCard7 = new JLabel(VERWALTUNG);
 		pnlCard7.add(lblCard7);
 
@@ -1108,7 +1120,7 @@ public class MainView extends JFrame implements Observer {
 			public void actionPerformed(ActionEvent arg0) {
 
 				if (liCard7Sammlungen.getSelectedIndex() > -1)
-					ctrl.deleteSammlung(((DBObjekt) liCard7Sammlungen
+					ctrl.deleteSammlung(((DBBasisObjekt) liCard7Sammlungen
 							.getSelectedValue()).getId());
 			}
 		});
@@ -1116,12 +1128,12 @@ public class MainView extends JFrame implements Observer {
 		pnlCard7.add(cmdCard7Sammlunglöschen);
 		cmdCard7Sammlunglöschen.setVisible(true);
 		cmdCard7Sammlunglöschen.setBounds(440, 60, 185, 30);
-
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card8-Über SYO - pnlCard8
-		 * -------------------------------------------------------
-		 */
+	}
+	
+	/**
+	 * Creates PanelCard 8
+	 */
+	public void createPnlCard8() {
 		lblCard8 = new JLabel(UBER_SYO);
 		pnlCard8.add(lblCard8);
 
@@ -1144,11 +1156,12 @@ public class MainView extends JFrame implements Observer {
 		lblCard8Info.setBounds(70, 100, 500, 250);
 		lblCard8Info.setVisible(true);
 
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * View-Card9-Stuff - pnlCard9
-		 * -------------------------------------------------------
-		 */
+	}
+	
+	/**
+	 * Creates PanelCard 9
+	 */
+	public void createPnlCard9() {
 		lblCard9 = new JLabel(STUFF);
 		pnlCard9.add(lblCard9);
 
@@ -1156,12 +1169,13 @@ public class MainView extends JFrame implements Observer {
 
 		lblCard9.setBounds(100, 20, 120, 30);
 		lblCard9.setVisible(true);
+	}
+	
+	/**
+	 * Creates the Navigation
+	 */
+	public void createNavigation() {
 
-		/*
-		 * ------------------------------------------------------- PANEL -
-		 * NAVIGATION - pnlNavigation
-		 * -------------------------------------------------------
-		 */
 		pnlNavigation.setLayout(null);
 		pnlNavigation.setBounds(0, 100, 225, 500);
 		pnlNavigation.setBackground(Color.WHITE);
@@ -1262,7 +1276,8 @@ public class MainView extends JFrame implements Observer {
 		getContentPane().add(pnlContent);
 		DBTool.getInstance().closeDB();
 	}
->>>>>>> develop_test
+
+
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -1273,7 +1288,7 @@ public class MainView extends JFrame implements Observer {
 		liCard7Sammlungen.setListData(liSammlung.toArray());
 		this.txtCard4neueSammlung.setText(""); // Clear the text
 		// Update object
-
+		
 		// Update typ
 
 		// Update feld

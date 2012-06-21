@@ -5,7 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import syo_gui.MainView;
-import syo_model.DBObjekt;
+import syo_model.DBBasisObjekt;
 import syo_model.DBTool;
 
 public class DBController implements Observer {
@@ -46,6 +46,29 @@ public class DBController implements Observer {
 		DBTool.getInstance().addSammlung(name);
 		DBTool.getInstance().closeDB();
 	}
+	
+	/**
+	 * Creates an Objekt.
+	 * @param name
+	 * @param typID
+	 * @param sammlungID
+	 */
+	public void createObjekt(String name, int typID, int sammlungID) {
+		DBTool.getInstance().connectDB();
+		DBTool.getInstance().addObject(name, typID, sammlungID);
+		DBTool.getInstance().closeDB();
+	}
+	
+	/**
+	 * Creates an Objekt if the barcode is already known.
+	 * @param name
+	 * @param typId
+	 * @param sammlungID
+	 * @param barcode
+	 */
+	public void createObjekt(String name, int typId, int sammlungID, String barcode) {
+		
+	}
 
 	/**
 	 * Deletes a Sammlungsobjekt.
@@ -61,19 +84,28 @@ public class DBController implements Observer {
 
 	// Update Methods
 
-	public ArrayList<DBObjekt> updateSammlung() {
+	public ArrayList<DBBasisObjekt> updateSammlung() {
 		DBTool.getInstance().connectDB();
-		ArrayList<DBObjekt> result = DBTool.getInstance().selectColumnFromTable(
-				"sammlung", "SammlungName");
+		ArrayList<DBBasisObjekt> result = DBTool.getInstance().selectAllFromTable(
+				"sammlung");
 		DBTool.getInstance().closeDB();
 		return result;
 	}
 	
-	public ArrayList<DBObjekt> getObjektOfSammlung(DBObjekt obj) {
+	public ArrayList<DBBasisObjekt> getObjektOfSammlung(DBBasisObjekt obj) {
 		DBTool.getInstance().connectDB();
-		ArrayList<DBObjekt> result = DBTool.getInstance().selectObjectsOfSammlungByID(obj.getId());
+		ArrayList<DBBasisObjekt> result = DBTool.getInstance().selectObjectsOfSammlungByID(obj.getId());
 		DBTool.getInstance().closeDB();
 		return result;
 	}
+	
+	public ArrayList<DBBasisObjekt> getEveryRowOfTable(String tblName) {
+		DBTool.getInstance().connectDB();
+		ArrayList<DBBasisObjekt> result =DBTool.getInstance().selectAllFromTable(tblName);
+		DBTool.getInstance().closeDB();
+		return result;
+	}
+	
+	
 
 }

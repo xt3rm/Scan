@@ -1,37 +1,10 @@
 package syo_model;
 
-/**
- * Wraps the relevant data of an Objekt into a class.
- * 
- * @author ebrogt
- *
- */
-public class DBObjekt {
+public class DBObjekt extends DBBasisObjekt {
 
-	private String name;
-	private int id;
-	
-	
-	public DBObjekt(String name, int id) {
-		this.name = name;
-		this.id = id;
+	public DBObjekt(String name, int id, int sammlungID) {
+		super(name, id);
+		// TODO Auto-generated constructor stub
 	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getId() {
-		return id;
-	}
-	
-	@Override
-	public String toString() {
-		return this.name;
-	}
+
 }

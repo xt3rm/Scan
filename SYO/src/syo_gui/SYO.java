@@ -9,6 +9,6 @@ public class SYO  {
 		DBTool.getInstance().setupDB("syo");
 		MainView mv = new MainView();
 		mv.setVisible(true);
-
+		mv.setLocationRelativeTo(null);
 	}
 }

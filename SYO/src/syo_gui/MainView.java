@@ -42,57 +42,7 @@ public class MainView extends JFrame implements Observer {
 
 	private CardLayout cl;
 
-<<<<<<< HEAD
-    JPanel pnlContent = new JPanel();
-    JPanel pnlNavigation = new JPanel();
-    private JPanel pnlView;
-    
-    
-
-    
-    
-//--Namen der verschiedenen Cards --    
-    final static String SAMMLUNGEN = "Meine Sammlungen";
-    final static String OBJEKT = "Objekte der ausgewählten Sammlung";
-    final static String TYPERSTELLUNG = "Erstellung eines neuen Typs";
-    final static String SAMMLUNGERSTELLUNG = "Erstellung einer neuen Sammlugn";
-    final static String OBJEKTERSTELLUNG = "Erstellung eines neuen Objektes";
-    final static String FELDERSTELLUNG = "Erstellung eines neuen Feldes";
-    final static String VERWALTUNG = "SYO - Verwaltung";
-    final static String UBER_SYO = "SYO - scan your object | Info";
-    final static String STUFF = "Das ist ein Text";
-
-    
-    
-//-- Cards des pnlView --    
-    JPanel pnlCard1;
-    JPanel pnlCard2;
-    JPanel pnlCard3;
-    JPanel pnlCard4;
-    JPanel pnlCard5;
-    JPanel pnlCard6;
-    JPanel pnlCard7;
-    JPanel pnlCard8;
-    JPanel pnlCard9;
-
-    
-    
-//-- Navigationspanel --    
-    Label lblNavigation;
-    Label lblNaviStuff;
-
-    JButton cmdSammlung;
-    JButton cmdVerwaltung;
-    JButton cmdInfo;
-    JButton cmdStuff;
-    
-    JButton cmdPrevious;
-    JButton cmdNext;
-    
-    
-    
-//--------- Komponenten Card1 - Alle Samlungen anzeigen ------    
-=======
+	
 	JPanel pnlContent = new JPanel();
 	JPanel pnlNavigation = new JPanel();
 	private JPanel pnlView;
@@ -122,25 +72,20 @@ public class MainView extends JFrame implements Observer {
 	// -- Navigationspanel --
 	Label lblNavigation;
 	Label lblNaviStuff;
-
 	JButton cmdSammlung;
 	JButton cmdVerwaltung;
 	JButton cmdInfo;
 	JButton cmdStuff;
-
 	JButton cmdPrevious;
 	JButton cmdNext;
 
 	// --------- Komponenten Card1 - Alle Samlungen anzeigen ------
->>>>>>> develop_test
 	private JLabel lblCard1;
 	private JButton cmdCard1neueSammlung;
 	private JScrollPane scrollPaneCard1;
 	JList liCard1Sammlungen;
 
-	// --------- Komponenten Card2 - Alle Objekte der ausgewählten Sammlung
-	// anzeigen ------
-
+	// --------- Komponenten Card2 - Alle Objekte der ausgewählten Sammlung anzeigen ------
 	JLabel lblCard2;
 	private JLabel lblCard2Sammlung;
 	private JList liCard2Sammlung;
@@ -213,15 +158,16 @@ public class MainView extends JFrame implements Observer {
 		this.setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		/*
-		 * ------------------------------------------------------- PANEL - View
-		 * - pnlView-------------------------------------------------------
-		 */
+/*
+* -------------------------------------------------------
+* PANEL - View - pnlView
+* -------------------------------------------------------
+*/
 		cl = new CardLayout();
 
 		pnlView = new JPanel();
 		pnlView.setLayout(cl);
-<<<<<<< HEAD
+
     	
         pnlView.setBounds(230,100,700,500);
         pnlView.setBackground(Color.RED);

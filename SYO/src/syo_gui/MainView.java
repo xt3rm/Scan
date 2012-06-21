@@ -230,12 +230,11 @@ public class MainView extends JFrame implements Observer {
 		cmdCard1neueSammlung.setVisible(true);
 		cmdCard1neueSammlung.setBounds(440, 60, 185, 30);
 		cmdCard1neueSammlung.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (4));
 			}
-			
-			
+
 		});
 
 		DBTool.getInstance().connectDB();
@@ -493,7 +492,6 @@ public class MainView extends JFrame implements Observer {
 		cmdCard5NeuerTyp.setBounds(440, 60, 185, 30);
 		cmdCard5NeuerTyp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dbtyp = new DBTyp();
 				cl.show(pnlView, "" + (3));
 
 			}
@@ -508,8 +506,10 @@ public class MainView extends JFrame implements Observer {
 					String name = txtCard5neuesObjekt.getText();
 					int typID = ((DBBasisObjekt) cmbCard5Typauswählen
 							.getSelectedItem()).getId();
-					txtCard5neuesObjekt.setText("");
-					ctrl.createObjekt(name, typID, aktuellerKnoten.getId());
+					if (isFilledOut(txtCard5neuesObjekt)) {
+						txtCard5neuesObjekt.setText("");
+						ctrl.createObjekt(name, typID, aktuellerKnoten.getId());
+					}
 				}
 			}
 		});
@@ -757,7 +757,7 @@ public class MainView extends JFrame implements Observer {
 		liCard7Sammlungen.setListData(liSammlung.toArray());
 		this.txtCard4neueSammlung.setText(""); // Clear the text
 		// Update object
-		
+
 		// Update typ
 		this.liTyp = ctrl.getEveryRowOfTable("typ");
 		this.cmbCard5Typauswählen.removeAllItems();

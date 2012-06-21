@@ -400,6 +400,7 @@ public class MainView extends JFrame implements Observer {
 			public void actionPerformed(ActionEvent arg0) {
 				if (isFilledOut(txtCard3Typname) && !liChosenFeld.isEmpty()) {
 					ctrl.createTyp(txtCard3Typname.getText(), liChosenFeld);
+					txtCard3Typname.setText("");
 					cl.show(pnlView, "" + (5));
 				}
 			}
@@ -751,13 +752,15 @@ public class MainView extends JFrame implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		System.out.println("Update");
-		// Update Sammlung
+		// Update sammlung
 		liSammlung = ctrl.updateSammlung();
 		liCard1Sammlungen.setListData(liSammlung.toArray());
 		liCard7Sammlungen.setListData(liSammlung.toArray());
 		this.txtCard4neueSammlung.setText(""); // Clear the text
 		// Update object
-
+		this.liObjekt = ctrl.getEveryRowOfTable("objekt");
+		this.liCard2Sammlung.setListData(liObjekt.toArray());
+		this.txtCard5neuesObjekt.setText("");
 		// Update typ
 		this.liTyp = ctrl.getEveryRowOfTable("typ");
 		this.cmbCard5Typauswählen.removeAllItems();

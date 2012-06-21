@@ -1,38 +1,37 @@
 package syo_controller;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import syo_gui.MainView;
-import syo_model.DBBasisObjekt;
 import syo_model.DBTool;
 
 public class DBController implements Observer {
 
 	private MainView mainView;
 	private ArrayList<String> sammlungen;
+	private ClassFactory factory;
 	
+	public DBController(MainView mainView) {
+		this.mainView = mainView;
+		DBTool.getInstance().addObserver(this);
+		sammlungen = new ArrayList<String>();
+		factory = new ClassFactory();
+	}
 
+	@Override
+	public void update(Observable o, Object arg) {
+		System.out.println("Update");
+	}
+	
 	public ArrayList<String> getSammlungen() {
 		return sammlungen;
 	}
 
 	public void setSammlungen(ArrayList<String> sammlungen) {
 		this.sammlungen = sammlungen;
-	}
-
-	public DBController(MainView mainView) {
-		this.mainView = mainView;
-		DBTool.getInstance().addObserver(this);
-		sammlungen = new ArrayList<String>();
-		// Change
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		System.out.println("Update");
-
 	}
 
 	/**
@@ -69,6 +68,13 @@ public class DBController implements Observer {
 	public void createObjekt(String name, int typId, int sammlungID, String barcode) {
 		
 	}
+	
+	
+	public void createFeld(String name) {
+		DBTool.getInstance().connectDB();
+		DBTool.getInstance().addStringFeld(name);
+		DBTool.getInstance().closeDB();
+	}
 
 	/**
 	 * Deletes a Sammlungsobjekt.
@@ -82,29 +88,34 @@ public class DBController implements Observer {
 		DBTool.getInstance().closeDB();
 	}
 
+	public ArrayList<DBBasisObjekt> getObjektOfSammlung(DBBasisObjekt obj) {
+		DBTool.getInstance().connectDB();
+		ResultSet rs = DBTool.getInstance().selectObjectsOfSammlungByID(
+				obj.getId());
+		ArrayList<DBBasisObjekt> dbo = factory.createBasisObjekte(rs);
+		DBTool.getInstance().closeDB();
+		return dbo;
+	}
+
+	public ArrayList<DBBasisObjekt> getEveryRowOfTable(String tblName) {
+		DBTool.getInstance().connectDB();
+		ResultSet rs = DBTool.getInstance().selectAllFromTable(tblName);
+		ArrayList<DBBasisObjekt> dbo = factory.createBasisObjekte(rs);
+		DBTool.getInstance().closeDB();
+		return dbo;
+	}
 	// Update Methods
 
 	public ArrayList<DBBasisObjekt> updateSammlung() {
 		DBTool.getInstance().connectDB();
-		ArrayList<DBBasisObjekt> result = DBTool.getInstance().selectAllFromTable(
+		ResultSet rs = DBTool.getInstance().selectAllFromTable(
 				"sammlung");
+		ArrayList<DBBasisObjekt> dbo = factory.createBasisObjekte(rs);
 		DBTool.getInstance().closeDB();
-		return result;
+		return dbo;
 	}
+
 	
-	public ArrayList<DBBasisObjekt> getObjektOfSammlung(DBBasisObjekt obj) {
-		DBTool.getInstance().connectDB();
-		ArrayList<DBBasisObjekt> result = DBTool.getInstance().selectObjectsOfSammlungByID(obj.getId());
-		DBTool.getInstance().closeDB();
-		return result;
-	}
-	
-	public ArrayList<DBBasisObjekt> getEveryRowOfTable(String tblName) {
-		DBTool.getInstance().connectDB();
-		ArrayList<DBBasisObjekt> result =DBTool.getInstance().selectAllFromTable(tblName);
-		DBTool.getInstance().closeDB();
-		return result;
-	}
 	
 	
 

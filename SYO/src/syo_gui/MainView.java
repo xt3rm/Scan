@@ -21,8 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import syo_controller.DBBasisObjekt;
 import syo_controller.DBController;
-import syo_model.DBBasisObjekt;
+import syo_controller.DBObjekt;
 import syo_model.DBTool;
 
 @SuppressWarnings("serial")
@@ -33,10 +34,12 @@ public class MainView extends JFrame implements Observer {
 	private ArrayList<DBBasisObjekt> liObjekt;
 	private ArrayList<DBBasisObjekt> liTyp;
 	private ArrayList<DBBasisObjekt> liFeld;
+	private ArrayList<DBBasisObjekt> liChosenFeld;
 	// controller
 	private DBController ctrl;
 	//Aktueller Knoten
 	private DBBasisObjekt aktuellerKnoten = null;
+	private DBObjekt dbo = null;
 	
 	private int currentCard = 1;
 
@@ -295,6 +298,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard2bearbeiten.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (5));
+				dbo = new DBObjekt(aktuellerKnoten.getId());
 			}
 		});
 		
@@ -330,18 +334,13 @@ public class MainView extends JFrame implements Observer {
 		txtCard3Typname.setVisible(true);
 		txtCard3Typname.setBounds(100, 90, 185, 30);
 
-		DBTool.getInstance().connectDB();
-		liTyp = DBTool.getInstance().selectAllFromTable("Typ");
-		DBTool.getInstance().closeDB();
-
-		listCard3s = new String[] { "ListCard3", "Supii", "lala", "weiss ni",
-				"42", "jaja", "weiss ni", "42", "jaja", "42", "42", "42", "42",
-				"42", "42", "42", "42" };
-
+		// Get the Felder
+		liFeld = ctrl.getEveryRowOfTable("feld");
+		
 		liCard3Felder = new JList(listCard3s);
 		pnlCard3.add(liCard3Felder);
 
-		liCard3Sammlung = new JList(liTyp.toArray());
+		liCard3Sammlung = new JList(liFeld.toArray());
 		pnlCard2.add(liCard3Sammlung);
 
 		scrollPaneCard3 = new JScrollPane(liCard3Sammlung);
@@ -358,7 +357,7 @@ public class MainView extends JFrame implements Observer {
 				"jaja", "weiss ni", "42", "jaja", "42", "42", "42", "42", "42",
 				"42", "42", "42" };
 
-		cmbCard3Feldauswaehlen = new JComboBox(listCard3_2s);
+		cmbCard3Feldauswaehlen = new JComboBox(liFeld.toArray());
 		pnlCard3.add(cmbCard3Feldauswaehlen);
 		cmbCard3Feldauswaehlen.setVisible(true);
 		cmbCard3Feldauswaehlen.setBounds(440, 150, 185, 30);
@@ -521,12 +520,13 @@ public class MainView extends JFrame implements Observer {
 		txtCard56Feldname.setVisible(true);
 		txtCard56Feldname.setBounds(100, 90, 185, 30);
 
-		cmdCard6weiter = new JButton("weiter");
+		cmdCard6weiter = new JButton("Erstellen");
 		pnlCard6.add(cmdCard6weiter);
 		cmdCard6weiter.setVisible(true);
 		cmdCard6weiter.setBounds(440, 60, 185, 30);
 		cmdCard6weiter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ctrl.createFeld(txtCard56Feldname.getText());
 				cl.show(pnlView, "" + (3));
 			}
 		});
@@ -739,6 +739,6 @@ public class MainView extends JFrame implements Observer {
 		// Update typ
 
 		// Update feld
-
+		this.liFeld = ctrl.getEveryRowOfTable("feld");
 	}
 }

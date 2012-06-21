@@ -23,7 +23,9 @@ import javax.swing.JTextField;
 
 import syo_controller.DBBasisObjekt;
 import syo_controller.DBController;
+import syo_controller.DBFeld;
 import syo_controller.DBObjekt;
+import syo_controller.DBTyp;
 import syo_model.DBTool;
 
 @SuppressWarnings("serial")
@@ -37,15 +39,14 @@ public class MainView extends JFrame implements Observer {
 	private ArrayList<DBBasisObjekt> liChosenFeld;
 	// controller
 	private DBController ctrl;
-	//Aktueller Knoten
+	// Aktueller Knoten
 	private DBBasisObjekt aktuellerKnoten = null;
 	private DBObjekt dbo = null;
-	
+	private DBTyp dbtyp = null;
+
 	private int currentCard = 1;
 
 	private CardLayout cl;
-
- 
 
 	JPanel pnlContent = new JPanel();
 	JPanel pnlNavigation = new JPanel();
@@ -174,7 +175,6 @@ public class MainView extends JFrame implements Observer {
 		pnlView = new JPanel();
 		pnlView.setLayout(cl);
 
-
 		pnlView.setBounds(230, 100, 700, 500);
 		pnlView.setBackground(Color.RED);
 
@@ -198,7 +198,7 @@ public class MainView extends JFrame implements Observer {
 		pnlView.add(pnlCard7, "7");
 		pnlView.add(pnlCard8, "8");
 		pnlView.add(pnlCard9, "9");
-		
+
 		createPnlCard1();
 		createPnlCard2();
 		createPnlCard3();
@@ -209,11 +209,8 @@ public class MainView extends JFrame implements Observer {
 		createPnlCard8();
 		createPnlCard9();
 		createNavigation();
-		
-		
-		
+
 	}
-	
 
 	/**
 	 * Creates PanelCard 1
@@ -246,10 +243,11 @@ public class MainView extends JFrame implements Observer {
 		liCard1Sammlungen.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					liObjekt = ctrl.getObjektOfSammlung((DBBasisObjekt)liCard1Sammlungen
-							.getSelectedValue());
-					aktuellerKnoten = (DBBasisObjekt)liCard1Sammlungen
-					.getSelectedValue();
+					liObjekt = ctrl
+							.getObjektOfSammlung((DBBasisObjekt) liCard1Sammlungen
+									.getSelectedValue());
+					aktuellerKnoten = (DBBasisObjekt) liCard1Sammlungen
+							.getSelectedValue();
 					liCard2Sammlung.setListData(liObjekt.toArray());
 					cl.show(pnlView, "" + (2));
 				}
@@ -264,7 +262,7 @@ public class MainView extends JFrame implements Observer {
 		scrollPaneCard1.setVisible(true);
 
 	}
-	
+
 	/**
 	 * Creates PanelCard 2
 	 */
@@ -301,7 +299,7 @@ public class MainView extends JFrame implements Observer {
 				dbo = new DBObjekt(aktuellerKnoten.getId());
 			}
 		});
-		
+
 		pnlCard2.add(cmdCard2bearbeiten);
 		cmdCard2bearbeiten.setVisible(true);
 		cmdCard2bearbeiten.setBounds(440, 60, 185, 30);
@@ -311,9 +309,9 @@ public class MainView extends JFrame implements Observer {
 		cmdCard2zurueck.setVisible(true);
 		cmdCard2zurueck.setBounds(440, 110, 185, 30);
 	}
-	
+
 	/**
-	 * Creates PanelCard 3
+	 * Creates PanelCard 3 TYPERSTELLUNG
 	 */
 	public void createPnlCard3() {
 		lblCard3 = new JLabel(TYPERSTELLUNG);
@@ -336,26 +334,18 @@ public class MainView extends JFrame implements Observer {
 
 		// Get the Felder
 		liFeld = ctrl.getEveryRowOfTable("feld");
-		
+
 		liCard3Felder = new JList(listCard3s);
 		pnlCard3.add(liCard3Felder);
 
-		liCard3Sammlung = new JList(liFeld.toArray());
+		liChosenFeld = new ArrayList<DBBasisObjekt>();
+		liCard3Sammlung = new JList(liChosenFeld.toArray());
 		pnlCard2.add(liCard3Sammlung);
 
 		scrollPaneCard3 = new JScrollPane(liCard3Sammlung);
 		pnlCard3.add(scrollPaneCard3);
 		scrollPaneCard3.setBounds(30, 150, 250, 200);
 		scrollPaneCard3.setVisible(true);
-
-		cmdCard3Feldhinzufuegen = new JButton("Feld zum Typ hinzufügen");
-		pnlCard3.add(cmdCard3Feldhinzufuegen);
-		cmdCard3Feldhinzufuegen.setVisible(true);
-		cmdCard3Feldhinzufuegen.setBounds(440, 90, 185, 30);
-
-		listCard3_2s = new String[] { "Feld1", "Feld2", "Feld3", "Feld1", "42",
-				"jaja", "weiss ni", "42", "jaja", "42", "42", "42", "42", "42",
-				"42", "42", "42" };
 
 		cmbCard3Feldauswaehlen = new JComboBox(liFeld.toArray());
 		pnlCard3.add(cmbCard3Feldauswaehlen);
@@ -372,10 +362,32 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
+		cmdCard3Feldhinzufuegen = new JButton("Feld zum Typ hinzufügen");
+		pnlCard3.add(cmdCard3Feldhinzufuegen);
+		cmdCard3Feldhinzufuegen.setVisible(true);
+		cmdCard3Feldhinzufuegen.setBounds(440, 90, 185, 30);
+		cmdCard3Feldhinzufuegen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (!liChosenFeld.contains(cmbCard3Feldauswaehlen
+						.getSelectedItem())) {
+					liChosenFeld.add((DBBasisObjekt) cmbCard3Feldauswaehlen
+							.getSelectedItem());
+					liCard3Sammlung.setListData(liChosenFeld.toArray());
+				}
+			}
+		});
+
 		cmdCard3entfernen = new JButton("entfernen");
 		pnlCard3.add(cmdCard3entfernen);
 		cmdCard3entfernen.setVisible(true);
 		cmdCard3entfernen.setBounds(440, 270, 185, 30);
+		cmdCard3entfernen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				liChosenFeld.remove((DBBasisObjekt) liCard3Sammlung
+						.getSelectedValue());
+				liCard3Sammlung.setListData(liChosenFeld.toArray());
+			}
+		});
 
 		cmdCard3weiter = new JButton("weiter");
 		pnlCard3.add(cmdCard3weiter);
@@ -383,12 +395,14 @@ public class MainView extends JFrame implements Observer {
 		cmdCard3weiter.setBounds(440, 310, 185, 30);
 		cmdCard3weiter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cl.show(pnlView, "" + (5));
+				if (isFilledOut(txtCard3Typname) && !liChosenFeld.isEmpty()) {
+					ctrl.createTyp(txtCard3Typname.getText(), liChosenFeld);
+					cl.show(pnlView, "" + (5));
+				}
 			}
 		});
-		
 	}
-	
+
 	/**
 	 * Creates PanelCard 4
 	 */
@@ -433,7 +447,7 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 	}
-	
+
 	/**
 	 * Creates PanelCard 5
 	 */
@@ -475,7 +489,9 @@ public class MainView extends JFrame implements Observer {
 		cmdCard5NeuerTyp.setBounds(440, 60, 185, 30);
 		cmdCard5NeuerTyp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				dbtyp = new DBTyp();
 				cl.show(pnlView, "" + (3));
+
 			}
 		});
 
@@ -486,7 +502,8 @@ public class MainView extends JFrame implements Observer {
 				cl.show(pnlView, "" + (2));
 				if (cmbCard5Typauswählen.getSelectedItem() != null) {
 					String name = txtCard5neuesObjekt.getText();
-					int typID = ((DBBasisObjekt)cmbCard5Typauswählen.getSelectedItem()).getId();
+					int typID = ((DBBasisObjekt) cmbCard5Typauswählen
+							.getSelectedItem()).getId();
 					txtCard5neuesObjekt.setText("");
 					ctrl.createObjekt(name, typID, aktuellerKnoten.getId());
 				}
@@ -541,7 +558,7 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 	}
-	
+
 	/**
 	 * Creates PanelCard 7
 	 */
@@ -576,7 +593,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard7Sammlunglöschen.setVisible(true);
 		cmdCard7Sammlunglöschen.setBounds(440, 60, 185, 30);
 	}
-	
+
 	/**
 	 * Creates PanelCard 8
 	 */
@@ -604,7 +621,7 @@ public class MainView extends JFrame implements Observer {
 		lblCard8Info.setVisible(true);
 
 	}
-	
+
 	/**
 	 * Creates PanelCard 9
 	 */
@@ -617,7 +634,7 @@ public class MainView extends JFrame implements Observer {
 		lblCard9.setBounds(100, 20, 120, 30);
 		lblCard9.setVisible(true);
 	}
-	
+
 	/**
 	 * Creates the Navigation
 	 */
@@ -724,8 +741,9 @@ public class MainView extends JFrame implements Observer {
 		DBTool.getInstance().closeDB();
 	}
 
-
-
+	/**
+	 * Updates the GUI
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		System.out.println("Update");
@@ -737,8 +755,20 @@ public class MainView extends JFrame implements Observer {
 		// Update object
 		
 		// Update typ
-
+		this.liTyp = ctrl.getEveryRowOfTable("typ");
+		this.cmbCard5Typauswählen.removeAllItems();
+		for (DBBasisObjekt dbt : liTyp) {
+			cmbCard5Typauswählen.addItem(dbt);
+		}
 		// Update feld
 		this.liFeld = ctrl.getEveryRowOfTable("feld");
+		cmbCard3Feldauswaehlen.removeAllItems();
+		for (DBBasisObjekt dbo : liFeld) {
+			cmbCard3Feldauswaehlen.addItem(dbo);
+		}
+	}
+
+	private Boolean isFilledOut(JTextField field) {
+		return !field.getText().equals("");
 	}
 }

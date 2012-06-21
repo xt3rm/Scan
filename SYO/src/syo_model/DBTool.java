@@ -421,6 +421,41 @@ public class DBTool extends Observable {
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
 	}
+	
+	
+	
+	/**
+	 * 
+	 * 
+	 * 
+	 */
+	public void deleteSammlungByID(int id) {
+
+		ResultSet resSet = selectObjectsOfSammlungByID(id);
+		
+		
+		String deleteSammlung = "DELETE FROM sammlung WHERE ID_Sammlung = " + id;
+
+		try {
+			statement = connection.createStatement();
+			while (resSet.next()) {
+				String delObj = "DELETE FROM objekt WHERE ID_Objekt ="+ resSet.getInt(1);
+				statement.executeUpdate(delObj);
+			}
+			statement.executeUpdate(deleteSammlung);
+			
+			
+			propagateChange();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+	}
+	
+	
+	
+	
 
 	// Select-Statements //
 	// *******************//

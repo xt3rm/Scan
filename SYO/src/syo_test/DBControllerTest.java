@@ -24,7 +24,7 @@ public class DBControllerTest {
 		DBTool.getInstance().addTyp("TestTyp");
 		assertTrue(DBTool.getInstance().getRowCount("typ") == 1);
 		
-		DBTool.getInstance().addStringFeld("Tester", 2);
+		DBTool.getInstance().addStringFeld("Tester");
 		assertTrue(DBTool.getInstance().getRowCount("feld") == 1);
 		assertTrue(DBTool.getInstance().getRowCount("typ_feld") == 1);
 		

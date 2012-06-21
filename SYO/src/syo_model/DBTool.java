@@ -1,6 +1,10 @@
 package syo_model;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Observable;
 
 /**
@@ -71,6 +75,8 @@ public class DBTool extends Observable {
 			statement.executeUpdate(creator.getTblObjekt_Sammlung());
 			statement.executeUpdate(creator.getTblTyp_Feld());
 			statement.execute(creator.getViewAllObjInfo());
+			// close DB
+			closeDB();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -223,15 +229,52 @@ public class DBTool extends Observable {
 	}
 
 	/**
-	 * Adds an object to the database.
 	 * 
 	 * @param name
-	 *            The name of the object.
 	 * @param typID
-	 *            The ID of the type of the object
+	 * @param sammlungID
+	 */
+	public void addObject(String name, int typID, int sammlungID) {
+		String objekt = "INSERT INTO Objekt (ID_Objekt, ObjektName, Typ_ID) VALUES (NULL,'"
+				+ name + "', '" + typID + "')";
+		int key = -1;
+		try {
+			statement = connection.createStatement();
+			statement.executeUpdate(objekt, Statement.RETURN_GENERATED_KEYS); // Der
+																				// generierte
+																				// Key
+																				// soll
+																				// bereitgestellt
+																				// werden.
+			rSet = statement.getGeneratedKeys();
+			// Den neu erzeugten Primary Key in key speichern.
+			while (rSet.next()) {
+				key = rSet.getInt(1);
+
+			}
+			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
+					+ key + ", " + sammlungID + ")";
+			statement.executeUpdate(objekt_sammlung);
+			objekt = "UPDATE objekt SET Barcode = '" + key
+					+ "' WHERE ID_Objekt ='" + key + "'";
+			statement.executeUpdate(objekt);
+			propagateChange();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+	}
+
+	/**
+	 * 
+	 * @param name
+	 * @param typID
+	 * @param sammlungID
+	 * @param barcode
 	 */
 	public void addObject(String name, int typID, int sammlungID, String barcode) {
-		String objekt = "INSERT INTO Objekt (ID_Objekt, ObjektName, Typ_ID, Barcode) VALUES (NULL,'"
+		String objekt = "INSERT INTO Objekt (ID_Objekt, ObjektName, Typ_ID) VALUES (NULL,'"
 				+ name + "', '" + typID + "','" + barcode + "')";
 		int key = -1;
 		try {
@@ -288,26 +331,18 @@ public class DBTool extends Observable {
 	 * @param length
 	 *            int the length of the field.
 	 */
-	public void addStringFeld(String name, int typID) {
+	public void addStringFeld(String name) {
 		String feld = "INSERT INTO feld (ID_Feld, FeldName) VALUES (NULL,'"
 				+ name + "')";
-		int key = -1;
 		try {
 			statement = connection.createStatement();
-			statement.executeUpdate(feld, Statement.RETURN_GENERATED_KEYS); // Der
-																			// generierte
-																			// Key
-																			// soll
-																			// bereitgestellt
-																			// werden.
-			rSet = statement.getGeneratedKeys();
-			// Den neu erzeugten Primary Key in key speichern.
-			while (rSet.next()) {
-				key = rSet.getInt(1);
-			}
-			String objekt_sammlung = "INSERT INTO Typ_Feld (Typ_ID, Feld_ID) VALUES ("
-					+ typID + ", " + key + ")";
-			statement.executeUpdate(objekt_sammlung);
+			statement.executeUpdate(feld); // Der
+											// generierte
+											// Key
+											// soll
+											// bereitgestellt
+											// werden.
+
 			propagateChange();
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
@@ -340,6 +375,37 @@ public class DBTool extends Observable {
 
 		}
 	}
+
+	// Delete-Statements //
+	// *******************//
+	// *******************//
+
+	/**
+	 * Adds an entry to table Eigenschaft.
+	 * 
+	 * @param tblName
+	 *            String The name of the table.
+	 * @param id
+	 *            int The id of the object.
+	 */
+	public void deleteItemOfTableByID(String tblName, int id) {
+		String delete = "DELETE FROM " + tblName + " WHERE ID_" + tblName
+				+ "= " + id;
+		try {
+			statement = connection.createStatement();
+			statement.executeUpdate(delete);
+			propagateChange();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+
+		}
+	}
+
+	// Select-Statements //
+	// *******************//
+	// *******************//
 
 	/**
 	 * Selects everything from a given table.
@@ -393,9 +459,9 @@ public class DBTool extends Observable {
 	 */
 	public ResultSet selectObjectsOfSammlungByID(int sammlungID) {
 		String selObj = "SELECT * FROM Objekt AS O "
-				+ "JOIN Objekt_Sammlung AS OS ON"
-				+ "O.ID_Objekt = OS.Objekt_ID" + "WHERE " + sammlungID
-				+ " = OS.Objekt_ID";
+				+ "JOIN Objekt_Sammlung AS OS ON "
+				+ "O.ID_Objekt = OS.Objekt_ID " + "WHERE " + sammlungID
+				+ " = OS.Sammlung_ID";
 		try {
 			statement = connection.createStatement();
 			statement.execute(selObj);
@@ -411,10 +477,11 @@ public class DBTool extends Observable {
 	/**
 	 * Selects all info to all Objekte
 	 * 
-	 * @return ResultSet
+	 * @return ArrayList<String>
 	 */
-	public ResultSet selectAllInfoFromObject() {
+	public ResultSet selectColumnFromObjectInfo(String colName) {
 		String selAll = "SELECT * FROM allObjInfo";
+
 		try {
 			statement = connection.createStatement();
 			statement.execute(selAll);

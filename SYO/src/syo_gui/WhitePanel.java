@@ -19,7 +19,7 @@ class WhitePanel extends JPanel
     	this.setBackground(Color.WHITE);
     	this.setVisible(true);
         try {                
-            theImage = ImageIO.read(new File("syo_logo.jpg"));
+            theImage = ImageIO.read(new File("images/syo_logo.jpg"));
             theImage = theImage.getScaledInstance((900),(95),Image.SCALE_SMOOTH );
         } catch (IOException ex) {
                 ex.printStackTrace();

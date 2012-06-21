@@ -79,6 +79,8 @@ public class MainView extends JFrame implements Observer {
 	Label lblNavigation;
 	Label lblNaviStuff;
 	JLabel lblMeldung;
+	
+	JTextField txtBarcode;
 
 	JButton cmdSammlung;
 	JButton cmdVerwaltung;
@@ -156,6 +158,8 @@ public class MainView extends JFrame implements Observer {
 	private JButton cmdCard9bearbeiten;
 	private JButton cmdCard9speichern;
 	private JButton cmdCard9abbrechen;
+	private JList liCard9Sammlung;
+	private JScrollPane scrollPaneCard9;
 
 	
 	
@@ -668,8 +672,7 @@ public class MainView extends JFrame implements Observer {
 	
 		
 		
-
-		
+	
 	}
 
 	/**
@@ -693,32 +696,23 @@ public class MainView extends JFrame implements Observer {
 		Font f = lblNavigation.getFont();
 		lblNavigation.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
 
-		lblNaviStuff = new Label();
-		pnlNavigation.add(lblNaviStuff);
-		lblNaviStuff.setBackground(new Color(255, 255, 255));
-		lblNaviStuff.setForeground(new Color(0, 0, 0));
-		lblNaviStuff.setAlignment(1);
-		lblNaviStuff.setBounds(10, 420, 205, 30);
-		lblNaviStuff.setFont(new Font((lblNavigation.getFont()).getFontName(),
-				(lblNavigation.getFont()).getStyle(), 10));
-		lblNaviStuff.setText("If you think, Java-GUI is easy...");
-		f = lblNavigation.getFont();
-		lblNavigation.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
-		
-		
-		lblMeldung = new JLabel("<html><b>Meldezeile</b></html>");
-		pnlNavigation.add(lblMeldung);
-		lblMeldung.setBackground(Color.white);
-		lblMeldung.setForeground(Color.red);
-		lblMeldung.setBounds(20,250,185, 100);
-		lblMeldung.setFont(new Font("Arial", Font.PLAIN, 14));
-		
-		
+		//Barcodefeld
+		txtBarcode = new JTextField();
+		pnlNavigation.add(txtBarcode);
+		txtBarcode.setBounds(20,420,185,30);
+		txtBarcode.setVisible(true);
+		txtBarcode.setFont(new Font("Arial", Font.PLAIN, 15));
+		txtBarcode.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(pnlView, "" + (9));
+			}
+		});
 
+		
 		cmdSammlung = new JButton("Sammlungen anzeigen");
 		pnlNavigation.add(cmdSammlung);
 		cmdSammlung.setVisible(true);
-		cmdSammlung.setBounds(20, 100, 185, 30);
+		cmdSammlung.setBounds(20, 70, 185, 30);
 		cmdSammlung.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (1));
@@ -728,7 +722,7 @@ public class MainView extends JFrame implements Observer {
 		cmdVerwaltung = new JButton("Sammlungen verwalten");
 		pnlNavigation.add(cmdVerwaltung);
 		cmdVerwaltung.setVisible(true);
-		cmdVerwaltung.setBounds(20, 150, 185, 30);
+		cmdVerwaltung.setBounds(20, 120, 185, 30);
 		cmdVerwaltung.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (7));
@@ -738,19 +732,26 @@ public class MainView extends JFrame implements Observer {
 		cmdInfo = new JButton("Über SYO");
 		pnlNavigation.add(cmdInfo);
 		cmdInfo.setVisible(true);
-		cmdInfo.setBounds(20, 200, 185, 30);
+		cmdInfo.setBounds(20, 170, 185, 30);
 		cmdInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (8));
 			}
 		});
+		
+		lblMeldung = new JLabel("<html><b>Meldezeile</b></html>");
+		pnlNavigation.add(lblMeldung);
+		lblMeldung.setBackground(Color.white);
+		lblMeldung.setForeground(Color.red);
+		lblMeldung.setBounds(20,250,185, 100);
+		lblMeldung.setFont(new Font("Arial", Font.PLAIN, 14));
 
 
 		// Previous & Next - Buttons / Only for Testing
 		cmdPrevious = new JButton("<-- Previous");
 		pnlNavigation.add(cmdPrevious);
 		cmdPrevious.setVisible(true);
-		cmdPrevious.setBounds(50, 330, 120, 36);
+		cmdPrevious.setBounds(50, 330, 120, 25);
 		cmdPrevious.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (currentCard > 1) {
@@ -763,7 +764,7 @@ public class MainView extends JFrame implements Observer {
 		cmdNext = new JButton("Next -->");
 		pnlNavigation.add(cmdNext);
 		cmdNext.setVisible(true);
-		cmdNext.setBounds(50, 375, 120, 36);
+		cmdNext.setBounds(50, 375, 120, 25);
 		cmdNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (currentCard < 10) {

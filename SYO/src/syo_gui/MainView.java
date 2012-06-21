@@ -20,6 +20,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
 
 import syo_controller.BarcodeGen;
 import syo_controller.DBBasisObjekt;
@@ -262,6 +263,9 @@ public class MainView extends JFrame implements Observer {
 
 		liCard1Sammlungen = new JList(liSammlung.toArray());
 
+		ComplexCellRenderer renderer = new ComplexCellRenderer();
+		//liCard1Sammlungen.setCellRenderer(renderer);
+		
 		liCard1Sammlungen.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {

@@ -446,9 +446,7 @@ public class MainView extends JFrame implements Observer {
                         
         
                         
-                        
-        
->>>>>>> develop_test
+                      
         
 /*        
 *-------------------------------------------------------

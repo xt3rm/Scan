@@ -1,6 +1,7 @@
 package syo_controller;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -102,12 +103,24 @@ public class DBController implements Observer {
 		DBTool.getInstance().closeDB();
 	}
 
-	public ArrayList<DBBasisObjekt> getObjektOfSammlung(DBBasisObjekt obj) {
+	public ArrayList<DBBasisObjekt> getBaseObjektOfSammlung(DBBasisObjekt obj) {
 		DBTool.getInstance().connectDB();
 		ResultSet rs = DBTool.getInstance().selectObjectsOfSammlungByID(
 				obj.getId());
 		ArrayList<DBBasisObjekt> dbo = factory.createBasisObjekte(rs);
 		DBTool.getInstance().closeDB();
+		return dbo;
+	}
+	
+	/**
+	 * Returns a Objekt with all its values.
+	 * @param obj
+	 * @return
+	 */
+	public DBObjekt getWholeObjekt(DBBasisObjekt obj) {
+		DBObjekt dbo = new DBObjekt(obj.getId());
+		DBTool.getInstance().connectDB();
+		ResultSet rs = DBTool.getInstance().selectFromTableID("objekt", obj.getId());
 		return dbo;
 	}
 

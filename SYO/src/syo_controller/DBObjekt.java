@@ -28,6 +28,7 @@ public class DBObjekt extends DBBasisObjekt {
 	public DBObjekt(int sammlungID){
 		super();
 		this.setSammlungID(sammlungID);
+		felder = new ArrayList<DBFeld>();
 	}
 
 	public void setSammlungID(int sammlungID) {

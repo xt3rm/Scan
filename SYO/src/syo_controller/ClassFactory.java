@@ -28,4 +28,17 @@ public class ClassFactory {
 		}
 		return dbo;
 	}
+	
+	/**
+	 * 
+	 * @param dbo
+	 * @param rs
+	 * @return
+	 */
+	/*
+	public DBObjekt createObjekt(DBBasisObjekt dbo, ResultSet rs) {
+		//
+		
+	}
+	*/
 }

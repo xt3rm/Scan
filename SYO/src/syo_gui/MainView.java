@@ -154,8 +154,12 @@ public class MainView extends JFrame implements Observer {
 	// --------- Komponenten Card9 - Irgendwelcher Stuff ------
 	JLabel lblCard9;
 
+	private JButton cmdCard9bearbeiten;
+	private JButton cmdCard9speichern;
+	private JButton cmdCard9abbrechen;
+
 	/**
-	 * Konstuktor der Klasse Main View() Die verschiedenen Panels werden
+	 * Konstruktor der Klasse Main View() Die verschiedenen Panels werden
 	 * erstellt
 	 */
 	public MainView() {
@@ -247,7 +251,7 @@ public class MainView extends JFrame implements Observer {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					liObjekt = ctrl
-							.getObjektOfSammlung((DBBasisObjekt) liCard1Sammlungen
+							.getBaseObjektOfSammlung((DBBasisObjekt) liCard1Sammlungen
 									.getSelectedValue());
 					aktuellerKnoten = (DBBasisObjekt) liCard1Sammlungen
 							.getSelectedValue();
@@ -311,6 +315,19 @@ public class MainView extends JFrame implements Observer {
 		pnlCard2.add(cmdCard2zurueck);
 		cmdCard2zurueck.setVisible(true);
 		cmdCard2zurueck.setBounds(440, 110, 185, 30);
+		
+		liCard2Sammlung.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					
+					aktuellerKnoten = (DBBasisObjekt) liCard2Sammlung
+							.getSelectedValue();
+					liCard2Sammlung.setListData(liObjekt.toArray());
+					cl.show(pnlView, "" + (2));
+				}
+			}
+		});
+		
 	}
 
 	/**
@@ -634,6 +651,48 @@ public class MainView extends JFrame implements Observer {
 		lblCard9 = new JLabel(STUFF);
 		pnlCard9.add(lblCard9);
 
+		cmdCard9bearbeiten = new JButton("bearbeiten");
+		pnlCard9.add(cmdCard9bearbeiten);
+		cmdCard9bearbeiten.setVisible(true);
+		cmdCard9bearbeiten.setBounds(440, 60, 185, 30);
+
+		cmdCard9speichern = new JButton("speichern");
+		pnlCard9.add(cmdCard9speichern);
+		cmdCard9speichern.setVisible(true);
+		cmdCard9speichern.setBounds(440, 100, 185, 30);
+
+		cmdCard9abbrechen = new JButton("abbrechen");
+		pnlCard9.add(cmdCard9abbrechen);
+		cmdCard9abbrechen.setVisible(true);
+		cmdCard9abbrechen.setBounds(440, 140, 185, 30);
+		dbo = new DBObjekt(1);
+		DBFeld f = new DBFeld("Ruedi", 1);
+		f.setWert("Hui");
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		dbo.addFeld(f);
+		
+		
+		if (dbo != null) {
+			JList jlist = new JList(dbo.getFelder().toArray());
+			jlist.setCellRenderer(new MyCellRenderer());
+			JScrollPane jsp = new JScrollPane(jlist);
+			pnlCard9.add(jsp);
+			jsp.setBounds(30, 100, 300, 150);
+		}
 		pnlCard9.setBackground(new Color(255, 255, 255));
 
 		lblCard9.setBounds(100, 20, 120, 30);

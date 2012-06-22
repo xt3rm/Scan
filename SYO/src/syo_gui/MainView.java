@@ -300,23 +300,23 @@ public class MainView extends JFrame implements Observer {
 		cmdCard9bearbeiten = new JButton("bearbeiten");
 		pnlCard9.add(cmdCard9bearbeiten);
 		cmdCard9bearbeiten.setVisible(true);
-		cmdCard9bearbeiten.setBounds(440, 60, 185, 30);
+		cmdCard9bearbeiten.setBounds(440, 70, 185, 30);
 
 		cmdCard9speichern = new JButton("speichern");
 		pnlCard9.add(cmdCard9speichern);
 		cmdCard9speichern.setVisible(true);
-		cmdCard9speichern.setBounds(440, 100, 185, 30);
+		cmdCard9speichern.setBounds(440, 110, 185, 30);
 
 		cmdCard9abbrechen = new JButton("abbrechen");
 		pnlCard9.add(cmdCard9abbrechen);
 		cmdCard9abbrechen.setVisible(true);
-		cmdCard9abbrechen.setBounds(440, 140, 185, 30);
+		cmdCard9abbrechen.setBounds(440, 150, 185, 30);
 
 		liCard9Sammlungen = new JList();
 		liCard9Sammlungen.setCellRenderer(new MyCellRenderer());
 		JScrollPane jsp = new JScrollPane(liCard9Sammlungen);
 		pnlCard9.add(jsp);
-		jsp.setBounds(30, 100, 300, 150);
+		jsp.setBounds(30, 70, 350, 250);
 
 		pnlCard9.setBackground(new Color(255, 255, 255));
 
@@ -662,7 +662,7 @@ public class MainView extends JFrame implements Observer {
 
 		scrollPaneCard7 = new JScrollPane(liCard7Sammlungen);
 		pnlCard7.add(scrollPaneCard7);
-		scrollPaneCard7.setBounds(30, 150, 500, 200);
+		scrollPaneCard7.setBounds(30, 90, 600, 250);
 		scrollPaneCard7.setVisible(true);
 
 		cmdCard7Sammlunglöschen = new JButton("Sammlung löschen");
@@ -677,7 +677,7 @@ public class MainView extends JFrame implements Observer {
 
 		pnlCard7.add(cmdCard7Sammlunglöschen);
 		cmdCard7Sammlunglöschen.setVisible(true);
-		cmdCard7Sammlunglöschen.setBounds(440, 60, 185, 30);
+		cmdCard7Sammlunglöschen.setBounds(40, 370, 185, 30);
 	}
 
 	/**

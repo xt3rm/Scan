@@ -305,7 +305,7 @@ public class DBTool extends Observable {
 			// Insert the fields
 			rSet = this.selectFelderOfTypByID(typID);
 			while (rSet.next()) {
-				this.addEigenschaft("", key, rSet.getInt("Feld_ID"));
+				addEigenschaft("", key, rSet.getInt("Feld_ID"));
 			}
 
 			propagateChange();

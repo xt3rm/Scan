@@ -820,7 +820,7 @@ public class MainView extends JFrame implements Observer {
 		liCard7Sammlungen.setListData(liSammlung.toArray());
 		this.txtCard4neueSammlung.setText(""); // Clear the text
 		// Update object
-		this.liObjekt = ctrl.getEveryRowOfTable("objekt");
+		this.liObjekt = ctrl.getBaseObjektOfSammlung(aktuellerKnoten);
 		this.liCard2Sammlung.setListData(liObjekt.toArray());
 		this.txtCard5neuesObjekt.setText("");
 		// Update typ

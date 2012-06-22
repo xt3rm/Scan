@@ -107,7 +107,7 @@ public class DBController implements Observer {
 	 */
 	public void deleteSammlung(int id) {
 		DBTool.getInstance().connectDB();
-		DBTool.getInstance().deleteItemOfTableByID("sammlung", id);
+		DBTool.getInstance().deleteSammlungByID(id);
 		DBTool.getInstance().closeDB();
 	}
 

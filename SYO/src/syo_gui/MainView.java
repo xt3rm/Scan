@@ -25,8 +25,6 @@ import syo_controller.BarcodeGen;
 import syo_controller.DBBasisObjekt;
 import syo_controller.DBController;
 import syo_controller.DBFeld;
-import syo_controller.DBObjekt;
-import syo_controller.DBTyp;
 import syo_model.DBTool;
 
 @SuppressWarnings("serial")
@@ -38,12 +36,11 @@ public class MainView extends JFrame implements Observer {
 	private ArrayList<DBBasisObjekt> liTyp;
 	private ArrayList<DBBasisObjekt> liFeld;
 	private ArrayList<DBBasisObjekt> liChosenFeld;
+	private ArrayList<DBBasisObjekt> liAllObjektFelder;
 	// controller
 	private DBController ctrl;
 	// Aktueller Knoten
 	private DBBasisObjekt aktuellerKnoten = null;
-	private DBObjekt dbo = null;
-	private DBTyp dbtyp = null;
 
 	private int currentCard = 1;
 
@@ -112,7 +109,6 @@ public class MainView extends JFrame implements Observer {
 	private JList liCard3Sammlung;
 	private JScrollPane scrollPaneCard3;
 	private JButton cmdCard3Feldhinzufuegen;
-	private String listCard3_2s[];
 	private JComboBox cmbCard3Feldauswaehlen;
 	private JButton cmdCard3NeuesFeld;
 	private JButton cmdCard3entfernen;
@@ -157,6 +153,8 @@ public class MainView extends JFrame implements Observer {
 	private JButton cmdCard9bearbeiten;
 	private JButton cmdCard9speichern;
 	private JButton cmdCard9abbrechen;
+
+	private JList liCard9Sammlungen;
 
 	/**
 	 * Konstruktor der Klasse Main View() Die verschiedenen Panels werden
@@ -271,6 +269,40 @@ public class MainView extends JFrame implements Observer {
 	}
 
 	/**
+	 * Creates PanelCard 9
+	 */
+	public void createPnlCard9() {
+		lblCard9 = new JLabel(STUFF);
+		pnlCard9.add(lblCard9);
+
+		cmdCard9bearbeiten = new JButton("bearbeiten");
+		pnlCard9.add(cmdCard9bearbeiten);
+		cmdCard9bearbeiten.setVisible(true);
+		cmdCard9bearbeiten.setBounds(440, 60, 185, 30);
+
+		cmdCard9speichern = new JButton("speichern");
+		pnlCard9.add(cmdCard9speichern);
+		cmdCard9speichern.setVisible(true);
+		cmdCard9speichern.setBounds(440, 100, 185, 30);
+
+		cmdCard9abbrechen = new JButton("abbrechen");
+		pnlCard9.add(cmdCard9abbrechen);
+		cmdCard9abbrechen.setVisible(true);
+		cmdCard9abbrechen.setBounds(440, 140, 185, 30);
+
+		liCard9Sammlungen = new JList();
+		liCard9Sammlungen.setCellRenderer(new MyCellRenderer());
+		JScrollPane jsp = new JScrollPane(liCard9Sammlungen);
+		pnlCard9.add(jsp);
+		jsp.setBounds(30, 100, 300, 150);
+
+		pnlCard9.setBackground(new Color(255, 255, 255));
+
+		lblCard9.setBounds(100, 20, 120, 30);
+		lblCard9.setVisible(true);
+	}
+
+	/**
 	 * Creates PanelCard 2
 	 */
 	public void createPnlCard2() {
@@ -303,7 +335,6 @@ public class MainView extends JFrame implements Observer {
 		cmdCard2bearbeiten.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (5));
-				dbo = new DBObjekt(aktuellerKnoten.getId());
 			}
 		});
 
@@ -315,19 +346,20 @@ public class MainView extends JFrame implements Observer {
 		pnlCard2.add(cmdCard2zurueck);
 		cmdCard2zurueck.setVisible(true);
 		cmdCard2zurueck.setBounds(440, 110, 185, 30);
-		
+
 		liCard2Sammlung.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					
-					aktuellerKnoten = (DBBasisObjekt) liCard2Sammlung
-							.getSelectedValue();
-					liCard2Sammlung.setListData(liObjekt.toArray());
-					cl.show(pnlView, "" + (2));
+					aktuellerKnoten = ctrl
+							.getWholeObjekt((DBBasisObjekt) liCard2Sammlung
+									.getSelectedValue());
+					liAllObjektFelder = aktuellerKnoten.getChildren();
+					liCard9Sammlungen.setListData(liAllObjektFelder.toArray());
+					cl.show(pnlView, "" + (9));
 				}
 			}
 		});
-		
+
 	}
 
 	/**
@@ -642,61 +674,6 @@ public class MainView extends JFrame implements Observer {
 		lblCard8Info.setBounds(70, 100, 500, 250);
 		lblCard8Info.setVisible(true);
 
-	}
-
-	/**
-	 * Creates PanelCard 9
-	 */
-	public void createPnlCard9() {
-		lblCard9 = new JLabel(STUFF);
-		pnlCard9.add(lblCard9);
-
-		cmdCard9bearbeiten = new JButton("bearbeiten");
-		pnlCard9.add(cmdCard9bearbeiten);
-		cmdCard9bearbeiten.setVisible(true);
-		cmdCard9bearbeiten.setBounds(440, 60, 185, 30);
-
-		cmdCard9speichern = new JButton("speichern");
-		pnlCard9.add(cmdCard9speichern);
-		cmdCard9speichern.setVisible(true);
-		cmdCard9speichern.setBounds(440, 100, 185, 30);
-
-		cmdCard9abbrechen = new JButton("abbrechen");
-		pnlCard9.add(cmdCard9abbrechen);
-		cmdCard9abbrechen.setVisible(true);
-		cmdCard9abbrechen.setBounds(440, 140, 185, 30);
-		dbo = new DBObjekt(1);
-		DBFeld f = new DBFeld("Ruedi", 1);
-		f.setWert("Hui");
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		dbo.addFeld(f);
-		
-		
-		if (dbo != null) {
-			JList jlist = new JList(dbo.getFelder().toArray());
-			jlist.setCellRenderer(new MyCellRenderer());
-			JScrollPane jsp = new JScrollPane(jlist);
-			pnlCard9.add(jsp);
-			jsp.setBounds(30, 100, 300, 150);
-		}
-		pnlCard9.setBackground(new Color(255, 255, 255));
-
-		lblCard9.setBounds(100, 20, 120, 30);
-		lblCard9.setVisible(true);
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package syo_controller;
 
+import java.util.ArrayList;
+
 /**
  * Wraps the relevant data of a basic Entry in the database into a class.
  * 
@@ -10,6 +12,8 @@ public class DBBasisObjekt {
 
 	private String name;
 	private int id;
+	protected DBBasisObjekt parent = null;
+	protected ArrayList<DBBasisObjekt> children = new ArrayList<DBBasisObjekt>();
 	
 	
 	public DBBasisObjekt(String name, int id) {
@@ -35,5 +39,21 @@ public class DBBasisObjekt {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+
+	public void setParent(DBBasisObjekt parent) {
+		this.parent = parent;
+	}
+
+	public DBBasisObjekt getParent() {
+		return null;
+	}
+
+	public void setChildren(ArrayList<DBBasisObjekt> children) {
+		this.children = children;
+	}
+
+	public ArrayList<DBBasisObjekt> getChildren() {
+		return children;
 	}
 }

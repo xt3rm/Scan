@@ -1,7 +1,6 @@
 package syo_controller;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -73,12 +72,21 @@ public class DBController implements Observer {
 
 	}
 
+	/**
+	 * 
+	 * @param name
+	 */
 	public void createFeld(String name) {
 		DBTool.getInstance().connectDB();
 		DBTool.getInstance().addStringFeld(name);
 		DBTool.getInstance().closeDB();
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @param felder
+	 */
 	public void createTyp(String name, ArrayList<DBBasisObjekt> felder) {
 		DBTool.getInstance().connectDB();
 		int typID = DBTool.getInstance().addTyp(name);
@@ -88,7 +96,7 @@ public class DBController implements Observer {
 			DBTool.getInstance().addTyp_Feld(typID, d.getId());
 			DBTool.getInstance().closeDB();
 		}
-		
+
 	}
 
 	/**
@@ -111,19 +119,26 @@ public class DBController implements Observer {
 		DBTool.getInstance().closeDB();
 		return dbo;
 	}
-	
+
 	/**
 	 * Returns a Objekt with all its values.
+	 * 
 	 * @param obj
 	 * @return
 	 */
-	public DBObjekt getWholeObjekt(DBBasisObjekt obj) {
-		DBObjekt dbo = new DBObjekt(obj.getId());
+	public DBBasisObjekt getWholeObjekt(DBBasisObjekt dbo) {
 		DBTool.getInstance().connectDB();
-		ResultSet rs = DBTool.getInstance().selectFromTableID("objekt", obj.getId());
+		ResultSet rs = DBTool.getInstance().selectAllInfoOfObject(dbo.getId());
+		dbo = factory.createObjektWithFields(dbo, rs);
+		DBTool.getInstance().closeDB();
 		return dbo;
 	}
 
+	/**
+	 * 
+	 * @param tblName
+	 * @return
+	 */
 	public ArrayList<DBBasisObjekt> getEveryRowOfTable(String tblName) {
 		DBTool.getInstance().connectDB();
 		ResultSet rs = DBTool.getInstance().selectAllFromTable(tblName);
@@ -134,6 +149,9 @@ public class DBController implements Observer {
 
 	// Update Methods
 
+	/**
+	 * 
+	 */
 	public ArrayList<DBBasisObjekt> updateSammlung() {
 		DBTool.getInstance().connectDB();
 		ResultSet rs = DBTool.getInstance().selectAllFromTable("sammlung");

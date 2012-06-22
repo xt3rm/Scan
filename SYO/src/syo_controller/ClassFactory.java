@@ -14,6 +14,7 @@ public class ClassFactory {
 
 	/**
 	 * Creates a DBBasisObjekt.
+	 * 
 	 * @param rs
 	 * @return
 	 */
@@ -28,17 +29,27 @@ public class ClassFactory {
 		}
 		return dbo;
 	}
-	
+
 	/**
 	 * 
 	 * @param dbo
 	 * @param rs
 	 * @return
 	 */
-	/*
-	public DBObjekt createObjekt(DBBasisObjekt dbo, ResultSet rs) {
-		//
+
+	public DBBasisObjekt createObjektWithFields(DBBasisObjekt dbo, ResultSet rs) {
 		
+		try {
+			while(rs.next()) {
+				dbo.getChildren().add(new DBFeld(rs.getString("FeldName"), rs.getInt("Feld_ID"), rs.getString("Wert")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+
+		return dbo;
 	}
-	*/
+
 }

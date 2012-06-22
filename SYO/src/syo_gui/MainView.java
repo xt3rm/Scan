@@ -19,13 +19,10 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
-
-import syo_controller.BarcodeGen;
 import syo_controller.DBBasisObjekt;
 import syo_controller.DBController;
-import syo_controller.DBFeld;
 import syo_model.DBTool;
 
 @SuppressWarnings("serial")
@@ -159,9 +156,9 @@ public class MainView extends JFrame implements Observer {
 	private JButton cmdCard9bearbeiten;
 	private JButton cmdCard9speichern;
 	private JButton cmdCard9abbrechen;
-	private JList liCard9Sammlung;
+	//private JList liCard9Sammlung;
 	private JScrollPane scrollPaneCard9;
-	private JList liCard9Sammlungen;
+	private JTable liCard9Sammlungen;
 
 	
 	
@@ -312,11 +309,14 @@ public class MainView extends JFrame implements Observer {
 		cmdCard9abbrechen.setVisible(true);
 		cmdCard9abbrechen.setBounds(440, 150, 185, 30);
 
-		liCard9Sammlungen = new JList();
-		liCard9Sammlungen.setCellRenderer(new MyCellRenderer());
-		JScrollPane jsp = new JScrollPane(liCard9Sammlungen);
-		pnlCard9.add(jsp);
-		jsp.setBounds(30, 70, 350, 250);
+
+
+		liCard9Sammlungen = new JTable();
+		//liCard9Sammlungen.setCellRenderer(new MyCellRenderer());
+		scrollPaneCard9 = new JScrollPane(liCard9Sammlungen);
+		pnlCard9.add(scrollPaneCard9);
+		scrollPaneCard9.setBounds(30, 70, 350, 250);
+
 
 		pnlCard9.setBackground(new Color(255, 255, 255));
 
@@ -376,7 +376,8 @@ public class MainView extends JFrame implements Observer {
 							.getWholeObjekt((DBBasisObjekt) liCard2Sammlung
 									.getSelectedValue());
 					liAllObjektFelder = aktuellerKnoten.getChildren();
-					liCard9Sammlungen.setListData(liAllObjektFelder.toArray());
+					
+					//setListData(liAllObjektFelder.toArray());
 					cl.show(pnlView, "" + (9));
 				}
 			}

@@ -380,8 +380,6 @@ public class MainView extends JFrame implements Observer {
 				}
 			}
 		});
-
-
 		cmdCard2zurueck.setBounds(40, 420, 185, 30);
 
 	}
@@ -572,11 +570,10 @@ public class MainView extends JFrame implements Observer {
 		cmdCard5NeuerTyp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (3));
-
 			}
 		});
 
-		cmdCard5weiter = new JButton("ok");
+		cmdCard5weiter = new JButton("Erstellen");
 		pnlCard5.add(cmdCard5weiter);
 		cmdCard5weiter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

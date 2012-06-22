@@ -72,12 +72,21 @@ public class DBController implements Observer {
 
 	}
 
+	/**
+	 * 
+	 * @param name
+	 */
 	public void createFeld(String name) {
 		DBTool.getInstance().connectDB();
 		DBTool.getInstance().addStringFeld(name);
 		DBTool.getInstance().closeDB();
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @param felder
+	 */
 	public void createTyp(String name, ArrayList<DBBasisObjekt> felder) {
 		DBTool.getInstance().connectDB();
 		int typID = DBTool.getInstance().addTyp(name);
@@ -87,7 +96,7 @@ public class DBController implements Observer {
 			DBTool.getInstance().addTyp_Feld(typID, d.getId());
 			DBTool.getInstance().closeDB();
 		}
-		
+
 	}
 
 	/**
@@ -98,11 +107,11 @@ public class DBController implements Observer {
 	 */
 	public void deleteSammlung(int id) {
 		DBTool.getInstance().connectDB();
-		DBTool.getInstance().deleteItemOfTableByID("sammlung", id);
+		DBTool.getInstance().deleteSammlungByID(id);
 		DBTool.getInstance().closeDB();
 	}
 
-	public ArrayList<DBBasisObjekt> getObjektOfSammlung(DBBasisObjekt obj) {
+	public ArrayList<DBBasisObjekt> getBaseObjektOfSammlung(DBBasisObjekt obj) {
 		DBTool.getInstance().connectDB();
 		ResultSet rs = DBTool.getInstance().selectObjectsOfSammlungByID(
 				obj.getId());
@@ -111,6 +120,25 @@ public class DBController implements Observer {
 		return dbo;
 	}
 
+	/**
+	 * Returns a Objekt with all its values.
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public DBBasisObjekt getWholeObjekt(DBBasisObjekt dbo) {
+		DBTool.getInstance().connectDB();
+		ResultSet rs = DBTool.getInstance().selectAllInfoOfObject(dbo.getId());
+		dbo = factory.createObjektWithFields(dbo, rs);
+		DBTool.getInstance().closeDB();
+		return dbo;
+	}
+
+	/**
+	 * 
+	 * @param tblName
+	 * @return
+	 */
 	public ArrayList<DBBasisObjekt> getEveryRowOfTable(String tblName) {
 		DBTool.getInstance().connectDB();
 		ResultSet rs = DBTool.getInstance().selectAllFromTable(tblName);
@@ -121,6 +149,9 @@ public class DBController implements Observer {
 
 	// Update Methods
 
+	/**
+	 * 
+	 */
 	public ArrayList<DBBasisObjekt> updateSammlung() {
 		DBTool.getInstance().connectDB();
 		ResultSet rs = DBTool.getInstance().selectAllFromTable("sammlung");

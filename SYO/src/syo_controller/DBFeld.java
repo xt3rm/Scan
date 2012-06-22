@@ -12,9 +12,9 @@ public class DBFeld extends DBBasisObjekt {
 
 	private String wert;
 	
-	public DBFeld(String name, int id) {
+	public DBFeld(String name, int id, String wert) {
 		super(name, id);
-		this.setWert("");
+		this.setWert(wert);
 	}
 
 	public void setWert(String wert) {

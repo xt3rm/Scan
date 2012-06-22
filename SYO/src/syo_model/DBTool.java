@@ -258,6 +258,14 @@ public class DBTool extends Observable {
 			objekt = "UPDATE objekt SET Barcode = '" + key
 					+ "' WHERE ID_Objekt ='" + key + "'";
 			statement.executeUpdate(objekt);
+			// Insert the fields
+			
+			ResultSet rs = this.selectFelderOfTypByID(typID);
+			while (rs.next()) {
+				this.connectDB();
+				this.addEigenschaft("", key, rs.getInt("Feld_ID"));
+			}
+
 			propagateChange();
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
@@ -293,8 +301,16 @@ public class DBTool extends Observable {
 			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
 					+ key + ", " + sammlungID + ")";
 			statement.executeUpdate(objekt_sammlung);
+
+			// Insert the fields
+			rSet = this.selectFelderOfTypByID(typID);
+			while (rSet.next()) {
+				addEigenschaft("", key, rSet.getInt("Feld_ID"));
+			}
+
 			propagateChange();
 		} catch (SQLException ex) {
+			ex.printStackTrace();
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
@@ -331,7 +347,8 @@ public class DBTool extends Observable {
 	}
 
 	public void addTyp_Feld(int typID, int feldID) {
-		String typ = "INSERT INTO Typ_Feld (Typ_ID, Feld_ID) VALUES (" + typID + "," + feldID +")";
+		String typ = "INSERT INTO Typ_Feld (Typ_ID, Feld_ID) VALUES (" + typID
+				+ "," + feldID + ")";
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(typ);
@@ -421,9 +438,7 @@ public class DBTool extends Observable {
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
 	}
-	
-	
-	
+
 	/**
 	 * 
 	 * 
@@ -432,19 +447,19 @@ public class DBTool extends Observable {
 	public void deleteSammlungByID(int id) {
 
 		ResultSet resSet = selectObjectsOfSammlungByID(id);
-		
-		
-		String deleteSammlung = "DELETE FROM sammlung WHERE ID_Sammlung = " + id;
+
+		String deleteSammlung = "DELETE FROM sammlung WHERE ID_Sammlung = "
+				+ id;
 
 		try {
 			statement = connection.createStatement();
 			while (resSet.next()) {
-				String delObj = "DELETE FROM objekt WHERE ID_Objekt ="+ resSet.getInt(1);
+				String delObj = "DELETE FROM objekt WHERE ID_Objekt ="
+						+ resSet.getInt(1);
 				statement.executeUpdate(delObj);
 			}
 			statement.executeUpdate(deleteSammlung);
-			
-			
+
 			propagateChange();
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
@@ -452,10 +467,6 @@ public class DBTool extends Observable {
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
 	}
-	
-	
-	
-	
 
 	// Select-Statements //
 	// *******************//
@@ -540,6 +551,49 @@ public class DBTool extends Observable {
 			statement = connection.createStatement();
 			statement.execute(selAll);
 			rSet = statement.getResultSet();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		return rSet;
+	}
+
+	public ResultSet selectFelderOfTypByID(int typID) {
+		String selFelder = "SELECT * FROM feld as F "
+				+ "JOIN Typ_Feld as TF ON F.ID_Feld = TF.Feld_ID "
+				+ "WHERE TF.Typ_ID = " + typID;
+		try {
+			statement = connection.createStatement();
+			statement.execute(selFelder);
+			rSet = statement.getResultSet();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		return rSet;
+
+	}
+
+	/**
+	 * ajfhalh
+	 * 
+	 * @param objektID
+	 * @return
+	 */
+	public ResultSet selectAllInfoOfObject(int objektID) {
+		String select = "SELECT * FROM objekt AS O "
+				+ "JOIN Typ_Feld as TF on TF.Typ_ID = O.Typ_ID "
+				+ "JOIN Feld as F on F.ID_Feld = TF.Feld_ID "
+				+ "JOIN Eigenschaft as E on E.Feld_ID = TF.Feld_ID "
+				+ "WHERE O.ID_Objekt = " + objektID + " AND E.Objekt_ID ="
+				+ objektID;
+		try {
+			statement = connection.createStatement();
+			statement.execute(select);
+			rSet = statement.getResultSet();
+
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());

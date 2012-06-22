@@ -89,6 +89,7 @@ public class MainView extends JFrame implements Observer {
 	
 	JButton cmdPrevious;
 	JButton cmdNext;
+	private int killerbutton;
 
 	// --------- Komponenten Card1 - Alle Samlungen anzeigen ------
 	private JLabel lblCard1;
@@ -251,7 +252,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard1neueSammlung = new JButton("neue Sammlung");
 		pnlCard1.add(cmdCard1neueSammlung);
 		cmdCard1neueSammlung.setVisible(true);
-		cmdCard1neueSammlung.setBounds(440, 60, 185, 30);
+		cmdCard1neueSammlung.setBounds(40, 340, 185, 30);
 		cmdCard1neueSammlung.addActionListener(new ActionListener() {
 
 
@@ -287,7 +288,7 @@ public class MainView extends JFrame implements Observer {
 		pnlCard1.add(liCard1Sammlungen);
 		scrollPaneCard1 = new JScrollPane(liCard1Sammlungen);
 		pnlCard1.add(scrollPaneCard1);
-		scrollPaneCard1.setBounds(30, 150, 500, 200);
+		scrollPaneCard1.setBounds(30, 60, 600, 260);
 		scrollPaneCard1.setVisible(true);
 	}
 
@@ -306,7 +307,7 @@ public class MainView extends JFrame implements Observer {
 
 		lblCard2Sammlung = new JLabel("Titel");
 		pnlCard2.add(lblCard2Sammlung);
-		lblCard2Sammlung.setBounds(30, 90, 300, 30);
+		lblCard2Sammlung.setBounds(30, 60, 300, 30);
 		lblCard2Sammlung.setVisible(true);
 		repaint();
 
@@ -317,7 +318,7 @@ public class MainView extends JFrame implements Observer {
 
 		scrollPaneCard2 = new JScrollPane(liCard2Sammlung);
 		pnlCard2.add(scrollPaneCard2);
-		scrollPaneCard2.setBounds(30, 150, 500, 200);
+		scrollPaneCard2.setBounds(30, 100, 600, 250);
 		scrollPaneCard2.setVisible(true);
 
 		cmdCard2bearbeiten = new JButton("Neu");
@@ -330,7 +331,7 @@ public class MainView extends JFrame implements Observer {
 
 		pnlCard2.add(cmdCard2bearbeiten);
 		cmdCard2bearbeiten.setVisible(true);
-		cmdCard2bearbeiten.setBounds(440, 60, 185, 30);
+		cmdCard2bearbeiten.setBounds(40, 370, 185, 30);
 
 		cmdCard2zurueck = new JButton("zurück");
 		pnlCard2.add(cmdCard2zurueck);
@@ -378,12 +379,12 @@ public class MainView extends JFrame implements Observer {
 		cmbCard3Feldauswaehlen = new JComboBox(liFeld.toArray());
 		pnlCard3.add(cmbCard3Feldauswaehlen);
 		cmbCard3Feldauswaehlen.setVisible(true);
-		cmbCard3Feldauswaehlen.setBounds(440, 150, 185, 30);
+		cmbCard3Feldauswaehlen.setBounds(440, 140, 185, 30);
 
 		cmdCard3NeuesFeld = new JButton("Neues Feld generieren");
 		pnlCard3.add(cmdCard3NeuesFeld);
 		cmdCard3NeuesFeld.setVisible(true);
-		cmdCard3NeuesFeld.setBounds(440, 230, 185, 30);
+		cmdCard3NeuesFeld.setBounds(440, 240, 185, 30);
 		cmdCard3NeuesFeld.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (6));
@@ -408,7 +409,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard3entfernen = new JButton("entfernen");
 		pnlCard3.add(cmdCard3entfernen);
 		cmdCard3entfernen.setVisible(true);
-		cmdCard3entfernen.setBounds(440, 270, 185, 30);
+		cmdCard3entfernen.setBounds(440, 190, 185, 30);
 		cmdCard3entfernen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				liChosenFeld.remove((DBBasisObjekt) liCard3Sammlung
@@ -520,7 +521,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard5NeuerTyp = new JButton("Neuer Typ");
 		pnlCard5.add(cmdCard5NeuerTyp);
 		cmdCard5NeuerTyp.setVisible(true);
-		cmdCard5NeuerTyp.setBounds(440, 60, 185, 30);
+		cmdCard5NeuerTyp.setBounds(440, 90, 185, 30);
 		cmdCard5NeuerTyp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (3));
@@ -737,13 +738,31 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		cmdVerwaltung = new JButton("Sammlungen verwalten");
+		cmdVerwaltung = new JButton("Change Style");
 		pnlNavigation.add(cmdVerwaltung);
 		cmdVerwaltung.setVisible(true);
 		cmdVerwaltung.setBounds(20, 120, 185, 30);
 		cmdVerwaltung.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cl.show(pnlView, "" + (7));
+				if (killerbutton==0){
+					pnlContent.setBackground(Color.BLACK);
+					pnlNavigation.setBackground(Color.BLUE);
+					cl.show(pnlView, "" + (1));
+					pnlCard1.setBackground(Color.RED);
+					killerbutton++;
+				}else if (killerbutton==1){
+					pnlContent.setBackground(Color.BLACK);
+					pnlNavigation.setBackground(Color.BLACK);
+					cl.show(pnlView, "" + (1));
+					pnlCard1.setBackground(Color.YELLOW);
+					killerbutton++;
+				}else{
+					pnlContent.setBackground(new Color(222,222,222));
+					pnlNavigation.setBackground(Color.WHITE);
+					cl.show(pnlView, "" + (1));
+					pnlCard1.setBackground(Color.WHITE);
+					killerbutton=0;
+				}
 			}
 		});
 

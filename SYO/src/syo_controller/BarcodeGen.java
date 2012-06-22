@@ -81,10 +81,12 @@ public class BarcodeGen {
 	    return cfg;
 	}
 	
-	
+	/*
 	public static void main(String args[]) throws ConfigurationException, BarcodeException, IOException{
-		BarcodeGen barli = new BarcodeGen(1);
+		BarcodeGen barli = new BarcodeGen(123456789);
 	}
+	*/
+	
 	
 }
 

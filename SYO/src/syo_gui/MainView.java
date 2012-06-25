@@ -257,9 +257,8 @@ public class MainView extends JFrame implements Observer {
 
 		});
 
-		DBTool.getInstance().connectDB();
 		liSammlung = ctrl.updateSammlung();
-		DBTool.getInstance().closeDB();
+
 
 		liCard1Sammlungen = new JList(liSammlung.toArray());
 		

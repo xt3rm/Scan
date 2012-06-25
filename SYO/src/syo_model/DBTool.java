@@ -282,7 +282,7 @@ public class DBTool extends Observable {
 	 * @param barcode
 	 */
 	public void addObject(String name, int typID, int sammlungID, String barcode) {
-		String objekt = "INSERT INTO Objekt (ID_Objekt, ObjektName, Typ_ID) VALUES (NULL,'"
+		String objekt = "INSERT INTO Objekt (ID_Objekt, ObjektName, Typ_ID, barcode) VALUES (NULL,'"
 				+ name + "', '" + typID + "','" + barcode + "')";
 		int key = -1;
 		try {
@@ -297,20 +297,21 @@ public class DBTool extends Observable {
 			// Den neu erzeugten Primary Key in key speichern.
 			while (rSet.next()) {
 				key = rSet.getInt(1);
+
 			}
 			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
 					+ key + ", " + sammlungID + ")";
 			statement.executeUpdate(objekt_sammlung);
-
+			
 			// Insert the fields
-			rSet = this.selectFelderOfTypByID(typID);
-			while (rSet.next()) {
-				addEigenschaft("", key, rSet.getInt("Feld_ID"));
+			ResultSet rs = this.selectFelderOfTypByID(typID);
+			while (rs.next()) {
+				this.connectDB();
+				this.addEigenschaft("", key, rs.getInt("Feld_ID"));
 			}
 
 			propagateChange();
 		} catch (SQLException ex) {
-			ex.printStackTrace();
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());

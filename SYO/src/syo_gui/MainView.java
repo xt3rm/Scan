@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -45,6 +46,10 @@ public class MainView extends JFrame implements Observer {
 	private DBController ctrl;
 	// Aktueller Knoten
 	private DBBasisObjekt aktuellerKnoten = null;
+	// Wird gerade etwas bearbeitet?
+	private boolean isEditing = false;
+	// Ein eventueller Barcode wird hier gespeichert
+	private String barcode = null;
 
 	private int currentCard = 1;
 
@@ -80,13 +85,13 @@ public class MainView extends JFrame implements Observer {
 	Label lblNavigation;
 	Label lblNaviStuff;
 	JLabel lblMeldung;
-	
+
 	JTextField txtBarcode;
 
 	JButton cmdSammlung;
 	JButton cmdVerwaltung;
 	JButton cmdInfo;
-	
+
 	JButton cmdPrevious;
 	JButton cmdNext;
 	private int killerbutton;
@@ -163,12 +168,10 @@ public class MainView extends JFrame implements Observer {
 	private JButton cmdCard9speichern;
 	private JButton cmdCard9abbrechen;
 	private JButton cmdCard9drucken;
-	//private JList liCard9Sammlung;
+	// private JList liCard9Sammlung;
 	private JScrollPane scrollPaneCard9;
 	private JTable liCard9Sammlungen;
 
-	
-	
 	/**
 	 * Konstruktor der Klasse Main View() Die verschiedenen Panels werden
 	 * erstellt
@@ -183,9 +186,8 @@ public class MainView extends JFrame implements Observer {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		/*
-		 * ------------------------------------------------------- 
-		 * PANEL - View - pnlView
-		 * -------------------------------------------------------
+		 * ------------------------------------------------------- PANEL - View
+		 * - pnlView -------------------------------------------------------
 		 */
 		cl = new CardLayout();
 
@@ -236,7 +238,7 @@ public class MainView extends JFrame implements Observer {
 
 		getContentPane().add(pnlContent);
 		DBTool.getInstance().closeDB();
-
+		txtBarcode.requestFocusInWindow();
 	}
 
 	/**
@@ -256,9 +258,8 @@ public class MainView extends JFrame implements Observer {
 		cmdCard1neueSammlung.setVisible(true);
 		cmdCard1neueSammlung.setBounds(40, 340, 185, 30);
 		cmdCard1neueSammlung.addActionListener(new ActionListener() {
-
-
 			public void actionPerformed(ActionEvent arg0) {
+				isEditing = true;
 				cl.show(pnlView, "" + (4));
 			}
 
@@ -266,9 +267,8 @@ public class MainView extends JFrame implements Observer {
 
 		liSammlung = ctrl.updateSammlung();
 
-
 		liCard1Sammlungen = new JList(liSammlung.toArray());
-		
+
 		liCard1Sammlungen.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
@@ -326,18 +326,16 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-
 		liCard9Sammlungen = new JTable();
 		scrollPaneCard9 = new JScrollPane(liCard9Sammlungen);
 		pnlCard9.add(scrollPaneCard9);
 		scrollPaneCard9.setBounds(30, 70, 350, 250);
 
-
 		pnlCard9.setBackground(new Color(255, 255, 255));
 
 		lblCard9.setBounds(100, 20, 120, 30);
 		lblCard9.setVisible(true);
-		
+
 		cmdCard9drucken = new JButton("Drucken");
 		pnlCard9.add(cmdCard9drucken);
 		cmdCard9drucken.setVisible(true);
@@ -394,6 +392,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard2bearbeiten = new JButton("Neu");
 		cmdCard2bearbeiten.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				isEditing = true;
 				cl.show(pnlView, "" + (5));
 			}
 		});
@@ -419,13 +418,21 @@ public class MainView extends JFrame implements Observer {
 						e1.printStackTrace();
 					}
 					liAllObjektFelder = aktuellerKnoten.getChildren();
-					liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
+					liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten
+							.getChildren()));
 					lblCard9.setText(aktuellerKnoten.getName());
 					cl.show(pnlView, "" + (9));
 				}
 			}
 		});
 		cmdCard2zurueck.setBounds(40, 420, 185, 30);
+		cmdCard2zurueck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				isEditing = true;
+				cl.show(pnlView, "" + (1));
+				txtBarcode.requestFocus();
+			}
+		});
 	}
 
 	/**
@@ -507,7 +514,7 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		cmdCard3weiter = new JButton("ok");
+		cmdCard3weiter = new JButton("Ok");
 		pnlCard3.add(cmdCard3weiter);
 		cmdCard3weiter.setVisible(true);
 		cmdCard3weiter.setBounds(440, 420, 185, 30);
@@ -520,11 +527,16 @@ public class MainView extends JFrame implements Observer {
 				}
 			}
 		});
-		
+
 		cmdCard3zurueck = new JButton("zurück");
 		pnlCard3.add(cmdCard3zurueck);
 		cmdCard3zurueck.setVisible(true);
 		cmdCard3zurueck.setBounds(40, 420, 185, 30);
+		cmdCard3zurueck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(pnlView, "" + (5));
+			}
+		});
 	}
 
 	/**
@@ -556,6 +568,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard4ok.setBounds(440, 420, 185, 30);
 		cmdCard4ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				isEditing = false;
 				ctrl.createSammlung(txtCard4neueSammlung.getText());
 				cl.show(pnlView, "" + (1));
 			}
@@ -567,6 +580,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard4abbrechen.setBounds(40, 420, 185, 30);
 		cmdCard4abbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				isEditing = false;
 				cl.show(pnlView, "" + (1));
 			}
 		});
@@ -621,25 +635,41 @@ public class MainView extends JFrame implements Observer {
 		pnlCard5.add(cmdCard5weiter);
 		cmdCard5weiter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cl.show(pnlView, "" + (2));
+				
 				if (cmbCard5Typauswählen.getSelectedItem() != null) {
 					String name = txtCard5neuesObjekt.getText();
 					int typID = ((DBBasisObjekt) cmbCard5Typauswählen
 							.getSelectedItem()).getId();
 					if (isFilledOut(txtCard5neuesObjekt)) {
+						isEditing = false;
+						
 						txtCard5neuesObjekt.setText("");
+						if (barcode == null) {
 						ctrl.createObjekt(name, typID, aktuellerKnoten.getId());
+						} else {
+							ctrl.createObjekt(name, typID, aktuellerKnoten.getId(), barcode);
+						}
+						cl.show(pnlView, "" + (2));
+						barcode = null;
 					}
 				}
 			}
 		});
 		cmdCard5weiter.setVisible(true);
 		cmdCard5weiter.setBounds(440, 420, 185, 30);
-		
+
 		cmdCard5zurueck = new JButton("zurück");
 		pnlCard5.add(cmdCard5zurueck);
 		cmdCard5zurueck.setVisible(true);
 		cmdCard5zurueck.setBounds(40, 420, 185, 30);
+		cmdCard5zurueck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				isEditing = false;
+				cl.show(pnlView, "" + (2));
+			}
+		});
+		
+		
 	}
 
 	/**
@@ -771,36 +801,57 @@ public class MainView extends JFrame implements Observer {
 		Font f = lblNavigation.getFont();
 		lblNavigation.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
 
-		//Barcodefeld
+		// Barcodefeld
 		txtBarcode = new JTextField();
 		pnlNavigation.add(txtBarcode);
-		txtBarcode.setBounds(20,420,185,30);
+		txtBarcode.setBounds(20, 420, 185, 30);
 		txtBarcode.setVisible(true);
 		txtBarcode.setFont(new Font("Arial", Font.PLAIN, 15));
+		
+		/**
+		 * 
+		 * This is the very important Scannerfield!
+		 * 
+		 */
 		txtBarcode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					aktuellerKnoten  = ctrl.getObjectOfBarcode(txtBarcode.getText());
-					lblCard9.setText(aktuellerKnoten.getName());
-					liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
-					cl.show(pnlView, "" + (9));
-					lblMeldung.setText("<html><b>Barcode erkannt</b></html>");
-					txtBarcode.setText("");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					lblMeldung.setText(e.getMessage());
-				}	
+				if (!isEditing) {
+					try {
+						aktuellerKnoten = ctrl.getObjectOfBarcode(txtBarcode
+								.getText());
+						lblCard9.setText(aktuellerKnoten.getName());
+						liCard9Sammlungen.setModel(new MyTableModel(
+								aktuellerKnoten.getChildren()));
+						cl.show(pnlView, "" + (9));
+						lblMeldung
+								.setText("<html><b>Barcode erkannt</b></html>");
+						txtBarcode.setText("");
+					} catch (Exception e) {
+						e.printStackTrace();
+						lblMeldung.setText("<html><b> " + e.getMessage()
+								+ " </b></html>");
+						if (JOptionPane.showConfirmDialog(null, "Neuen eintrag erfassen?", "Nicht gefunden!", JOptionPane.YES_NO_OPTION) == 0) {
+							//disableMainView();
+							barcode = txtBarcode.getText();
+							cl.show(pnlView, "" + (1));
+						}
+					}
+				} else {
+					lblMeldung
+					.setText("<html><b>Bitte zuerst den aktuellen Bearbeitungsschritt abschliessen!</b></html>");
+				}
 			}
 		});
 
-		
 		cmdSammlung = new JButton("Sammlungen anzeigen");
 		pnlNavigation.add(cmdSammlung);
 		cmdSammlung.setVisible(true);
 		cmdSammlung.setBounds(20, 70, 185, 30);
 		cmdSammlung.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				barcode = null;
+				isEditing = false;
+				txtBarcode.requestFocus();
 				cl.show(pnlView, "" + (1));
 				lblMeldung.setText("<html><b> </b></html>");
 			}
@@ -812,36 +863,36 @@ public class MainView extends JFrame implements Observer {
 		cmdVerwaltung.setBounds(20, 120, 185, 30);
 		cmdVerwaltung.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (killerbutton==0){
+				if (killerbutton == 0) {
 					pnlContent.setBackground(Color.BLACK);
 					pnlNavigation.setBackground(Color.BLUE);
 					cl.show(pnlView, "" + (1));
 					pnlCard1.setBackground(Color.RED);
 					killerbutton++;
-				}else if (killerbutton==1){
+				} else if (killerbutton == 1) {
 					pnlContent.setBackground(Color.BLACK);
 					pnlNavigation.setBackground(Color.BLACK);
 					cl.show(pnlView, "" + (1));
 					pnlCard1.setBackground(Color.YELLOW);
 					killerbutton++;
-				}else if (killerbutton==2){
+				} else if (killerbutton == 2) {
 					pnlContent.setBackground(Color.BLACK);
-					pnlNavigation.setBackground(new Color(255,192,203));
+					pnlNavigation.setBackground(new Color(255, 192, 203));
 					cl.show(pnlView, "" + (1));
-					pnlCard1.setBackground(new Color(255,192,203));
+					pnlCard1.setBackground(new Color(255, 192, 203));
 					killerbutton++;
-				}else if (killerbutton==3){
+				} else if (killerbutton == 3) {
 					pnlContent.setBackground(Color.BLACK);
-					pnlNavigation.setBackground(new Color(238,212,130));
+					pnlNavigation.setBackground(new Color(238, 212, 130));
 					cl.show(pnlView, "" + (1));
-					pnlCard1.setBackground(new Color(238,212,130));
+					pnlCard1.setBackground(new Color(238, 212, 130));
 					killerbutton++;
-				}else{
-					pnlContent.setBackground(new Color(222,222,222));
+				} else {
+					pnlContent.setBackground(new Color(222, 222, 222));
 					pnlNavigation.setBackground(Color.WHITE);
 					cl.show(pnlView, "" + (1));
 					pnlCard1.setBackground(Color.WHITE);
-					killerbutton=0;
+					killerbutton = 0;
 				}
 			}
 		});
@@ -855,12 +906,12 @@ public class MainView extends JFrame implements Observer {
 				cl.show(pnlView, "" + (8));
 			}
 		});
-		
+
 		lblMeldung = new JLabel("<html><b> </b></html>");
 		pnlNavigation.add(lblMeldung);
 		lblMeldung.setBackground(Color.white);
 		lblMeldung.setForeground(Color.red);
-		lblMeldung.setBounds(20,250,185, 100);
+		lblMeldung.setBounds(20, 250, 185, 100);
 		lblMeldung.setFont(new Font("Arial", Font.PLAIN, 14));
 	}
 
@@ -889,13 +940,16 @@ public class MainView extends JFrame implements Observer {
 		cmbCard3Feldauswaehlen.removeAllItems();
 		for (DBBasisObjekt dbo : liFeld) {
 			cmbCard3Feldauswaehlen.addItem(dbo);
+
+			txtBarcode.requestFocusInWindow();
 		}
 	}
 
 	private Boolean isFilledOut(JTextField field) {
 		return !field.getText().equals("");
 	}
+	
+	private  void disableMainView() {
+		this.setEnabled(false);
+	}
 }
-
-
-

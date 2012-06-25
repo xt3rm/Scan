@@ -68,8 +68,11 @@ public class DBController implements Observer {
 	 * @param sammlungID
 	 * @param barcode
 	 */
-	public void createObjekt(String name, int typId, int sammlungID,
+	public void createObjekt(String name, int typID, int sammlungID,
 			String barcode) {
+		DBTool.getInstance().connectDB();
+		DBTool.getInstance().addObject(name, typID, sammlungID, barcode);
+		DBTool.getInstance().closeDB();
 
 	}
 

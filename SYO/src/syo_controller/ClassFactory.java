@@ -40,22 +40,22 @@ public class ClassFactory {
 
 	public DBBasisObjekt createObjektWithFields(DBBasisObjekt dbo, ResultSet rs)
 			throws Exception {
-		if (rs != null) {
-			dbo.setChildren(new ArrayList<DBBasisObjekt>());
-			try {
-				while (rs.next()) {
-					dbo.getChildren().add(
-							new DBFeld(rs.getString("FeldName"), rs
-									.getInt("Feld_ID"), rs.getString("Wert")));
-					dbo.setId(rs.getInt("ID_Objekt"));
-					dbo.setName(rs.getString("ObjektName"));
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		dbo.setChildren(new ArrayList<DBBasisObjekt>());
+		int count = 0; // To check if something was found
+		try {
+			while (rs.next()) {
+				count++;
+				dbo.getChildren().add(
+						new DBFeld(rs.getString("FeldName"), rs
+								.getInt("Feld_ID"), rs.getString("Wert")));
+				dbo.setId(rs.getInt("ID_Objekt"));
+				dbo.setName(rs.getString("ObjektName"));
 			}
-		} else {
-			throw new Exception("Did not find Object");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (count == 0) {
+			throw new Exception("Ungültiger Barcode: Objekt nicht gefunden!");
 		}
 
 		return dbo;

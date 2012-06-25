@@ -782,15 +782,15 @@ public class MainView extends JFrame implements Observer {
 				try {
 					aktuellerKnoten  = ctrl.getObjectOfBarcode(txtBarcode.getText());
 					lblCard9.setText(aktuellerKnoten.getName());
+					liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
+					cl.show(pnlView, "" + (9));
+					lblMeldung.setText("<html><b>Barcode erkannt</b></html>");
+					txtBarcode.setText("");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					lblMeldung.setText(e.getMessage());
-				}
-				txtBarcode.setText("");
-				liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
-				cl.show(pnlView, "" + (9));
-				lblMeldung.setText("<html><b>Barcode erkannt</b></html>");
+				}	
 			}
 		});
 

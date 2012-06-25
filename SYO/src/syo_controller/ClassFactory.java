@@ -38,7 +38,7 @@ public class ClassFactory {
 	 */
 
 	public DBBasisObjekt createObjektWithFields(DBBasisObjekt dbo, ResultSet rs) {
-		
+		dbo.setChildren(new ArrayList<DBBasisObjekt>());
 		try {
 			while(rs.next()) {
 				dbo.getChildren().add(new DBFeld(rs.getString("FeldName"), rs.getInt("Feld_ID"), rs.getString("Wert")));

@@ -14,6 +14,7 @@ public class MyTableModel extends AbstractTableModel {
 	
 	public MyTableModel( ArrayList<DBBasisObjekt> felder) {
 		this.felder = felder;
+		
 	}
 	
 	@Override
@@ -35,6 +36,17 @@ public class MyTableModel extends AbstractTableModel {
 			result = ((DBFeld)felder.get(row)).getName();
 		} else {
 			result = ((DBFeld)felder.get(row)).getWert();
+		}
+		return result;
+	}
+	
+	@Override
+	public String getColumnName(int col) {
+		String result = "";
+		if (col == 0) {
+			result = "Feldname";
+		} else if (col == 1) {
+			result = "Wert";
 		}
 		return result;
 	}

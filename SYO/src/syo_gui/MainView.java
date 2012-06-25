@@ -258,14 +258,10 @@ public class MainView extends JFrame implements Observer {
 
 		});
 
-		DBTool.getInstance().connectDB();
 		liSammlung = ctrl.updateSammlung();
-		DBTool.getInstance().closeDB();
+
 
 		liCard1Sammlungen = new JList(liSammlung.toArray());
-
-		ComplexCellRenderer renderer = new ComplexCellRenderer();
-		//liCard1Sammlungen.setCellRenderer(renderer);
 		
 		liCard1Sammlungen.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -276,6 +272,7 @@ public class MainView extends JFrame implements Observer {
 					aktuellerKnoten = (DBBasisObjekt) liCard1Sammlungen
 							.getSelectedValue();
 					liCard2Sammlung.setListData(liObjekt.toArray());
+					lblCard2Sammlung.setText(aktuellerKnoten.getName());
 					cl.show(pnlView, "" + (2));
 				}
 			}
@@ -292,18 +289,23 @@ public class MainView extends JFrame implements Observer {
 	 * Creates PanelCard 9
 	 */
 	public void createPnlCard9() {
-		lblCard9 = new JLabel(STUFF);
+		lblCard9 = new JLabel("");
 		pnlCard9.add(lblCard9);
 
-		cmdCard9bearbeiten = new JButton("bearbeiten");
+		cmdCard9bearbeiten = new JButton("Bearbeiten");
 		pnlCard9.add(cmdCard9bearbeiten);
 		cmdCard9bearbeiten.setVisible(true);
 		cmdCard9bearbeiten.setBounds(440, 70, 185, 30);
 
-		cmdCard9speichern = new JButton("speichern");
+		cmdCard9speichern = new JButton("Speichern");
 		pnlCard9.add(cmdCard9speichern);
 		cmdCard9speichern.setVisible(true);
 		cmdCard9speichern.setBounds(440, 110, 185, 30);
+		cmdCard9speichern.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctrl.updateObjekt(aktuellerKnoten);
+			}
+		});
 
 		cmdCard9abbrechen = new JButton("zurück");
 		pnlCard9.add(cmdCard9abbrechen);
@@ -311,9 +313,15 @@ public class MainView extends JFrame implements Observer {
 		cmdCard9abbrechen.setBounds(40, 420, 185, 30);
 
 
+		cmdCard9abbrechen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(pnlView, "" + (2));
+				aktuellerKnoten = null;
+			}
+		});
+
 
 		liCard9Sammlungen = new JTable();
-		//liCard9Sammlungen.setCellRenderer(new MyCellRenderer());
 		scrollPaneCard9 = new JScrollPane(liCard9Sammlungen);
 		pnlCard9.add(scrollPaneCard9);
 		scrollPaneCard9.setBounds(30, 70, 350, 250);
@@ -324,7 +332,7 @@ public class MainView extends JFrame implements Observer {
 		lblCard9.setBounds(100, 20, 120, 30);
 		lblCard9.setVisible(true);
 		
-		cmdCard9drucken = new JButton("drucken");
+		cmdCard9drucken = new JButton("Drucken");
 		pnlCard9.add(cmdCard9drucken);
 		cmdCard9drucken.setVisible(true);
 		cmdCard9drucken.setBounds(440, 150, 185, 30);
@@ -343,7 +351,7 @@ public class MainView extends JFrame implements Observer {
 		lblCard2.setVisible(true);
 		repaint();
 
-		lblCard2Sammlung = new JLabel("Titel");
+		lblCard2Sammlung = new JLabel("");
 		pnlCard2.add(lblCard2Sammlung);
 		lblCard2Sammlung.setBounds(30, 60, 300, 30);
 		lblCard2Sammlung.setVisible(true);
@@ -383,7 +391,7 @@ public class MainView extends JFrame implements Observer {
 									.getSelectedValue());
 					liAllObjektFelder = aktuellerKnoten.getChildren();
 					liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
-					
+					lblCard9.setText(aktuellerKnoten.getName());
 					cl.show(pnlView, "" + (9));
 				}
 			}
@@ -850,7 +858,6 @@ public class MainView extends JFrame implements Observer {
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		System.out.println("Update");
 		// Update sammlung
 		liSammlung = ctrl.updateSammlung();
 		liCard1Sammlungen.setListData(liSammlung.toArray());

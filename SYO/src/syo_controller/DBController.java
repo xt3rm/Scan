@@ -160,4 +160,18 @@ public class DBController implements Observer {
 		return dbo;
 	}
 
+	/**
+	 * Uodates the Eigenschaften of an Objekt.
+	 * 
+	 * @param dbo
+	 */
+	public void updateObjekt(DBBasisObjekt dbo) {
+		for (DBBasisObjekt f : dbo.getChildren()) {
+			DBTool.getInstance().connectDB();
+			DBTool.getInstance().updateObjectData(dbo.getId(), f.getId(),
+					((DBFeld) f).getWert());
+			DBTool.getInstance().closeDB();
+		}
+	}
+
 }

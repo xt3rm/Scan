@@ -91,6 +91,7 @@ public class MainView extends JFrame implements Observer {
 	JButton cmdSammlung;
 	JButton cmdVerwaltung;
 	JButton cmdInfo;
+	JButton cmdBackup;
 
 	JButton cmdPrevious;
 	JButton cmdNext;
@@ -99,8 +100,10 @@ public class MainView extends JFrame implements Observer {
 	// --------- Komponenten Card1 - Alle Samlungen anzeigen ------
 	private JLabel lblCard1;
 	private JButton cmdCard1neueSammlung;
+	private JButton cmdCard1Sammlungloeschen;
 	private JScrollPane scrollPaneCard1;
 	JList liCard1Sammlungen;
+
 
 	// --------- Komponenten Card2 - Alle Objekte der ausgewählten Sammlung
 	// anzeigen ------
@@ -111,6 +114,7 @@ public class MainView extends JFrame implements Observer {
 	private JScrollPane scrollPaneCard2;
 	private JButton cmdCard2bearbeiten;
 	private JButton cmdCard2zurueck;
+	private JButton cmdCard2Objektloeschen;
 
 	// --------- Komponenten Card3 - Ein neuer Typ kann erstellt werden ------
 	JLabel lblCard3;
@@ -283,6 +287,11 @@ public class MainView extends JFrame implements Observer {
 				}
 			}
 		});
+		
+		cmdCard1Sammlungloeschen = new JButton("Sammlung löschen");
+		pnlCard1.add(cmdCard1Sammlungloeschen);
+		cmdCard1Sammlungloeschen.setVisible(true);
+		cmdCard1Sammlungloeschen.setBounds(40, 380, 185, 30);
 
 		pnlCard1.add(liCard1Sammlungen);
 		scrollPaneCard1 = new JScrollPane(liCard1Sammlungen);
@@ -433,6 +442,13 @@ public class MainView extends JFrame implements Observer {
 				txtBarcode.requestFocus();
 			}
 		});
+		
+		cmdCard2Objektloeschen = new JButton("Objekt löschen");
+		pnlCard2.add(cmdCard2Objektloeschen);
+		cmdCard2Objektloeschen.setVisible(true);
+		cmdCard2Objektloeschen.setBounds(240, 370, 185, 30);
+		
+		
 	}
 
 	/**
@@ -668,7 +684,7 @@ public class MainView extends JFrame implements Observer {
 				cl.show(pnlView, "" + (2));
 			}
 		});
-		
+
 		
 	}
 
@@ -896,6 +912,9 @@ public class MainView extends JFrame implements Observer {
 				}
 			}
 		});
+		
+		
+		
 
 		cmdInfo = new JButton("Über SYO");
 		pnlNavigation.add(cmdInfo);
@@ -906,6 +925,11 @@ public class MainView extends JFrame implements Observer {
 				cl.show(pnlView, "" + (8));
 			}
 		});
+		
+		cmdBackup = new JButton("Backup");
+		pnlNavigation.add(cmdBackup);
+		cmdBackup.setVisible(true);
+		cmdBackup.setBounds(20, 220, 185, 30);
 
 		lblMeldung = new JLabel("<html><b> </b></html>");
 		pnlNavigation.add(lblMeldung);

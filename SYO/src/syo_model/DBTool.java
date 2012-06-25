@@ -441,9 +441,10 @@ public class DBTool extends Observable {
 	}
 
 	/**
+	 * Deletes a Sammlung and all its dependent objects.
 	 * 
-	 * 
-	 * 
+	 * @param id
+	 *            int The id of the object.
 	 */
 	public void deleteSammlungByID(int id) {
 

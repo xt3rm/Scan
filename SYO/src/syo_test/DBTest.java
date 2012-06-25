@@ -3,13 +3,10 @@ package syo_test;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import syo_controller.DBBasisObjekt;
 import syo_model.DBTool;
 
 public class DBTest {

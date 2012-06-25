@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import syo_controller.DBController;
-import syo_gui.MainView;
 import syo_model.DBTool;
 
 public class DBControllerTest {
@@ -35,7 +34,7 @@ public class DBControllerTest {
 		DBTool.getInstance().addEigenschaft("TestWert", 2, 2);
 		assertTrue(DBTool.getInstance().getRowCount("eigenschaft") == 1);
 		
-		DBController db = new DBController(new MainView());
+		new DBController();
 	}
 
 	@After

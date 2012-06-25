@@ -41,7 +41,6 @@ public class MainView extends JFrame implements Observer {
 	private ArrayList<DBBasisObjekt> liTyp;
 	private ArrayList<DBBasisObjekt> liFeld;
 	private ArrayList<DBBasisObjekt> liChosenFeld;
-	private ArrayList<DBBasisObjekt> liAllObjektFelder;
 	// controller
 	private DBController ctrl;
 	// Aktueller Knoten
@@ -50,8 +49,6 @@ public class MainView extends JFrame implements Observer {
 	private boolean isEditing = false;
 	// Ein eventueller Barcode wird hier gespeichert
 	private String barcode = null;
-
-	private int currentCard = 1;
 
 	private CardLayout cl;
 
@@ -178,12 +175,12 @@ public class MainView extends JFrame implements Observer {
 	 */
 	public MainView() {
 		DBTool.getInstance().addObserver(this);
-		ctrl = new DBController(this);
 		this.setTitle("SYO - Scan Your Objects");
 		this.setSize(900, 600);
 		this.setResizable(false);
 		this.setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		ctrl = new DBController();
 
 		/*
 		 * ------------------------------------------------------- PANEL - View
@@ -265,7 +262,7 @@ public class MainView extends JFrame implements Observer {
 
 		});
 
-		liSammlung = ctrl.updateSammlung();
+		liSammlung = ctrl.getSammlung();
 
 		liCard1Sammlungen = new JList(liSammlung.toArray());
 
@@ -417,7 +414,6 @@ public class MainView extends JFrame implements Observer {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					liAllObjektFelder = aktuellerKnoten.getChildren();
 					liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten
 							.getChildren()));
 					lblCard9.setText(aktuellerKnoten.getName());
@@ -921,7 +917,7 @@ public class MainView extends JFrame implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// Update sammlung
-		liSammlung = ctrl.updateSammlung();
+		liSammlung = ctrl.getSammlung();
 		liCard1Sammlungen.setListData(liSammlung.toArray());
 		liCard7Sammlungen.setListData(liSammlung.toArray());
 		this.txtCard4neueSammlung.setText(""); // Clear the text
@@ -949,7 +945,4 @@ public class MainView extends JFrame implements Observer {
 		return !field.getText().equals("");
 	}
 	
-	private  void disableMainView() {
-		this.setEnabled(false);
-	}
 }

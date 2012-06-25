@@ -6,17 +6,20 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import syo_gui.MainView;
 import syo_model.DBTool;
 
+/**
+ * Controller für die Datenbankanbindung und das Erstellen von Objekten daraus.
+ * 
+ * @author ebrogt
+ * 
+ */
 public class DBController implements Observer {
 
-	private MainView mainView;
 	private ArrayList<String> sammlungen;
 	private ClassFactory factory;
 
-	public DBController(MainView mainView) {
-		this.mainView = mainView;
+	public DBController() {
 		DBTool.getInstance().addObserver(this);
 		sammlungen = new ArrayList<String>();
 		factory = new ClassFactory();
@@ -77,6 +80,7 @@ public class DBController implements Observer {
 	}
 
 	/**
+	 * Creates a new Feld.
 	 * 
 	 * @param name
 	 */
@@ -87,9 +91,12 @@ public class DBController implements Observer {
 	}
 
 	/**
+	 * Creates a new Typ.
 	 * 
 	 * @param name
+	 *            Name of the Typ.
 	 * @param felder
+	 *            The felder of the Typ.
 	 */
 	public void createTyp(String name, ArrayList<DBBasisObjekt> felder) {
 		DBTool.getInstance().connectDB();
@@ -129,7 +136,7 @@ public class DBController implements Observer {
 	 * 
 	 * @param obj
 	 * @return DBBasisObjekt
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public DBBasisObjekt getWholeObjekt(DBBasisObjekt dbo) throws Exception {
 		DBTool.getInstance().connectDB();
@@ -140,9 +147,11 @@ public class DBController implements Observer {
 	}
 
 	/**
+	 * Returns every row of a given table.
 	 * 
 	 * @param tblName
-	 * @return
+	 *            The name of the table.
+	 * @return ArrayList<DBBasisObjekt>
 	 */
 	public ArrayList<DBBasisObjekt> getEveryRowOfTable(String tblName) {
 		DBTool.getInstance().connectDB();
@@ -155,9 +164,9 @@ public class DBController implements Observer {
 	// Update Methods
 
 	/**
-	 * 
+	 * Get all Sammlungen
 	 */
-	public ArrayList<DBBasisObjekt> updateSammlung() {
+	public ArrayList<DBBasisObjekt> getSammlung() {
 		DBTool.getInstance().connectDB();
 		ResultSet rs = DBTool.getInstance().selectAllFromTable("sammlung");
 		ArrayList<DBBasisObjekt> dbo = factory.createBasisObjekte(rs);
@@ -199,14 +208,24 @@ public class DBController implements Observer {
 		DBTool.getInstance().closeDB();
 		return result;
 	}
-	
+
+	/**
+	 * Get the object belonging to the given barcode.
+	 * 
+	 * @param barcode
+	 *            The barcode we are looking for.
+	 * @return DBBasisObjekt
+	 * @throws Exception
+	 *             Throws an Exception if the Objekt was not found.
+	 */
 	public DBBasisObjekt getObjectOfBarcode(String barcode) throws Exception {
 		DBBasisObjekt dbo = new DBBasisObjekt();
 		DBTool.getInstance().connectDB();
-		ResultSet rs = DBTool.getInstance().selectAllInfoOfObjectByBarcode(barcode);
+		ResultSet rs = DBTool.getInstance().selectAllInfoOfObjectByBarcode(
+				barcode);
 		dbo = factory.createObjektWithFields(dbo, rs);
 		DBTool.getInstance().closeDB();
-		
+
 		return dbo;
 	}
 

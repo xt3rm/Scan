@@ -372,8 +372,8 @@ public class MainView extends JFrame implements Observer {
 							.getWholeObjekt((DBBasisObjekt) liCard2Sammlung
 									.getSelectedValue());
 					liAllObjektFelder = aktuellerKnoten.getChildren();
+					liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
 					
-					//setListData(liAllObjektFelder.toArray());
 					cl.show(pnlView, "" + (9));
 				}
 			}

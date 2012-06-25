@@ -698,7 +698,6 @@ public class DBTool extends Observable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	/**

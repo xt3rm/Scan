@@ -49,7 +49,7 @@ public class MainView extends JFrame implements Observer {
 	private boolean isEditing = false;
 	// Ein eventueller Barcode wird hier gespeichert
 	private String barcode = null;
-
+	// Filechooser für backup
 	private CardLayout cl;
 
 	JPanel pnlContent = new JPanel();
@@ -151,12 +151,6 @@ public class MainView extends JFrame implements Observer {
 	private JButton cmdCard6weiter;
 	private JButton cmdCard6abbrechen;
 
-	// --------- Komponenten Card7 - Verwaltung der Sache ------
-	JLabel lblCard7;
-	private JScrollPane scrollPaneCard7;
-	private JList liCard7Sammlungen;
-	private JButton cmdCard7Sammlunglöschen;
-
 	// --------- Komponenten Card8 - Info über SYO ------
 	JLabel lblCard8;
 	private JLabel lblCard8Info;
@@ -223,7 +217,6 @@ public class MainView extends JFrame implements Observer {
 		createPnlCard4();
 		createPnlCard5();
 		createPnlCard6();
-		createPnlCard7();
 		createPnlCard8();
 		createPnlCard9();
 		createNavigation();
@@ -749,40 +742,7 @@ public class MainView extends JFrame implements Observer {
 		});
 	}
 
-	/**
-	 * Creates PanelCard 7
-	 */
-	public void createPnlCard7() {
-		lblCard7 = new JLabel(VERWALTUNG);
-		pnlCard7.add(lblCard7);
-
-		pnlCard7.setBackground(new Color(255, 255, 255));
-
-		lblCard7.setBounds(100, 20, 220, 30);
-		lblCard7.setVisible(true);
-
-		liCard7Sammlungen = new JList(liSammlung.toArray());
-		pnlCard7.add(liCard7Sammlungen);
-
-		scrollPaneCard7 = new JScrollPane(liCard7Sammlungen);
-		pnlCard7.add(scrollPaneCard7);
-		scrollPaneCard7.setBounds(30, 90, 600, 250);
-		scrollPaneCard7.setVisible(true);
-
-		cmdCard7Sammlunglöschen = new JButton("Sammlung löschen");
-		cmdCard7Sammlunglöschen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				if (liCard7Sammlungen.getSelectedIndex() > -1)
-					ctrl.deleteSammlung(((DBBasisObjekt) liCard7Sammlungen
-							.getSelectedValue()).getId());
-			}
-		});
-
-		pnlCard7.add(cmdCard7Sammlunglöschen);
-		cmdCard7Sammlunglöschen.setVisible(true);
-		cmdCard7Sammlunglöschen.setBounds(40, 370, 185, 30);
-	}
+	
 
 	/**
 	 * Creates PanelCard 8
@@ -938,11 +898,6 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		cmdBackup = new JButton("Backup");
-		pnlNavigation.add(cmdBackup);
-		cmdBackup.setVisible(true);
-		cmdBackup.setBounds(20, 220, 185, 30);
-
 		lblMeldung = new JLabel("<html><b> </b></html>");
 		pnlNavigation.add(lblMeldung);
 		lblMeldung.setBackground(Color.white);
@@ -959,7 +914,6 @@ public class MainView extends JFrame implements Observer {
 		// Update sammlung
 		liSammlung = ctrl.getSammlung();
 		liCard1Sammlungen.setListData(liSammlung.toArray());
-		liCard7Sammlungen.setListData(liSammlung.toArray());
 		this.txtCard4neueSammlung.setText(""); // Clear the text
 		// Update object
 		if (aktuellerKnoten != null) {

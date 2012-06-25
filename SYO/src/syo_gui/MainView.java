@@ -169,7 +169,7 @@ public class MainView extends JFrame implements Observer {
 	public MainView() {
 		DBTool.getInstance().addObserver(this);
 		ctrl = new DBController(this);
-		this.setTitle("SYO - Alles ist besser | Unser Motto: Das Beste ist Schlecht genug!!");
+		this.setTitle("SYO - Scan Your Objects");
 		this.setSize(900, 600);
 		this.setResizable(false);
 		this.setVisible(true);
@@ -383,7 +383,6 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 		cmdCard2zurueck.setBounds(40, 420, 185, 30);
-
 	}
 
 	/**
@@ -769,6 +768,18 @@ public class MainView extends JFrame implements Observer {
 					pnlNavigation.setBackground(Color.BLACK);
 					cl.show(pnlView, "" + (1));
 					pnlCard1.setBackground(Color.YELLOW);
+					killerbutton++;
+				}else if (killerbutton==2){
+					pnlContent.setBackground(Color.BLACK);
+					pnlNavigation.setBackground(new Color(255,192,203));
+					cl.show(pnlView, "" + (1));
+					pnlCard1.setBackground(new Color(255,192,203));
+					killerbutton++;
+				}else if (killerbutton==3){
+					pnlContent.setBackground(Color.BLACK);
+					pnlNavigation.setBackground(new Color(238,212,130));
+					cl.show(pnlView, "" + (1));
+					pnlCard1.setBackground(new Color(238,212,130));
 					killerbutton++;
 				}else{
 					pnlContent.setBackground(new Color(222,222,222));

@@ -48,7 +48,7 @@ public class Printer extends JFrame {
     	this.imgBarcode = img;
     	this.setSize(500,500);
     	this.setLayout(null);
-    	setDefaultCloseOperation(EXIT_ON_CLOSE);
+    	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     	
     	//Druckvorschaupanel
     	imgpanel = new ImagePanel(new ImageIcon(imgBarcode).getImage());

@@ -1,6 +1,7 @@
 package syo_controller;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -121,12 +122,13 @@ public class DBController implements Observer {
 	}
 
 	/**
-	 * Returns a Objekt with all its values.
+	 * Returns an Objekt with all its values.
 	 * 
 	 * @param obj
-	 * @return
+	 * @return DBBasisObjekt
+	 * @throws Exception 
 	 */
-	public DBBasisObjekt getWholeObjekt(DBBasisObjekt dbo) {
+	public DBBasisObjekt getWholeObjekt(DBBasisObjekt dbo) throws Exception {
 		DBTool.getInstance().connectDB();
 		ResultSet rs = DBTool.getInstance().selectAllInfoOfObject(dbo.getId());
 		dbo = factory.createObjektWithFields(dbo, rs);
@@ -172,6 +174,37 @@ public class DBController implements Observer {
 					((DBFeld) f).getWert());
 			DBTool.getInstance().closeDB();
 		}
+	}
+
+	/**
+	 * Gets the Barcode of an Objekt as a String.
+	 * 
+	 * @param dbo
+	 * @return String
+	 */
+	public String getBarcodeOfObject(DBBasisObjekt dbo) {
+		String result = "";
+		DBTool.getInstance().connectDB();
+		ResultSet rs = DBTool.getInstance().selectBarcodeOfObjekt(dbo.getId());
+		try {
+			while (rs.next()) {
+				result = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DBTool.getInstance().closeDB();
+		return result;
+	}
+	
+	public DBBasisObjekt getObjectOfBarcode(String barcode) throws Exception {
+		DBBasisObjekt dbo = new DBBasisObjekt();
+		DBTool.getInstance().connectDB();
+		ResultSet rs = DBTool.getInstance().selectAllInfoOfObjectByBarcode(barcode);
+		dbo = factory.createObjektWithFields(dbo, rs);
+		DBTool.getInstance().closeDB();
+		
+		return dbo;
 	}
 
 }

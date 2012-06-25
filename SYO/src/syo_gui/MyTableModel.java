@@ -14,7 +14,6 @@ public class MyTableModel extends AbstractTableModel {
 	
 	public MyTableModel( ArrayList<DBBasisObjekt> felder) {
 		this.felder = felder;
-		
 	}
 	
 	@Override

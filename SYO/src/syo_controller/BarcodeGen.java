@@ -25,7 +25,7 @@ import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
  *
  */
 public class BarcodeGen {
-	private long barcodeID;
+	private String barcodeID;
 	
 	/**
 	 * Der Konstruktor der Klasse BarcodeGen nimmt einen Barcode entgegen, in Form eines Intergers
@@ -36,7 +36,7 @@ public class BarcodeGen {
 	 * @throws BarcodeException
 	 * @throws IOException
 	 */
-	public BarcodeGen(long bari) throws ConfigurationException, BarcodeException, IOException{
+	public BarcodeGen(String bari) throws ConfigurationException, BarcodeException, IOException{
 		
 		this.barcodeID = bari;
 		BarcodeUtil util = BarcodeUtil.getInstance();
@@ -49,7 +49,7 @@ public class BarcodeGen {
 	        fout, "image/jpeg", resolution, BufferedImage.TYPE_BYTE_BINARY, false, 0);
 	
 	    
-	    gen.generateBarcode(canvas, String.valueOf(barcodeID));
+	    gen.generateBarcode(canvas, barcodeID);
 	    canvas.finish();
 	    
 	    Image pic = ImageIO.read(new File("images/code128.jpg"));

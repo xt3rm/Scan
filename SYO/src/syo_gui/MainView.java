@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -21,6 +22,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.krysalis.barcode4j.BarcodeException;
+
+import syo_controller.BarcodeGen;
 import syo_controller.DBBasisObjekt;
 import syo_controller.DBController;
 import syo_model.DBTool;
@@ -335,7 +341,25 @@ public class MainView extends JFrame implements Observer {
 		cmdCard9drucken = new JButton("Drucken");
 		pnlCard9.add(cmdCard9drucken);
 		cmdCard9drucken.setVisible(true);
-		cmdCard9drucken.setBounds(440, 150, 185, 30);
+
+		cmdCard9drucken.setBounds(440, 190, 185, 30);
+		cmdCard9drucken.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					new BarcodeGen(ctrl.getBarcodeOfObject(aktuellerKnoten));
+				} catch (ConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (BarcodeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+
 	}
 
 	/**
@@ -386,9 +410,14 @@ public class MainView extends JFrame implements Observer {
 		liCard2Sammlung.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					aktuellerKnoten = ctrl
-							.getWholeObjekt((DBBasisObjekt) liCard2Sammlung
-									.getSelectedValue());
+					try {
+						aktuellerKnoten = ctrl
+								.getWholeObjekt((DBBasisObjekt) liCard2Sammlung
+										.getSelectedValue());
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					liAllObjektFelder = aktuellerKnoten.getChildren();
 					liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
 					lblCard9.setText(aktuellerKnoten.getName());
@@ -750,6 +779,16 @@ public class MainView extends JFrame implements Observer {
 		txtBarcode.setFont(new Font("Arial", Font.PLAIN, 15));
 		txtBarcode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					aktuellerKnoten  = ctrl.getObjectOfBarcode(txtBarcode.getText());
+					lblCard9.setText(aktuellerKnoten.getName());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					lblMeldung.setText(e.getMessage());
+				}
+				txtBarcode.setText("");
+				liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
 				cl.show(pnlView, "" + (9));
 				lblMeldung.setText("<html><b>Barcode erkannt</b></html>");
 			}
@@ -823,36 +862,6 @@ public class MainView extends JFrame implements Observer {
 		lblMeldung.setForeground(Color.red);
 		lblMeldung.setBounds(20,250,185, 100);
 		lblMeldung.setFont(new Font("Arial", Font.PLAIN, 14));
-
-
-		// Previous & Next - Buttons / Only for Testing
-		cmdPrevious = new JButton("<-- Previous");
-		pnlNavigation.add(cmdPrevious);
-		cmdPrevious.setVisible(true);
-		cmdPrevious.setBounds(50, 330, 120, 25);
-		cmdPrevious.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (currentCard > 1) {
-					currentCard -= 1;
-					cl.show(pnlView, "" + (currentCard));
-				}
-			}
-		});
-
-		cmdNext = new JButton("Next -->");
-		pnlNavigation.add(cmdNext);
-		cmdNext.setVisible(true);
-		cmdNext.setBounds(50, 375, 120, 25);
-		cmdNext.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (currentCard < 10) {
-					currentCard += 1;
-					cl.show(pnlView, "" + (currentCard));
-				}
-			}
-		});
-
-
 	}
 
 	/**

@@ -259,7 +259,7 @@ public class DBTool extends Observable {
 					+ "' WHERE ID_Objekt ='" + key + "'";
 			statement.executeUpdate(objekt);
 			// Insert the fields
-			
+
 			ResultSet rs = this.selectFelderOfTypByID(typID);
 			while (rs.next()) {
 				this.connectDB();
@@ -559,6 +559,11 @@ public class DBTool extends Observable {
 		return rSet;
 	}
 
+	/**
+	 * 
+	 * @param typID
+	 * @return
+	 */
 	public ResultSet selectFelderOfTypByID(int typID) {
 		String selFelder = "SELECT * FROM feld as F "
 				+ "JOIN Typ_Feld as TF ON F.ID_Feld = TF.Feld_ID "
@@ -576,6 +581,74 @@ public class DBTool extends Observable {
 
 	}
 
+	public ResultSet selectBarcodeOfObjekt(int objectID) {
+		String select = "SELECT barcode FROM objekt WHERE ID_Objekt= "
+				+ objectID;
+		try {
+			statement = connection.createStatement();
+			statement.execute(select);
+			rSet = statement.getResultSet();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		return rSet;
+	}
+
+	/**
+	 * Selects the objekt with the given Barcode.
+	 * 
+	 * @param barcode
+	 * @return
+	 */
+	public ResultSet selectobjectWithBarcode(String barcode) {
+		String select = "SELECT ID_Objekt FROM objekt WHERE barcode= "
+				+ barcode;
+		ResultSet newResult = null;
+		try {
+			statement = connection.createStatement();
+			statement.execute(select);
+			rSet = statement.getResultSet();
+			while (rSet.next()) {
+				newResult = this.selectAllInfoOfObject(rSet.getInt(1));
+			}
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		return newResult;
+	}
+
+	/**
+	 * ajfhalh
+	 * 
+	 * @param objektID
+	 * @return
+	 */
+	public ResultSet selectAllInfoOfObjectByBarcode(String barcode) {
+		String select = "SELECT * FROM objekt AS O "
+				+ "JOIN Typ_Feld as TF on TF.Typ_ID = O.Typ_ID "
+				+ "JOIN Feld as F on F.ID_Feld = TF.Feld_ID "
+				+ "JOIN Eigenschaft as E on E.Feld_ID = TF.Feld_ID ,"
+				+ "(SELECT ID_Objekt FROM Objekt WHERE barcode = '"
+				+ barcode
+				+ "' ) as ID "
+				+ "WHERE O.ID_Objekt = ID.ID_Objekt AND E.Objekt_ID = ID.ID_Objekt";
+		try {
+			statement = connection.createStatement();
+			statement.execute(select);
+			rSet = statement.getResultSet();
+
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		return rSet;
+	}
+
 	/**
 	 * ajfhalh
 	 * 
@@ -583,6 +656,7 @@ public class DBTool extends Observable {
 	 * @return
 	 */
 	public ResultSet selectAllInfoOfObject(int objektID) {
+
 		String select = "SELECT * FROM objekt AS O "
 				+ "JOIN Typ_Feld as TF on TF.Typ_ID = O.Typ_ID "
 				+ "JOIN Feld as F on F.ID_Feld = TF.Feld_ID "
@@ -610,7 +684,9 @@ public class DBTool extends Observable {
 	 * @param wert
 	 */
 	public void updateObjectData(int objectID, int feldID, String wert) {
-		String update = "UPDATE eigenschaft SET wert = '" + wert + "' WHERE objekt_ID = " + objectID + " AND feld_ID = " + feldID;
+		String update = "UPDATE eigenschaft SET wert = '" + wert
+				+ "' WHERE objekt_ID = " + objectID + " AND feld_ID = "
+				+ feldID;
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(update);
@@ -619,9 +695,8 @@ public class DBTool extends Observable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
 
 	/**
 	 * Combines setChanged and notifyObservers in one method.

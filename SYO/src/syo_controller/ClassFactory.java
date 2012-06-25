@@ -31,6 +31,7 @@ public class ClassFactory {
 	}
 
 	/**
+	 * Creates an object with all Fields and its parent.
 	 * 
 	 * @param dbo
 	 * @param rs

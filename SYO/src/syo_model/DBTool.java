@@ -583,20 +583,6 @@ public class DBTool extends Observable {
 
 	}
 
-	public ResultSet selectBarcodeOfObjekt(int objectID) {
-		String select = "SELECT barcode FROM objekt WHERE ID_Objekt= "
-				+ objectID;
-		try {
-			statement = connection.createStatement();
-			statement.execute(select);
-			rSet = statement.getResultSet();
-		} catch (SQLException ex) {
-			System.out.println("SQLException: " + ex.getMessage());
-			System.out.println("SQLState: " + ex.getSQLState());
-			System.out.println("VendorError: " + ex.getErrorCode());
-		}
-		return rSet;
-	}
 
 	/**
 	 * Selects the objekt with the given Barcode.

@@ -32,6 +32,12 @@ import syo_controller.DBBasisObjekt;
 import syo_controller.DBController;
 import syo_model.DBTool;
 
+/**
+ * Main GUI class
+ * 
+ * @author ebrogt, ebeckm, estedt
+ * 
+ */
 @SuppressWarnings("serial")
 public class MainView extends JFrame implements Observer {
 
@@ -449,9 +455,9 @@ public class MainView extends JFrame implements Observer {
 		cmdCard2Objektloeschen.setBounds(240, 370, 185, 30);
 		cmdCard2Objektloeschen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (liCard2Sammlung.getSelectedIndex() > -1) { 
-				ctrl.deleteObjekt(((DBBasisObjekt)liCard2Sammlung
-				.getSelectedValue()).getId());
+				if (liCard2Sammlung.getSelectedIndex() > -1) {
+					ctrl.deleteObjekt(((DBBasisObjekt) liCard2Sammlung
+							.getSelectedValue()).getId());
 				}
 			}
 		});
@@ -741,8 +747,6 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 	}
-
-	
 
 	/**
 	 * Creates PanelCard 8

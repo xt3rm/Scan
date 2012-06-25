@@ -2,8 +2,13 @@ package syo_gui;
 
 import syo_model.DBTool;
 
-
-public class SYO  {
+/**
+ * Mainklasse
+ * 
+ * @author ebrogt, ebeckm, estedt
+ * 
+ */
+public class SYO {
 
 	public static void main(String[] args) {
 		DBTool.getInstance().setupDB("syo");

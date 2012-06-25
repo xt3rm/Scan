@@ -292,12 +292,12 @@ public class MainView extends JFrame implements Observer {
 		lblCard9 = new JLabel("");
 		pnlCard9.add(lblCard9);
 
-		cmdCard9bearbeiten = new JButton("bearbeiten");
+		cmdCard9bearbeiten = new JButton("Bearbeiten");
 		pnlCard9.add(cmdCard9bearbeiten);
 		cmdCard9bearbeiten.setVisible(true);
 		cmdCard9bearbeiten.setBounds(440, 70, 185, 30);
 
-		cmdCard9speichern = new JButton("speichern");
+		cmdCard9speichern = new JButton("Speichern");
 		pnlCard9.add(cmdCard9speichern);
 		cmdCard9speichern.setVisible(true);
 		cmdCard9speichern.setBounds(440, 110, 185, 30);
@@ -329,7 +329,7 @@ public class MainView extends JFrame implements Observer {
 		lblCard9.setBounds(100, 20, 120, 30);
 		lblCard9.setVisible(true);
 		
-		cmdCard9drucken = new JButton("drucken");
+		cmdCard9drucken = new JButton("Drucken");
 		pnlCard9.add(cmdCard9drucken);
 		cmdCard9drucken.setVisible(true);
 		cmdCard9drucken.setBounds(440, 190, 185, 30);

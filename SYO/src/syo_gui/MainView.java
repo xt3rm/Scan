@@ -405,9 +405,14 @@ public class MainView extends JFrame implements Observer {
 		liCard2Sammlung.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					aktuellerKnoten = ctrl
-							.getWholeObjekt((DBBasisObjekt) liCard2Sammlung
-									.getSelectedValue());
+					try {
+						aktuellerKnoten = ctrl
+								.getWholeObjekt((DBBasisObjekt) liCard2Sammlung
+										.getSelectedValue());
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					liAllObjektFelder = aktuellerKnoten.getChildren();
 					liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
 					lblCard9.setText(aktuellerKnoten.getName());
@@ -769,6 +774,16 @@ public class MainView extends JFrame implements Observer {
 		txtBarcode.setFont(new Font("Arial", Font.PLAIN, 15));
 		txtBarcode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					aktuellerKnoten  = ctrl.getObjectOfBarcode(txtBarcode.getText());
+					lblCard9.setText(aktuellerKnoten.getName());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					lblMeldung.setText(e.getMessage());
+				}
+				txtBarcode.setText("");
+				liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
 				cl.show(pnlView, "" + (9));
 			}
 		});
@@ -840,35 +855,6 @@ public class MainView extends JFrame implements Observer {
 		lblMeldung.setForeground(Color.red);
 		lblMeldung.setBounds(20,250,185, 100);
 		lblMeldung.setFont(new Font("Arial", Font.PLAIN, 14));
-
-
-		// Previous & Next - Buttons / Only for Testing
-		cmdPrevious = new JButton("<-- Previous");
-		pnlNavigation.add(cmdPrevious);
-		cmdPrevious.setVisible(true);
-		cmdPrevious.setBounds(50, 330, 120, 25);
-		cmdPrevious.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (currentCard > 1) {
-					currentCard -= 1;
-					cl.show(pnlView, "" + (currentCard));
-				}
-			}
-		});
-
-		cmdNext = new JButton("Next -->");
-		pnlNavigation.add(cmdNext);
-		cmdNext.setVisible(true);
-		cmdNext.setBounds(50, 375, 120, 25);
-		cmdNext.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (currentCard < 10) {
-					currentCard += 1;
-					cl.show(pnlView, "" + (currentCard));
-				}
-			}
-		});
-
 
 	}
 

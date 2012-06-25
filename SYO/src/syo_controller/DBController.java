@@ -126,8 +126,9 @@ public class DBController implements Observer {
 	 * 
 	 * @param obj
 	 * @return DBBasisObjekt
+	 * @throws Exception 
 	 */
-	public DBBasisObjekt getWholeObjekt(DBBasisObjekt dbo) {
+	public DBBasisObjekt getWholeObjekt(DBBasisObjekt dbo) throws Exception {
 		DBTool.getInstance().connectDB();
 		ResultSet rs = DBTool.getInstance().selectAllInfoOfObject(dbo.getId());
 		dbo = factory.createObjektWithFields(dbo, rs);
@@ -194,6 +195,16 @@ public class DBController implements Observer {
 		}
 		DBTool.getInstance().closeDB();
 		return result;
+	}
+	
+	public DBBasisObjekt getObjectOfBarcode(String barcode) throws Exception {
+		DBBasisObjekt dbo = new DBBasisObjekt();
+		DBTool.getInstance().connectDB();
+		ResultSet rs = DBTool.getInstance().selectAllInfoOfObjectByBarcode(barcode);
+		dbo = factory.createObjektWithFields(dbo, rs);
+		DBTool.getInstance().closeDB();
+		
+		return dbo;
 	}
 
 }

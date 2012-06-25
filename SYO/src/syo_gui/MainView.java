@@ -304,6 +304,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard9speichern.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ctrl.updateObjekt(aktuellerKnoten);
+				lblMeldung.setText("<html><b>Daten eingetragen</b></html>");
 			}
 		});
 
@@ -311,11 +312,10 @@ public class MainView extends JFrame implements Observer {
 		pnlCard9.add(cmdCard9abbrechen);
 		cmdCard9abbrechen.setVisible(true);
 		cmdCard9abbrechen.setBounds(40, 420, 185, 30);
-
-
 		cmdCard9abbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (2));
+				lblMeldung.setText("<html><b> </b></html>");
 				aktuellerKnoten = null;
 			}
 		});
@@ -751,6 +751,7 @@ public class MainView extends JFrame implements Observer {
 		txtBarcode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (9));
+				lblMeldung.setText("<html><b>Barcode erkannt</b></html>");
 			}
 		});
 
@@ -762,6 +763,7 @@ public class MainView extends JFrame implements Observer {
 		cmdSammlung.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (1));
+				lblMeldung.setText("<html><b> </b></html>");
 			}
 		});
 
@@ -815,7 +817,7 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 		
-		lblMeldung = new JLabel("<html><b>Meldezeile</b></html>");
+		lblMeldung = new JLabel("<html><b> </b></html>");
 		pnlNavigation.add(lblMeldung);
 		lblMeldung.setBackground(Color.white);
 		lblMeldung.setForeground(Color.red);

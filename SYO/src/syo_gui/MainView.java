@@ -262,9 +262,6 @@ public class MainView extends JFrame implements Observer {
 		DBTool.getInstance().closeDB();
 
 		liCard1Sammlungen = new JList(liSammlung.toArray());
-
-		ComplexCellRenderer renderer = new ComplexCellRenderer();
-		//liCard1Sammlungen.setCellRenderer(renderer);
 		
 		liCard1Sammlungen.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -275,6 +272,7 @@ public class MainView extends JFrame implements Observer {
 					aktuellerKnoten = (DBBasisObjekt) liCard1Sammlungen
 							.getSelectedValue();
 					liCard2Sammlung.setListData(liObjekt.toArray());
+					lblCard2Sammlung.setText(aktuellerKnoten.getName());
 					cl.show(pnlView, "" + (2));
 				}
 			}
@@ -291,7 +289,7 @@ public class MainView extends JFrame implements Observer {
 	 * Creates PanelCard 9
 	 */
 	public void createPnlCard9() {
-		lblCard9 = new JLabel(STUFF);
+		lblCard9 = new JLabel("");
 		pnlCard9.add(lblCard9);
 
 		cmdCard9bearbeiten = new JButton("bearbeiten");
@@ -316,13 +314,11 @@ public class MainView extends JFrame implements Observer {
 		cmdCard9abbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (2));
+				aktuellerKnoten = null;
 			}
 		});
 
-
-
 		liCard9Sammlungen = new JTable();
-		//liCard9Sammlungen.setCellRenderer(new MyCellRenderer());
 		scrollPaneCard9 = new JScrollPane(liCard9Sammlungen);
 		pnlCard9.add(scrollPaneCard9);
 		scrollPaneCard9.setBounds(30, 70, 350, 250);
@@ -347,7 +343,7 @@ public class MainView extends JFrame implements Observer {
 		lblCard2.setVisible(true);
 		repaint();
 
-		lblCard2Sammlung = new JLabel("Titel");
+		lblCard2Sammlung = new JLabel("");
 		pnlCard2.add(lblCard2Sammlung);
 		lblCard2Sammlung.setBounds(30, 60, 300, 30);
 		lblCard2Sammlung.setVisible(true);
@@ -387,13 +383,12 @@ public class MainView extends JFrame implements Observer {
 									.getSelectedValue());
 					liAllObjektFelder = aktuellerKnoten.getChildren();
 					liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
-					
+					lblCard9.setText(aktuellerKnoten.getName());
 					cl.show(pnlView, "" + (9));
 				}
 			}
 		});
 		cmdCard2zurueck.setBounds(40, 420, 185, 30);
-
 	}
 
 	/**
@@ -843,7 +838,6 @@ public class MainView extends JFrame implements Observer {
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		System.out.println("Update");
 		// Update sammlung
 		liSammlung = ctrl.updateSammlung();
 		liCard1Sammlungen.setListData(liSammlung.toArray());

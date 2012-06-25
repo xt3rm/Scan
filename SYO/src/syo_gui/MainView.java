@@ -156,6 +156,7 @@ public class MainView extends JFrame implements Observer {
 	private JButton cmdCard9bearbeiten;
 	private JButton cmdCard9speichern;
 	private JButton cmdCard9abbrechen;
+	private JButton cmdCard9drucken;
 	//private JList liCard9Sammlung;
 	private JScrollPane scrollPaneCard9;
 	private JTable liCard9Sammlungen;
@@ -322,6 +323,11 @@ public class MainView extends JFrame implements Observer {
 
 		lblCard9.setBounds(100, 20, 120, 30);
 		lblCard9.setVisible(true);
+		
+		cmdCard9drucken = new JButton("drucken");
+		pnlCard9.add(cmdCard9drucken);
+		cmdCard9drucken.setVisible(true);
+		cmdCard9drucken.setBounds(440, 190, 185, 30);
 	}
 
 	/**

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -21,6 +22,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.krysalis.barcode4j.BarcodeException;
+
+import syo_controller.BarcodeGen;
 import syo_controller.DBBasisObjekt;
 import syo_controller.DBController;
 import syo_model.DBTool;
@@ -333,6 +339,22 @@ public class MainView extends JFrame implements Observer {
 		pnlCard9.add(cmdCard9drucken);
 		cmdCard9drucken.setVisible(true);
 		cmdCard9drucken.setBounds(440, 190, 185, 30);
+		cmdCard9drucken.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					new BarcodeGen(ctrl.getBarcodeOfObject(aktuellerKnoten));
+				} catch (ConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (BarcodeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	/**

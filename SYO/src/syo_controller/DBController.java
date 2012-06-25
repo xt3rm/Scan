@@ -1,6 +1,7 @@
 package syo_controller;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -121,10 +122,10 @@ public class DBController implements Observer {
 	}
 
 	/**
-	 * Returns a Objekt with all its values.
+	 * Returns an Objekt with all its values.
 	 * 
 	 * @param obj
-	 * @return
+	 * @return DBBasisObjekt
 	 */
 	public DBBasisObjekt getWholeObjekt(DBBasisObjekt dbo) {
 		DBTool.getInstance().connectDB();
@@ -172,6 +173,27 @@ public class DBController implements Observer {
 					((DBFeld) f).getWert());
 			DBTool.getInstance().closeDB();
 		}
+	}
+
+	/**
+	 * Gets the Barcode of an Objekt as a String.
+	 * 
+	 * @param dbo
+	 * @return String
+	 */
+	public String getBarcodeOfObject(DBBasisObjekt dbo) {
+		String result = "";
+		DBTool.getInstance().connectDB();
+		ResultSet rs = DBTool.getInstance().selectBarcodeOfObjekt(dbo.getId());
+		try {
+			while (rs.next()) {
+				result = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DBTool.getInstance().closeDB();
+		return result;
 	}
 
 }

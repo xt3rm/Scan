@@ -559,6 +559,11 @@ public class DBTool extends Observable {
 		return rSet;
 	}
 
+	/**
+	 * 
+	 * @param typID
+	 * @return
+	 */
 	public ResultSet selectFelderOfTypByID(int typID) {
 		String selFelder = "SELECT * FROM feld as F "
 				+ "JOIN Typ_Feld as TF ON F.ID_Feld = TF.Feld_ID "
@@ -574,6 +579,20 @@ public class DBTool extends Observable {
 		}
 		return rSet;
 
+	}
+	
+	public ResultSet selectBarcodeOfObjekt(int objectID) {
+		String select = "SELECT barcode FROM objekt WHERE ID_Objekt= " + objectID;
+		try {
+			statement = connection.createStatement();
+			statement.execute(select);
+			rSet = statement.getResultSet();
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		return rSet;
 	}
 
 	/**

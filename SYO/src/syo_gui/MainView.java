@@ -291,7 +291,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard1Sammlungloeschen = new JButton("Sammlung löschen");
 		pnlCard1.add(cmdCard1Sammlungloeschen);
 		cmdCard1Sammlungloeschen.setVisible(true);
-		cmdCard1Sammlungloeschen.setBounds(40, 380, 185, 30);
+		cmdCard1Sammlungloeschen.setBounds(40, 390, 185, 30);
 
 		pnlCard1.add(liCard1Sammlungen);
 		scrollPaneCard1 = new JScrollPane(liCard1Sammlungen);

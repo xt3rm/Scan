@@ -670,6 +670,7 @@ public class DBTool extends Observable {
 				+ "JOIN Typ_Feld as TF on TF.Typ_ID = O.Typ_ID "
 				+ "JOIN Feld as F on F.ID_Feld = TF.Feld_ID "
 				+ "JOIN Eigenschaft as E on E.Feld_ID = TF.Feld_ID "
+				+ "JOIN Objekt_Sammlung as OS on O.ID_Objekt = OS.Objekt_ID "
 				+ "WHERE O.ID_Objekt = " + objektID + " AND E.Objekt_ID ="
 				+ objektID;
 		try {

@@ -431,7 +431,6 @@ public class MainView extends JFrame implements Observer {
 										.getSelectedValue());
 						aktuellerKnoten.setParent(tmp);
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten
@@ -455,6 +454,14 @@ public class MainView extends JFrame implements Observer {
 		pnlCard2.add(cmdCard2Objektloeschen);
 		cmdCard2Objektloeschen.setVisible(true);
 		cmdCard2Objektloeschen.setBounds(240, 370, 185, 30);
+		cmdCard2Objektloeschen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (liCard2Sammlung.getSelectedIndex() > -1) { 
+				ctrl.deleteObjekt(((DBBasisObjekt)liCard2Sammlung
+				.getSelectedValue()).getId());
+				}
+			}
+		});
 
 	}
 
@@ -851,13 +858,11 @@ public class MainView extends JFrame implements Observer {
 								.setText("<html><b>Barcode erkannt</b></html>");
 						txtBarcode.setText("");
 					} catch (Exception e) {
-						e.printStackTrace();
 						lblMeldung.setText("<html><b> " + e.getMessage()
 								+ " </b></html>");
 						if (JOptionPane.showConfirmDialog(null,
 								"Neuen eintrag erfassen?", "Nicht gefunden!",
 								JOptionPane.YES_NO_OPTION) == 0) {
-							// disableMainView();
 							barcode = txtBarcode.getText();
 							cl.show(pnlView, "" + (1));
 						}

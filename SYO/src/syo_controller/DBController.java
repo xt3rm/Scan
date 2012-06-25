@@ -3,8 +3,6 @@ package syo_controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import syo_model.DBTool;
 
@@ -14,20 +12,14 @@ import syo_model.DBTool;
  * @author ebrogt
  * 
  */
-public class DBController implements Observer {
+public class DBController  {
 
 	private ArrayList<String> sammlungen;
 	private ClassFactory factory;
 
 	public DBController() {
-		DBTool.getInstance().addObserver(this);
 		sammlungen = new ArrayList<String>();
 		factory = new ClassFactory();
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		System.out.println("Update");
 	}
 
 	public ArrayList<String> getSammlungen() {
@@ -119,6 +111,18 @@ public class DBController implements Observer {
 	public void deleteSammlung(int id) {
 		DBTool.getInstance().connectDB();
 		DBTool.getInstance().deleteSammlungByID(id);
+		DBTool.getInstance().closeDB();
+	}
+	
+	/**
+	 * Deletes a Objekt.
+	 * 
+	 * @param id
+	 *            The id of the Objekt
+	 */
+	public void deleteObjekt(int id) {
+		DBTool.getInstance().connectDB();
+		DBTool.getInstance().deleteItemOfTableByID("objekt", id);
 		DBTool.getInstance().closeDB();
 	}
 

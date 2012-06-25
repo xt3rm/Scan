@@ -101,7 +101,6 @@ public class MainView extends JFrame implements Observer {
 	private JScrollPane scrollPaneCard1;
 	JList liCard1Sammlungen;
 
-
 	// --------- Komponenten Card2 - Alle Objekte der ausgewählten Sammlung
 	// anzeigen ------
 
@@ -165,7 +164,6 @@ public class MainView extends JFrame implements Observer {
 	// --------- Komponenten Card9 - Irgendwelcher Stuff ------
 
 	private JLabel lblCard9;
-	private JButton cmdCard9bearbeiten;
 	private JButton cmdCard9speichern;
 	private JButton cmdCard9abbrechen;
 	private JButton cmdCard9drucken;
@@ -276,7 +274,7 @@ public class MainView extends JFrame implements Observer {
 					liObjekt = ctrl
 							.getBaseObjektOfSammlung((DBBasisObjekt) liCard1Sammlungen
 									.getSelectedValue());
-					
+
 					aktuellerKnoten = (DBBasisObjekt) liCard1Sammlungen
 							.getSelectedValue();
 					liCard2Sammlung.setListData(liObjekt.toArray());
@@ -285,11 +283,19 @@ public class MainView extends JFrame implements Observer {
 				}
 			}
 		});
-		
+
 		cmdCard1Sammlungloeschen = new JButton("Sammlung löschen");
 		pnlCard1.add(cmdCard1Sammlungloeschen);
 		cmdCard1Sammlungloeschen.setVisible(true);
 		cmdCard1Sammlungloeschen.setBounds(40, 390, 185, 30);
+		cmdCard1Sammlungloeschen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				if (liCard1Sammlungen.getSelectedIndex() > -1)
+					ctrl.deleteSammlung(((DBBasisObjekt) liCard1Sammlungen
+							.getSelectedValue()).getId());
+			}
+		});
 
 		pnlCard1.add(liCard1Sammlungen);
 		scrollPaneCard1 = new JScrollPane(liCard1Sammlungen);
@@ -305,11 +311,6 @@ public class MainView extends JFrame implements Observer {
 		lblCard9 = new JLabel("");
 		pnlCard9.add(lblCard9);
 
-		cmdCard9bearbeiten = new JButton("Bearbeiten");
-		pnlCard9.add(cmdCard9bearbeiten);
-		cmdCard9bearbeiten.setVisible(true);
-		cmdCard9bearbeiten.setBounds(440, 70, 185, 30);
-
 		cmdCard9speichern = new JButton("Speichern");
 		pnlCard9.add(cmdCard9speichern);
 		cmdCard9speichern.setVisible(true);
@@ -321,15 +322,22 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		cmdCard9abbrechen = new JButton("zurück");
+		cmdCard9abbrechen = new JButton("Zurück");
 		pnlCard9.add(cmdCard9abbrechen);
 		cmdCard9abbrechen.setVisible(true);
 		cmdCard9abbrechen.setBounds(40, 420, 185, 30);
 		cmdCard9abbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cl.show(pnlView, "" + (2));
-				lblMeldung.setText("<html><b> </b></html>");
-				aktuellerKnoten = null;
+
+				// Update object
+				if (aktuellerKnoten.getParent() != null) {
+					liObjekt = ctrl.getBaseObjektOfSammlung(aktuellerKnoten
+							.getParent());
+					liCard2Sammlung.setListData(liObjekt.toArray());
+					txtCard5neuesObjekt.setText("");
+					lblMeldung.setText("<html><b> </b></html>");
+					cl.show(pnlView, "" + (2));
+				}
 			}
 		});
 
@@ -436,22 +444,18 @@ public class MainView extends JFrame implements Observer {
 		cmdCard2zurueck.setBounds(40, 420, 185, 30);
 		cmdCard2zurueck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				isEditing = true;
+				isEditing = false;
 				cl.show(pnlView, "" + (1));
 				txtBarcode.requestFocus();
-				// Update object
-				liObjekt = ctrl.getBaseObjektOfSammlung(aktuellerKnoten);
-				liCard2Sammlung.setListData(liObjekt.toArray());
-				txtCard5neuesObjekt.setText("");
+
 			}
 		});
-		
+
 		cmdCard2Objektloeschen = new JButton("Objekt löschen");
 		pnlCard2.add(cmdCard2Objektloeschen);
 		cmdCard2Objektloeschen.setVisible(true);
 		cmdCard2Objektloeschen.setBounds(240, 370, 185, 30);
-		
-		
+
 	}
 
 	/**
@@ -581,7 +585,7 @@ public class MainView extends JFrame implements Observer {
 		txtCard4neueSammlung.setVisible(true);
 		txtCard4neueSammlung.setBounds(140, 90, 185, 30);
 
-		cmdCard4ok = new JButton("ok");
+		cmdCard4ok = new JButton("Erstellen");
 		pnlCard4.add(cmdCard4ok);
 		cmdCard4ok.setVisible(true);
 		cmdCard4ok.setBounds(440, 420, 185, 30);
@@ -593,7 +597,7 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		cmdCard4abbrechen = new JButton("zurück");
+		cmdCard4abbrechen = new JButton("Zurück");
 		pnlCard4.add(cmdCard4abbrechen);
 		cmdCard4abbrechen.setVisible(true);
 		cmdCard4abbrechen.setBounds(40, 420, 185, 30);
@@ -654,19 +658,21 @@ public class MainView extends JFrame implements Observer {
 		pnlCard5.add(cmdCard5weiter);
 		cmdCard5weiter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				if (cmbCard5Typauswählen.getSelectedItem() != null) {
 					String name = txtCard5neuesObjekt.getText();
 					int typID = ((DBBasisObjekt) cmbCard5Typauswählen
 							.getSelectedItem()).getId();
 					if (isFilledOut(txtCard5neuesObjekt)) {
 						isEditing = false;
-						
+
 						txtCard5neuesObjekt.setText("");
 						if (barcode == null) {
-						ctrl.createObjekt(name, typID, aktuellerKnoten.getId());
+							ctrl.createObjekt(name, typID,
+									aktuellerKnoten.getId());
 						} else {
-							ctrl.createObjekt(name, typID, aktuellerKnoten.getId(), barcode);
+							ctrl.createObjekt(name, typID,
+									aktuellerKnoten.getId(), barcode);
 						}
 						cl.show(pnlView, "" + (2));
 						barcode = null;
@@ -688,7 +694,6 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 
-		
 	}
 
 	/**
@@ -826,7 +831,7 @@ public class MainView extends JFrame implements Observer {
 		txtBarcode.setBounds(20, 420, 185, 30);
 		txtBarcode.setVisible(true);
 		txtBarcode.setFont(new Font("Arial", Font.PLAIN, 15));
-		
+
 		/**
 		 * 
 		 * This is the very important Scannerfield!
@@ -849,15 +854,17 @@ public class MainView extends JFrame implements Observer {
 						e.printStackTrace();
 						lblMeldung.setText("<html><b> " + e.getMessage()
 								+ " </b></html>");
-						if (JOptionPane.showConfirmDialog(null, "Neuen eintrag erfassen?", "Nicht gefunden!", JOptionPane.YES_NO_OPTION) == 0) {
-							//disableMainView();
+						if (JOptionPane.showConfirmDialog(null,
+								"Neuen eintrag erfassen?", "Nicht gefunden!",
+								JOptionPane.YES_NO_OPTION) == 0) {
+							// disableMainView();
 							barcode = txtBarcode.getText();
 							cl.show(pnlView, "" + (1));
 						}
 					}
 				} else {
 					lblMeldung
-					.setText("<html><b>Bitte zuerst den aktuellen Bearbeitungsschritt abschliessen!</b></html>");
+							.setText("<html><b>Bitte zuerst den aktuellen Bearbeitungsschritt abschliessen!</b></html>");
 				}
 			}
 		});
@@ -915,9 +922,6 @@ public class MainView extends JFrame implements Observer {
 				}
 			}
 		});
-		
-		
-		
 
 		cmdInfo = new JButton("Über SYO");
 		pnlNavigation.add(cmdInfo);
@@ -928,7 +932,7 @@ public class MainView extends JFrame implements Observer {
 				cl.show(pnlView, "" + (8));
 			}
 		});
-		
+
 		cmdBackup = new JButton("Backup");
 		pnlNavigation.add(cmdBackup);
 		cmdBackup.setVisible(true);
@@ -953,9 +957,11 @@ public class MainView extends JFrame implements Observer {
 		liCard7Sammlungen.setListData(liSammlung.toArray());
 		this.txtCard4neueSammlung.setText(""); // Clear the text
 		// Update object
-		this.liObjekt = ctrl.getBaseObjektOfSammlung(aktuellerKnoten);
-		this.liCard2Sammlung.setListData(liObjekt.toArray());
-		this.txtCard5neuesObjekt.setText("");
+		if (aktuellerKnoten != null) {
+			this.liObjekt = ctrl.getBaseObjektOfSammlung(aktuellerKnoten);
+			this.liCard2Sammlung.setListData(liObjekt.toArray());
+			this.txtCard5neuesObjekt.setText("");
+		}
 		// Update typ
 		this.liTyp = ctrl.getEveryRowOfTable("typ");
 		this.cmbCard5Typauswählen.removeAllItems();
@@ -975,5 +981,5 @@ public class MainView extends JFrame implements Observer {
 	private Boolean isFilledOut(JTextField field) {
 		return !field.getText().equals("");
 	}
-	
+
 }

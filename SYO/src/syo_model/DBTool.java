@@ -302,7 +302,7 @@ public class DBTool extends Observable {
 			String objekt_sammlung = "INSERT INTO Objekt_Sammlung (Objekt_ID, Sammlung_ID) VALUES ("
 					+ key + ", " + sammlungID + ")";
 			statement.executeUpdate(objekt_sammlung);
-			
+
 			// Insert the fields
 			ResultSet rs = this.selectFelderOfTypByID(typID);
 			while (rs.next()) {
@@ -624,7 +624,7 @@ public class DBTool extends Observable {
 	}
 
 	/**
-	 * ajfhalh
+	 * Selects all Info about an Object with the given barcode.
 	 * 
 	 * @param objektID
 	 * @return
@@ -637,6 +637,7 @@ public class DBTool extends Observable {
 				+ "(SELECT ID_Objekt FROM Objekt WHERE barcode = '"
 				+ barcode
 				+ "' ) as ID "
+				+ "JOIN Objekt_Sammlung as OS on ID.ID_Objekt = OS.Objekt_ID " 
 				+ "WHERE O.ID_Objekt = ID.ID_Objekt AND E.Objekt_ID = ID.ID_Objekt";
 		try {
 			statement = connection.createStatement();

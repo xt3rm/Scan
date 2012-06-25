@@ -50,6 +50,7 @@ public class ClassFactory {
 								.getInt("Feld_ID"), rs.getString("Wert")));
 				dbo.setId(rs.getInt("ID_Objekt"));
 				dbo.setName(rs.getString("ObjektName"));
+				dbo.setParent(new DBBasisObjekt("", rs.getInt("Sammlung_ID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

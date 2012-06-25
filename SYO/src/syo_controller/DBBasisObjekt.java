@@ -46,7 +46,7 @@ public class DBBasisObjekt {
 	}
 
 	public DBBasisObjekt getParent() {
-		return null;
+		return this.parent;
 	}
 
 	public void setChildren(ArrayList<DBBasisObjekt> children) {

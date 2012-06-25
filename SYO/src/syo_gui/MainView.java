@@ -310,19 +310,22 @@ public class MainView extends JFrame implements Observer {
 		cmdCard9speichern.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ctrl.updateObjekt(aktuellerKnoten);
+				lblMeldung.setText("<html><b>Daten eingetragen</b></html>");
 			}
 		});
 
-		cmdCard9abbrechen = new JButton("abbrechen");
+		cmdCard9abbrechen = new JButton("zurück");
 		pnlCard9.add(cmdCard9abbrechen);
 		cmdCard9abbrechen.setVisible(true);
-		cmdCard9abbrechen.setBounds(440, 150, 185, 30);
+		cmdCard9abbrechen.setBounds(40, 420, 185, 30);
 		cmdCard9abbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (2));
+				lblMeldung.setText("<html><b> </b></html>");
 				aktuellerKnoten = null;
 			}
 		});
+
 
 		liCard9Sammlungen = new JTable();
 		scrollPaneCard9 = new JScrollPane(liCard9Sammlungen);
@@ -338,6 +341,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard9drucken = new JButton("Drucken");
 		pnlCard9.add(cmdCard9drucken);
 		cmdCard9drucken.setVisible(true);
+
 		cmdCard9drucken.setBounds(440, 190, 185, 30);
 		cmdCard9drucken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -355,6 +359,7 @@ public class MainView extends JFrame implements Observer {
 				}
 			}
 		});
+
 	}
 
 	/**
@@ -777,14 +782,15 @@ public class MainView extends JFrame implements Observer {
 				try {
 					aktuellerKnoten  = ctrl.getObjectOfBarcode(txtBarcode.getText());
 					lblCard9.setText(aktuellerKnoten.getName());
+					liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
+					cl.show(pnlView, "" + (9));
+					lblMeldung.setText("<html><b>Barcode erkannt</b></html>");
+					txtBarcode.setText("");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					lblMeldung.setText(e.getMessage());
-				}
-				txtBarcode.setText("");
-				liCard9Sammlungen.setModel(new MyTableModel(aktuellerKnoten.getChildren()));
-				cl.show(pnlView, "" + (9));
+				}	
 			}
 		});
 
@@ -796,6 +802,7 @@ public class MainView extends JFrame implements Observer {
 		cmdSammlung.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(pnlView, "" + (1));
+				lblMeldung.setText("<html><b> </b></html>");
 			}
 		});
 
@@ -849,13 +856,12 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 		
-		lblMeldung = new JLabel("<html><b>Meldezeile</b></html>");
+		lblMeldung = new JLabel("<html><b> </b></html>");
 		pnlNavigation.add(lblMeldung);
 		lblMeldung.setBackground(Color.white);
 		lblMeldung.setForeground(Color.red);
 		lblMeldung.setBounds(20,250,185, 100);
 		lblMeldung.setFont(new Font("Arial", Font.PLAIN, 14));
-
 	}
 
 	/**

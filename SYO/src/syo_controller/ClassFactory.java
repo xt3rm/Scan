@@ -35,24 +35,28 @@ public class ClassFactory {
 	 * @param dbo
 	 * @param rs
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 
-	public DBBasisObjekt createObjektWithFields(DBBasisObjekt dbo, ResultSet rs) throws Exception {
+	public DBBasisObjekt createObjektWithFields(DBBasisObjekt dbo, ResultSet rs)
+			throws Exception {
 		if (rs != null) {
-		dbo.setChildren(new ArrayList<DBBasisObjekt>());
-		try {
-			while(rs.next()) {
-				dbo.getChildren().add(new DBFeld(rs.getString("FeldName"), rs.getInt("Feld_ID"), rs.getString("Wert")));
-				dbo.setId(rs.getInt("ID_Objekt"));
-				dbo.setName(rs.getString("ObjektName"));
+			dbo.setChildren(new ArrayList<DBBasisObjekt>());
+			try {
+				while (rs.next()) {
+					dbo.getChildren().add(
+							new DBFeld(rs.getString("FeldName"), rs
+									.getInt("Feld_ID"), rs.getString("Wert")));
+					dbo.setId(rs.getInt("ID_Objekt"));
+					dbo.setName(rs.getString("ObjektName"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}}
-		else {throw new Exception("Did not find Object");}
-			
+		} else {
+			throw new Exception("Did not find Object");
+		}
 
 		return dbo;
 	}

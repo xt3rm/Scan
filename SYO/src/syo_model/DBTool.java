@@ -603,6 +603,27 @@ public class DBTool extends Observable {
 	}
 
 	/**
+	 * Updates table Eigenschaft for an Objekt.
+	 * 
+	 * @param objectID
+	 * @param feldID
+	 * @param wert
+	 */
+	public void updateObjectData(int objectID, int feldID, String wert) {
+		String update = "UPDATE eigenschaft SET wert = '" + wert + "' WHERE objekt_ID = " + objectID + " AND feld_ID = " + feldID;
+		try {
+			statement = connection.createStatement();
+			statement.executeUpdate(update);
+			rSet = statement.getResultSet();
+			propagateChange();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+
+	/**
 	 * Combines setChanged and notifyObservers in one method.
 	 */
 	private void propagateChange() {

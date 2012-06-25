@@ -303,11 +303,21 @@ public class MainView extends JFrame implements Observer {
 		pnlCard9.add(cmdCard9speichern);
 		cmdCard9speichern.setVisible(true);
 		cmdCard9speichern.setBounds(440, 110, 185, 30);
+		cmdCard9speichern.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctrl.updateObjekt(aktuellerKnoten);
+			}
+		});
 
 		cmdCard9abbrechen = new JButton("abbrechen");
 		pnlCard9.add(cmdCard9abbrechen);
 		cmdCard9abbrechen.setVisible(true);
 		cmdCard9abbrechen.setBounds(440, 150, 185, 30);
+		cmdCard9abbrechen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(pnlView, "" + (2));
+			}
+		});
 
 
 

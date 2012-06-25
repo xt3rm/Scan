@@ -272,6 +272,7 @@ public class MainView extends JFrame implements Observer {
 					liObjekt = ctrl
 							.getBaseObjektOfSammlung((DBBasisObjekt) liCard1Sammlungen
 									.getSelectedValue());
+					
 					aktuellerKnoten = (DBBasisObjekt) liCard1Sammlungen
 							.getSelectedValue();
 					liCard2Sammlung.setListData(liObjekt.toArray());
@@ -407,9 +408,11 @@ public class MainView extends JFrame implements Observer {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					try {
+						DBBasisObjekt tmp = aktuellerKnoten;
 						aktuellerKnoten = ctrl
 								.getWholeObjekt((DBBasisObjekt) liCard2Sammlung
 										.getSelectedValue());
+						aktuellerKnoten.setParent(tmp);
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -427,6 +430,10 @@ public class MainView extends JFrame implements Observer {
 				isEditing = true;
 				cl.show(pnlView, "" + (1));
 				txtBarcode.requestFocus();
+				// Update object
+				liObjekt = ctrl.getBaseObjektOfSammlung(aktuellerKnoten);
+				liCard2Sammlung.setListData(liObjekt.toArray());
+				txtCard5neuesObjekt.setText("");
 			}
 		});
 	}

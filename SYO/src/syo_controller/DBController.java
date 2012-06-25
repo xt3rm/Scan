@@ -122,6 +122,11 @@ public class DBController implements Observer {
 		DBTool.getInstance().closeDB();
 	}
 
+	/**
+	 * Get all Objekte in a Sammlung represented by a DBBasisObjekt.
+	 * @param obj
+	 * @return
+	 */
 	public ArrayList<DBBasisObjekt> getBaseObjektOfSammlung(DBBasisObjekt obj) {
 		DBTool.getInstance().connectDB();
 		ResultSet rs = DBTool.getInstance().selectObjectsOfSammlungByID(

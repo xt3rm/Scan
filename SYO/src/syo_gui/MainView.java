@@ -305,10 +305,10 @@ public class MainView extends JFrame implements Observer {
 		cmdCard9speichern.setVisible(true);
 		cmdCard9speichern.setBounds(440, 110, 185, 30);
 
-		cmdCard9abbrechen = new JButton("abbrechen");
+		cmdCard9abbrechen = new JButton("zurück");
 		pnlCard9.add(cmdCard9abbrechen);
 		cmdCard9abbrechen.setVisible(true);
-		cmdCard9abbrechen.setBounds(440, 150, 185, 30);
+		cmdCard9abbrechen.setBounds(40, 420, 185, 30);
 
 
 
@@ -327,7 +327,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard9drucken = new JButton("drucken");
 		pnlCard9.add(cmdCard9drucken);
 		cmdCard9drucken.setVisible(true);
-		cmdCard9drucken.setBounds(440, 190, 185, 30);
+		cmdCard9drucken.setBounds(440, 150, 185, 30);
 	}
 
 	/**

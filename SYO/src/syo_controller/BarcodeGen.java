@@ -35,7 +35,7 @@ public class BarcodeGen {
 	 * @throws BarcodeException
 	 * @throws IOException
 	 */
-	public BarcodeGen(String bari) throws ConfigurationException, BarcodeException, IOException{
+	public BarcodeGen(String bari,  DBBasisObjekt dbo) throws ConfigurationException, BarcodeException, IOException{
 		
 		this.barcodeID = bari;
 		BarcodeUtil util = BarcodeUtil.getInstance();
@@ -53,7 +53,7 @@ public class BarcodeGen {
 	    
 	    Image pic = ImageIO.read(new File("images/code128.jpg"));
 	    
-	    Printer p = new Printer(pic);
+	    Printer p = new Printer(pic, dbo);
 	    p.setLocationRelativeTo(null);
 	    p.setVisible(true);
 	}

@@ -358,7 +358,7 @@ public class MainView extends JFrame implements Observer {
 		cmdCard9drucken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					new BarcodeGen(ctrl.getBarcodeOfObject(aktuellerKnoten));
+					new BarcodeGen(ctrl.getBarcodeOfObject(aktuellerKnoten), aktuellerKnoten);
 				} catch (ConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
